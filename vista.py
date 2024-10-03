@@ -9,6 +9,7 @@ from tkinter import (
     Entry,
     Button,
     Scrollbar,
+    Menu,
 )
 
 # from tkinter.messagebox import showinfo
@@ -26,34 +27,34 @@ from referencia.referencia_treeview import referencia_tree
 class Ventana:
     """Ventana Tkinter de la aplicación."""
 
-    def __init__(self, windows):
+    def __init__(self, windows, titulo="Clientes v1.00", geometria="1320x750"):
 
         self.root = windows
 
-        self.root.title("Clientes v1.01")
-        self.root.geometry("1320x750")
+        self.root.title(titulo)
+        self.root.geometry(geometria)
+        self.menu()
+        self.setup_widgets()
+        # self.objeto_acciones = Abmc(self)
 
+    def setup_widgets(self):
         self.ico = Image.open("referencia/favicon.png")
         self.foto = ImageTk.PhotoImage(self.ico)
         self.root.wm_iconphoto(False, self.foto)
 
-        # Usado para centrar los widgets:
-        self.marco = LabelFrame(self.root, bg=estilo_tree["labelbg"])
-
-        # Uso la etiqueta para como encabezado del programa
+        self.marco = LabelFrame(self.root, bg="#35374B")
         self.titulo = Label(
             self.marco,
-            text=estilo_tree["titulo_marco"],
-            bg=estilo_tree["titulo_bg"],
-            fg=estilo_tree["titulo_fg"],
-            height=estilo_tree["titulo_height"],
-            width=estilo_tree["titulo_width"],
-            font=estilo_tree["titulo_font"],
+            text="Administración de Clientes",
+            bg="#78A083",
+            fg="black",
+            height=1,
+            width=60,
+            font=("Helvetica 16 bold"),
         )
-        self.titulo.grid(
-            row=0, column=1, columnspan=3, padx=1, pady=8, sticky="w" + "E"
-        )
+        self.titulo.grid(row=0, column=1, columnspan=3, padx=1, pady=8, sticky="we")
 
+        # Etiquetas y campos de entrada
         self.fuente_etiqueta = "Helvetica 12"
         etiquetas = [
             ("Indice", 1),
@@ -74,8 +75,9 @@ class Ventana:
                 fg="white",
                 font=self.fuente_etiqueta,
             )
-            etiqueta.grid(row=row, padx=5, pady=5, column=1, sticky="E")
+            etiqueta.grid(row=row, padx=5, pady=5, column=1, sticky="e")
 
+        # Variables y campos de entrada
         self.var_indice = IntVar()
         self.var_nombre_cliente = StringVar()
         self.var_apellido_cliente = StringVar()
@@ -85,8 +87,6 @@ class Ventana:
         self.var_perfil = StringVar()
         self.var_correo_electronico = StringVar()
 
-        self.ancho_entry = 25
-        self.fuente_entrada = "Helvetica 11 bold"
         variables = [
             (self.var_indice, 1, "disabled"),
             (self.var_nombre_cliente, 2, "normal"),
@@ -98,6 +98,8 @@ class Ventana:
             (self.var_perfil, 8, "normal"),
         ]
 
+        self.ancho_entry = 25
+        self.fuente_entrada = "Helvetica 11 bold"
         for var, row, state in variables:
             entry = Entry(
                 self.marco,
@@ -106,186 +108,113 @@ class Ventana:
                 width=self.ancho_entry,
                 state=state,
             )
-            entry.grid(row=row, column=2, pady=5, sticky="w" + "E")
+            entry.grid(row=row, column=2, pady=5, sticky="we")
 
-        texto_etiqueta = referencia_tree["texto_etiquetas"]
-        self.etiqueta_criterios_sitios = Label(
-            self.marco,
-            text=texto_etiqueta,
-            background=estilo_tree["etiqueta_bg"],
-            fg=estilo_tree["etiqueta_fg"],
-            font=self.fuente_entrada,
-        )
-        self.etiqueta_criterios_sitios.grid(row=7, column=3, rowspan=2)
+        # Configuración del Treeview
+        self.setup_treeview()
 
-        self.fuente_botones = estilo_tree["fuente_botones"]
+        # Botones
         botones = [
-            (
-                "Agregar",
-                9,
-                1,
-                lambda: self.objeto_acciones.alta_cliente(
-                    self.tree,
-                    self.var_indice,
-                    self.var_nombre_cliente.get(),
-                    self.var_apellido_cliente.get(),
-                    self.var_contacto.get(),
-                    self.var_correo_electronico.get(),
-                    self.var_telefono.get(),
-                    self.var_sitio.get(),
-                    self.var_perfil.get(),
-                ),
-            ),
-            (
-                "Vaciar Entradas",
-                9,
-                2,
-                lambda: self.vaciar(),
-            ),
-            (
-                "Borrar",
-                9,
-                3,
-                lambda: self.objeto_acciones.borrar(self.tree),
-            ),
-            (
-                "Modificar",
-                10,
-                1,
-                lambda: self.objeto_acciones.actualizar(
-                    self.tree,
-                    self.var_indice.get(),
-                    self.var_nombre_cliente.get(),
-                    self.var_apellido_cliente.get(),
-                    self.var_contacto.get(),
-                    self.var_correo_electronico.get(),
-                    self.var_telefono.get(),
-                    self.var_sitio.get(),
-                    self.var_perfil.get(),
-                ),
-            ),
-            (
-                "Importar Datos",
-                10,
-                2,
-                lambda: self.objeto_acciones.importar_datos(self.tree),
-            ),
+            ("Agregar", 9, 1, self.agregar_cliente),
+            ("Vaciar Entradas", 9, 2, self.vaciar),
+            ("Borrar", 9, 3, self.borrar_cliente),
+            ("Modificar", 10, 1, self.modificar_cliente),
+            ("Importar Datos", 10, 2, self.importar_datos),
             ("Salir", 10, 3, self.root.quit),
         ]
 
+        self.fuente_botones = "Helvetica 11 bold"
         for text, row, col, command in botones:
             boton = Button(
                 self.marco,
                 font=self.fuente_botones,
                 text=text,
-                background=estilo_tree["fondo_botones"],
+                background="#78A083",
                 command=command,
             )
-            boton.grid(row=row, column=col, padx=10, pady=10, sticky="w" + "E")
+            boton.grid(row=row, column=col, padx=10, pady=10, sticky="we")
             boton.configure(width=35)
 
+        self.marco.place(relx=0.5, rely=0.5, anchor="center")
+
+    def setup_treeview(self):
+        # Treeview style
         self.miestilo = ttk.Style()
         self.miestilo.theme_use("default")
         self.miestilo.configure(
             "miestilo.Treeview.Heading",
-            font=estilo_tree["fuente_headings"],
-            fontcolor=estilo_tree["color_fuente"],
-            background=estilo_tree["fondo_headings"],
+            font=("Helvetica 11 bold"),
+            background="#78A083",
+            foreground="white",
         )
         self.miestilo.configure(
             "Treeview",
-            font=estilo_tree["fuente_treeview"],
-            background=estilo_tree["fondo_treeview"],
-            foreground=estilo_tree["fore_treeview"],
-            fieldbackground=estilo_tree["field_treeview"],
+            font=("Helvetica 11"),
+            background="#4E5275",
+            foreground="#bababa",
+            fieldbackground="#D3D3D3",
         )
-        self.miestilo.map(
-            "Treeview", background=[("selected", estilo_tree["seleccionado"])]
-        )
+        self.miestilo.map("Treeview", background=[("selected", "#35374B")])
+
+        # Define Treeview columns
+        columnas = [
+            ("ID", 60, "w"),
+            ("Nombre", 150, ""),
+            ("Tipo de Cliente", 120, ""),
+            ("Contacto", 150, "w"),
+            ("Correo-E", 230, ""),
+            ("Teléfono", 150, ""),
+            ("Sitio Web", 180, "w"),
+            ("Otro Perfil", 230, "w"),
+        ]
 
         self.tree = ttk.Treeview(
             self.marco,
-            columns=(
-                "ID",
-                "Nombre",
-                "Apellido",
-                "Contacto",
-                "Correo-E",
-                "Teléfono",
-                "Sitio Web",
-                "Otro Perfil",
-            ),
+            columns=[col[0] for col in columnas],
             show="headings",
             style="miestilo.Treeview",
         )
-
-        columnas = [
-            ("ID", 60, "n"),
-            ("Nombre", 80, "w"),
-            ("Apellido", 80, "w"),
-            ("Contacto", 140, "w"),
-            ("Correo-E", 230, "w"),
-            ("Teléfono", 150, "w"),
-            ("Sitio Web", 170, "w"),
-            ("Otro Perfil", 170, "w"),
-        ]
 
         for col, width, anchor in columnas:
             self.tree.column(
                 col, width=width, minwidth=width, anchor=anchor if anchor else "w"
             )
+            self.tree.heading(col, text=col)
 
-        self.tree.heading("ID", text="ID", command=lambda: self.ordener_col_por("ID"))
-        self.tree.heading(
-            "Nombre",
-            text="Nombre",
-            command=lambda: self.ordener_col_por("Nombre"),
-        )
-        self.tree.heading(
-            "Apellido",
-            text="Apellido",
-            command=lambda: self.ordener_col_por("Apellido"),
-        )
-        self.tree.heading(
-            "Contacto",
-            text="Contacto",
-            command=lambda: self.ordener_col_por("Contacto"),
-        )
-        self.tree.heading(
-            "Correo-E",
-            text="Correo-E",
-            command=lambda: self.ordener_col_por("Correo-E"),
-        )
-        self.tree.heading(
-            "Teléfono",
-            text="Teléfono",
-            command=lambda: self.ordener_col_por("Teléfono"),
-        )
-        self.tree.heading(
-            "Sitio Web",
-            text="Sitio Web",
-            command=lambda: self.ordener_col_por("Sitio Web"),
-        )
-        self.tree.heading(
-            "Otro Perfil",
-            text="Otro Perfil",
-            command=lambda: self.ordener_col_por("Otro Perfil"),
-        )
-
-        self.tree.grid(row=12, column=0, columnspan=5, sticky="nsew")
+        # Scrollbar
         self.barra_desplazamiento = Scrollbar(self.marco, command=self.tree.yview)
-        self.barra_desplazamiento.grid(row=12, column=5, sticky="nsew")
-
         self.tree.configure(yscrollcommand=self.barra_desplazamiento.set)
         self.tree.bind("<ButtonRelease-1>", self.seleccionar)
         self.tree.bind("<KeyRelease-Up>", self.seleccionar)
         self.tree.bind("<KeyRelease-Down>", self.seleccionar)
+        # Layout Treeview
+        self.tree.grid(row=12, column=0, columnspan=5, sticky="nsew")
+        self.barra_desplazamiento.grid(row=12, column=5, sticky="ns")
 
-        self.marco.place(relx=0.5, rely=0.5, anchor="center")
-        self.objeto_acciones = Abmc(self)
-        self.vaciar()
-        self.sort_column = None
-        self.sort_order = 1  # 1 para ascendente, -1 para descendente
+    def hola(self):
+        print("hola")
+
+    def menu(self):
+        menubar = Menu(self.root)
+        menu_archivo = Menu(menubar, tearoff=0)
+        menu_archivo.add_command(label="Importar", command=self.hola)
+        menu_archivo.add_command(label="Exportar", command=self.hola)
+        menu_archivo.add_separator()
+        menu_archivo.add_command(label="Salir", command=self.root.quit)
+        menubar.add_cascade(label="Archivo", menu=menu_archivo)
+
+        menu_tema = Menu(menubar, tearoff=0)
+        menu_tema.add_command(label="Claro", command=self.hola)
+        menu_tema.add_command(label="Oscuro", command=self.hola)
+        # menu_tema.add_separator()
+        # menu_tema.add_command(label="Cortar", command=master.quit)
+        menubar.add_cascade(label="Temas", menu=menu_tema)
+
+        menu_ayuda = Menu(menubar, tearoff=0)
+        menu_ayuda.add_command(label="Documentación", command=self.hola)
+        menu_ayuda.add_command(label="Acerca de", command=self.hola)
+        menubar.add_cascade(label="Ayuda", menu=menu_ayuda)
+        self.root.config(menu=menubar)
 
     def ordener_col_por(self, col):
         """Ordena el Treeview al hacer 2 veces click en el encabezado elegido.
