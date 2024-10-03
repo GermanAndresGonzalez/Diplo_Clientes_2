@@ -1,0 +1,2 @@
+Se produjo un error: Vista 323 (TypeError("'<' not supported between instances of 'str' and 'float'"),) 2024-09-02 18:13:03.717318
+Se produjo un error: Vista 323 (TypeError("'<' not supported between instances of 'str' and 'float'"),) 2024-09-02 18:13:04.472153
