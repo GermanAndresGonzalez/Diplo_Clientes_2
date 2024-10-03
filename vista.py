@@ -1,5 +1,6 @@
 """Módulo para la vista de la aplicación."""
 
+import tkinter as tk
 from tkinter import (
     ttk,
     LabelFrame,
@@ -12,30 +13,60 @@ from tkinter import (
     Menu,
 )
 
+
 # from tkinter.messagebox import showinfo
 import datetime
+from os import getcwd
 from PIL import Image, ImageTk
+from functools import partial
+import webbrowser
 from modelo import Abmc
 from registro_errores import RegistroLogError
-from referencia.estilos_treeview import estilo_tree
-from referencia.referencia_treeview import referencia_tree
+
+# from referencia.estilos_treeview import estilo_tree
+# from referencia.referencia_treeview import referencia_tree
+
 
 # from referencia.diccionario import diccionario
 # from base_datos import ManejoBD
+class Acercade(
+    tk.Toplevel,
+):
+    """Ventana Acerca de la aplicación Clientes."""
+
+    def __init__(self, parent):
+        super().__init__(parent)
+
+        self.geometry("300x100")
+        self.title("Acerca de Clientes v1.00")
+
+        ttk.Button(self, text="Cerrar", command=self.destroy).pack(expand=True)
 
 
-class Ventana:
+class Ventana(tk.Tk):
     """Ventana Tkinter de la aplicación."""
 
     def __init__(self, windows, titulo="Clientes v1.00", geometria="1320x750"):
+        super().__init__()
 
         self.root = windows
+        self.objeto_acciones = Abmc(self)
 
         self.root.title(titulo)
         self.root.geometry(geometria)
-        self.menu()
+
         self.setup_widgets()
-        # self.objeto_acciones = Abmc(self)
+        self.menu()
+        self.objeto_acciones.cargar_treeview(self.tree)
+
+    def abrir_documentacion(self):
+        directorio = getcwd() + "/docs/build/html/index.html"
+        print(directorio)
+        webbrowser.open(directorio)
+
+    def ventana_acerca(self):
+        acercade = Acercade(self)
+        acercade.grab_set()
 
     def setup_widgets(self):
         self.ico = Image.open("referencia/favicon.png")
@@ -115,11 +146,19 @@ class Ventana:
 
         # Botones
         botones = [
-            ("Agregar", 9, 1, self.agregar_cliente),
-            ("Vaciar Entradas", 9, 2, self.vaciar),
-            ("Borrar", 9, 3, self.borrar_cliente),
-            ("Modificar", 10, 1, self.modificar_cliente),
-            ("Importar Datos", 10, 2, self.importar_datos),
+            ("Agregar", 9, 1, self.objeto_acciones.alta_cliente),
+            ("Vaciar Entradas", 9, 2, self.objeto_acciones.vaciar_todo),
+            ("Borrar", 9, 3, self.objeto_acciones.borrar),
+            ("Modificar", 10, 1, self.objeto_acciones.actualizar),
+            (
+                "Importar Datos",
+                10,
+                2,
+                partial(
+                    self.objeto_acciones.importar_datos,
+                    self.tree,
+                ),
+            ),
             ("Salir", 10, 3, self.root.quit),
         ]
 
@@ -160,7 +199,7 @@ class Ventana:
         columnas = [
             ("ID", 60, "w"),
             ("Nombre", 150, ""),
-            ("Tipo de Cliente", 120, ""),
+            ("Apellido", 120, ""),
             ("Contacto", 150, "w"),
             ("Correo-E", 230, ""),
             ("Teléfono", 150, ""),
@@ -190,6 +229,7 @@ class Ventana:
         # Layout Treeview
         self.tree.grid(row=12, column=0, columnspan=5, sticky="nsew")
         self.barra_desplazamiento.grid(row=12, column=5, sticky="ns")
+        self.objeto_acciones = Abmc(self)
 
     def hola(self):
         print("hola")
@@ -197,7 +237,10 @@ class Ventana:
     def menu(self):
         menubar = Menu(self.root)
         menu_archivo = Menu(menubar, tearoff=0)
-        menu_archivo.add_command(label="Importar", command=self.hola)
+        menu_archivo.add_command(
+            label="Importar",
+            command=partial(self.objeto_acciones.importar_datos, self.tree),
+        )
         menu_archivo.add_command(label="Exportar", command=self.hola)
         menu_archivo.add_separator()
         menu_archivo.add_command(label="Salir", command=self.root.quit)
@@ -211,8 +254,8 @@ class Ventana:
         menubar.add_cascade(label="Temas", menu=menu_tema)
 
         menu_ayuda = Menu(menubar, tearoff=0)
-        menu_ayuda.add_command(label="Documentación", command=self.hola)
-        menu_ayuda.add_command(label="Acerca de", command=self.hola)
+        menu_ayuda.add_command(label="Documentación", command=self.abrir_documentacion)
+        menu_ayuda.add_command(label="Acerca de", command=partial(self.ventana_acerca))
         menubar.add_cascade(label="Ayuda", menu=menu_ayuda)
         self.root.config(menu=menubar)
 
