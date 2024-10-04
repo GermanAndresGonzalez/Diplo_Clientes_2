@@ -10,7 +10,12 @@ from base_datos import ManejoBD
 from referencia.diccionario import diccionario
 from registro_errores import RegistroLogError
 
+def registro(funcion):
+        def envoltura(*args,**kwargs):
+            funcion(*args, **kwargs)
+            print("Se ejecutó:", funcion.__name__ , *args, **kwargs)
 
+        return envoltura
 class Abmc:
     """Crea Altas, Bajas, Modificaciones de datos."""
 
@@ -29,6 +34,7 @@ class Abmc:
             self.base_datos.conectar_bd(self.nombre_bd)
             self.agregar_cliente_diccionario(diccionario)
 
+    @registro
     def importar_datos(self, tree):
         """Usado para importar datos desde un archivo shelve."""
 
@@ -61,6 +67,7 @@ class Abmc:
         for i, datos in enumerate(diccionario.values()):
             self.base_datos.agregar_datos("personas", datos)
 
+    @registro
     def alta_cliente(
         self,
         tree,
@@ -120,6 +127,7 @@ class Abmc:
             else:
                 res = showinfo("¡Atención!", "No se agregó el cliente")
 
+    @registro
     def borrar(self, tree):
         """Borra cliente de la base de datos."""
 
@@ -149,6 +157,7 @@ class Abmc:
 
         self.vaciar_todo(tree)
 
+    @registro
     def actualizar(
         self,
         tree,
