@@ -55,7 +55,7 @@ class Ventana(tk.Tk):
         self.root.title(titulo)
         self.root.geometry(geometria)
 
-        self.setup_widgets()
+        self.configurar_widgets()
         self.menu()
         self.objeto_acciones.cargar_treeview(self.tree)
 
@@ -68,7 +68,7 @@ class Ventana(tk.Tk):
         acercade = Acercade(self)
         acercade.grab_set()
 
-    def setup_widgets(self):
+    def configurar_widgets(self):
         self.icono = Image.open("referencia/favicon.ico")
         self.foto = ImageTk.PhotoImage(self.icono)
         self.root.wm_iconphoto(False, self.foto)
@@ -146,7 +146,7 @@ class Ventana(tk.Tk):
             entry.grid(row=row, column=2, pady=5, sticky="we")
 
         # Configuración del Treeview
-        self.setup_treeview()
+        self.configurar_treeview()
 
         # Botones
         botones = [
@@ -166,8 +166,8 @@ class Ventana(tk.Tk):
                     self.var_perfil.get(),
                 ),
             ),
-            ("Vaciar Entradas", 9, 2, lambda: self.objeto_acciones.vaciar_todo),
-            ("Borrar", 9, 3, lambda: self.objeto_acciones.borrar),
+            ("Vaciar Entradas", 9, 2, lambda: self.vaciar()),
+            ("Borrar", 9, 3, lambda: self.objeto_acciones.borrar(tree=self.tree)),
             (
                 "Modificar",
                 10,
@@ -210,7 +210,7 @@ class Ventana(tk.Tk):
 
         self.marco.place(relx=0.5, rely=0.5, anchor="center")
 
-    def setup_treeview(self):
+    def configurar_treeview(self):
         # Treeview style
         self.miestilo = ttk.Style()
         self.miestilo.theme_use("default")

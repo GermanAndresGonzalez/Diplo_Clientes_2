@@ -26,3 +26,5 @@ Se produjo un error: Vista 361 () 2024-10-03 18:42:42.898973
 Se produjo un error: Vista 361 () 2024-10-03 18:42:43.353609
 Se produjo un error: Vista 361 () 2024-10-03 18:42:43.890664
 Se produjo un error: Vista 361 () 2024-10-03 18:42:44.271093
+Se produjo un error: Modelo 139 () 2024-10-04 18:58:33.823925
+Se produjo un error: Modelo 139 () 2024-10-04 18:58:44.780043
