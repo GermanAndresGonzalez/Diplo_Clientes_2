@@ -69,9 +69,13 @@ class Ventana(tk.Tk):
         acercade.grab_set()
 
     def setup_widgets(self):
-        self.ico = Image.open("referencia/favicon.png")
-        self.foto = ImageTk.PhotoImage(self.ico)
+        self.icono = Image.open("referencia/favicon.ico")
+        self.foto = ImageTk.PhotoImage(self.icono)
         self.root.wm_iconphoto(False, self.foto)
+        # self.iconbitmap("referencia/favicon.png")
+        # self.ico = Image.open("referencia/favicon.png")
+        # self.foto = ImageTk.PhotoImage(self.ico)
+        # self.root.wm_iconphoto(False, self.foto)
 
         self.marco = LabelFrame(self.root, bg="#35374B")
         self.titulo = Label(
@@ -146,10 +150,40 @@ class Ventana(tk.Tk):
 
         # Botones
         botones = [
-            ("Agregar", 9, 1, self.objeto_acciones.alta_cliente),
-            ("Vaciar Entradas", 9, 2, self.objeto_acciones.vaciar_todo),
-            ("Borrar", 9, 3, self.objeto_acciones.borrar),
-            ("Modificar", 10, 1, self.objeto_acciones.actualizar),
+            (
+                "Agregar",
+                9,
+                1,
+                lambda: self.objeto_acciones.alta_cliente(
+                    self.tree,
+                    self.var_indice,
+                    self.var_nombre_cliente.get(),
+                    self.var_apellido_cliente.get(),
+                    self.var_contacto.get(),
+                    self.var_correo_electronico.get(),
+                    self.var_telefono.get(),
+                    self.var_sitio.get(),
+                    self.var_perfil.get(),
+                ),
+            ),
+            ("Vaciar Entradas", 9, 2, lambda: self.objeto_acciones.vaciar_todo),
+            ("Borrar", 9, 3, lambda: self.objeto_acciones.borrar),
+            (
+                "Modificar",
+                10,
+                1,
+                lambda: self.objeto_acciones.actualizar(
+                    self.tree,
+                    self.var_indice.get(),
+                    self.var_nombre_cliente.get(),
+                    self.var_apellido_cliente.get(),
+                    self.var_contacto.get(),
+                    self.var_correo_electronico.get(),
+                    self.var_telefono.get(),
+                    self.var_sitio.get(),
+                    self.var_perfil.get(),
+                ),
+            ),
             (
                 "Importar Datos",
                 10,
@@ -255,7 +289,7 @@ class Ventana(tk.Tk):
 
         menu_ayuda = Menu(menubar, tearoff=0)
         menu_ayuda.add_command(label="Documentación", command=self.abrir_documentacion)
-        menu_ayuda.add_command(label="Acerca de", command=partial(self.ventana_acerca))
+        menu_ayuda.add_command(label="Acerca de", command=self.ventana_acerca)
         menubar.add_cascade(label="Ayuda", menu=menu_ayuda)
         self.root.config(menu=menubar)
 
