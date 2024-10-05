@@ -13,14 +13,14 @@ __version__ = "0.1"
 class Controlador:
     """Controlador de la vista principal."""
 
-    def __init__(self):
-        self.controlador_root = root
-        self.objeto_vista = vista.Ventana(self.controlador_root)
+    def __init__(self, _root):
+        #self.controlador_root = root
+        self.objeto_vista = vista.Ventana(_root)
 
 
 if __name__ == "__main__":
 
     MI_ID = 0
     root = Tk()
-    aplicacion = Controlador()
+    aplicacion = Controlador(root)
     root.mainloop()

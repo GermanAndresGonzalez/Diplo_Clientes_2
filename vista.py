@@ -34,8 +34,8 @@ class Acercade(
 ):
     """Ventana Acerca de la aplicación Clientes."""
 
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self,):
+        super().__init__()
 
         self.geometry("300x100")
         self.title("Acerca de Clientes v1.00")
@@ -47,7 +47,7 @@ class Ventana(tk.Tk):
     """Ventana Tkinter de la aplicación."""
 
     def __init__(self, windows, titulo="Clientes v1.00", geometria="1320x750"):
-        super().__init__()
+        #super().__init__()
 
         self.root = windows
         self.objeto_acciones = Abmc(self)
@@ -65,7 +65,7 @@ class Ventana(tk.Tk):
         webbrowser.open(directorio)
 
     def ventana_acerca(self):
-        acercade = Acercade(self)
+        acercade = Acercade()
         acercade.grab_set()
 
     def configurar_widgets(self):
