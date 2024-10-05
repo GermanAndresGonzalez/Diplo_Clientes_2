@@ -22,6 +22,7 @@ from functools import partial
 import webbrowser
 from modelo import Abmc
 from registro_errores import RegistroLogError
+from referencia.acercade import Acercade
 
 # from referencia.estilos_treeview import estilo_tree
 # from referencia.referencia_treeview import referencia_tree
@@ -29,25 +30,13 @@ from registro_errores import RegistroLogError
 
 # from referencia.diccionario import diccionario
 # from base_datos import ManejoBD
-class Acercade(
-    tk.Toplevel,
-):
-    """Ventana Acerca de la aplicación Clientes."""
-
-    def __init__(self,):
-        super().__init__()
-
-        self.geometry("300x100")
-        self.title("Acerca de Clientes v1.00")
-
-        ttk.Button(self, text="Cerrar", command=self.destroy).pack(expand=True)
 
 
 class Ventana(tk.Tk):
     """Ventana Tkinter de la aplicación."""
 
     def __init__(self, windows, titulo="Clientes v1.00", geometria="1320x750"):
-        #super().__init__()
+        # super().__init__()
 
         self.root = windows
         self.objeto_acciones = Abmc(self)

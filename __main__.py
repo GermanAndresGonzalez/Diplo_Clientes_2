@@ -14,7 +14,7 @@ class Controlador:
     """Controlador de la vista principal."""
 
     def __init__(self, _root):
-        #self.controlador_root = root
+        # self.controlador_root = root
         self.objeto_vista = vista.Ventana(_root)
 
 

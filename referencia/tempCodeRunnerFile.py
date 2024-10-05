@@ -1,18 +1,19 @@
-referencia_tree = {
-    "nombre_columnas": {
-        "#0": "ID",
-        "NOMBRES": "NOMBRES",
-        "APELLIDOS": "APELLIDOS",
-        "CONTACTO": "CONTACTO",
-        "CORREO": "CORREO",
-        "TELEFONO": "TELEFONO",
-        "SITIO WEB": "SITIO WEB",
-        "PERFIL": "PERFIL",
-    },
-    "texto_etiquetas": "Los sitios web no deben incluir: 'http://',\n'https://' o una '/' al final de la URL.",
-}
+from tkinter import *
+import webbrowser
 
-if __name__ == "__main__":
 
-    print(list(referencia_tree["nombre_columnas"]))
-    print(list(referencia_tree["nombre_columnas"])[0])
+def callback(link):
+    webbrowser.open_new(link)
+
+
+root = Tk()
+link = Label(
+    root,
+    text="Click to visit website",
+    fg="blue",
+    cursor="hand2",
+)
+link.bind("<Button-1>", callback("https://github.com/GermanAndresGonzalez"))
+link.pack()
+root.mainloop()
+
