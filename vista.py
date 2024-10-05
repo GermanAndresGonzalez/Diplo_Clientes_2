@@ -197,7 +197,7 @@ class Ventana(tk.Tk):
             boton.grid(row=row, column=col, padx=10, pady=10, sticky="we")
             boton.configure(width=35)
 
-        self.marco.place(relx=0.5, rely=0.5, anchor="center")
+        self.marco.place(x=0, y=0, relwidth=1, relheight=1)
 
     def configurar_treeview(self):
         # Treeview style
