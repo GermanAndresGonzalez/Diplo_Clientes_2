@@ -156,7 +156,7 @@ class Ventana(tk.Tk):
                 ),
             ),
             ("Vaciar Entradas", 9, 2, lambda: self.vaciar()),
-            ("Borrar", 9, 3, lambda: self.objeto_acciones.borrar(tree=self.tree)),
+            ("Borrar", 9, 3, lambda: self.objeto_acciones.borrar(self.tree)),
             (
                 "Modificar",
                 10,

@@ -9,14 +9,18 @@ from validacion import ValidacionCampos
 from base_datos import ManejoBD
 from referencia.diccionario import diccionario
 from registro_errores import RegistroLogError
+from observador import Sujeto
+
 
 def registro(funcion):
-        def envoltura(*args,**kwargs):
-            funcion(*args, **kwargs)
-            print("Se ejecutó:", funcion.__name__ , *args, **kwargs)
+    def envoltura(*args, **kwargs):
+        funcion(*args, **kwargs)
+        print("Se ejecutó:", funcion.__name__, *args, **kwargs)
 
-        return envoltura
-class Abmc:
+    return envoltura
+
+
+class Abmc(Sujeto):
     """Crea Altas, Bajas, Modificaciones de datos."""
 
     def __init__(self, ventana):
@@ -113,6 +117,7 @@ class Abmc:
                     self.base_datos.conectar_bd(self.nombre_bd)
                     self.base_datos.agregar_datos("personas", datos)
                     self.base_datos.cerrar_db()
+                    self.notificar("Alta:", datos)
                     self.cargar_treeview(tree)
                     self.vaciar_todo(tree)
                 except sqlite3.Error as e:
@@ -145,6 +150,7 @@ class Abmc:
                     valor2 = tree.item(item, "values")
                     self.base_datos.borrar_datos(self.nombre_tabla, (str(valor2[0])))
                     self.base_datos.cerrar_db()
+                    self.notificar("Baja:", valor2)
                     self.cargar_treeview(tree)
             except Exception:
                 self.reg_errores = RegistroLogError(
@@ -206,6 +212,7 @@ class Abmc:
                         "personas", datos, f"id = {var_indice}"
                     )
                     self.base_datos.cerrar_db()
+                    self.notificar("Modificación:", datos)
                     self.cargar_treeview(tree)
                     self.vaciar_todo(tree)
 

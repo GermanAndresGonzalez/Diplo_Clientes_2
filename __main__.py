@@ -2,6 +2,8 @@
 
 from tkinter import Tk
 import vista
+from observador import Observer
+
 
 __author__ = "Germán González"
 __maintainer__ = "Germán González"
@@ -16,6 +18,8 @@ class Controlador:
     def __init__(self, _root):
         # self.controlador_root = root
         self.objeto_vista = vista.Ventana(_root)
+        # self.observador_app = observador.ConcreteObserverA(self.objeto_vista.objeto_acciones)
+        # self.observador = Observer.ConcreteObserverA(self.objeto_vista.objeto_acciones)
 
 
 if __name__ == "__main__":
@@ -23,4 +27,9 @@ if __name__ == "__main__":
     MI_ID = 0
     root = Tk()
     aplicacion = Controlador(root)
+    obser = Observer(aplicacion.objeto_vista.objeto_acciones)
+    # observador = Observer(aplicacion.objeto_vista)
+
     root.mainloop()
+
+    # aplicacion.objeto_vista.actualizar()
