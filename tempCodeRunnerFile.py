@@ -1,2 +1,1 @@
-
-__maintainer__ = "Germán González"
+root = Tk()
