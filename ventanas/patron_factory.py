@@ -1,17 +1,17 @@
 import tkinter as tk
 import configparser
 from PIL import ImageTk, Image
+import sqlite3
 
 
 def leer_config(diccionario):
     dato = {}
     config = configparser.ConfigParser()
-    config.read("referencia/config.ini", encoding="utf-8")
+    config.read("../referencia/config.ini", encoding="utf-8")
 
     config.sections()
     for key in config[diccionario]:
         dato.update({key: config[diccionario][key]})  # config[diccionario][key]
-
     return dato
 
 
@@ -39,6 +39,8 @@ campos_entradas = leer_config("campos_entradas")
 botones = leer_config("botones")
 txt_login = leer_config("texto_login")
 texto_botones = leer_config("texto_botones")
+
+print("\n", marco, "\n",)
 
 root = tk.Tk()
 root.title("Pantalla de login")
@@ -68,11 +70,6 @@ eti_usuario = WidgetFactory.crear_widget(
 )
 eti_usuario.place(x=40, y=10, anchor=tk.NW)
 
-"""ico_usuario = ImageTk.PhotoImage(Image.open(imagenes["usuario"]))
-imagen_usuario = WidgetFactory.crear_widget(
-    "etiqueta", marco_der, image=ico_usuario, **campos_etiquetas
-)
-imagen_usuario.place(x=20, y=16)"""
 
 entrada_usuario = WidgetFactory.crear_widget("entrada", marco_der, **campos_entradas)
 entrada_usuario.place(x=20, y=50)
@@ -87,11 +84,6 @@ eti_pass.place(
     anchor=tk.NW,
 )
 
-"""ico_pass = ImageTk.PhotoImage(Image.open(imagenes["password"]))
-imagen_pass = WidgetFactory.crear_widget(
-    "etiqueta", marco_der, image=ico_pass, **campos_etiquetas
-)
-imagen_pass.place(x=20, y=86)"""
 
 entrada_pass = WidgetFactory.crear_widget(
     "entrada", marco_der, show="*", **campos_entradas

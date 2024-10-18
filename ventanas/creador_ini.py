@@ -8,11 +8,10 @@ def crear_config():
         "imag_pinky": "imagenes/Pinky_011.png",
         "bloqueado_icon": "imagenes/locked.png",
         "usuario": "imagenes/user_icon.png",
-        "correo": "imagenes/uicons-regular-rounded-2.6.0/uicons-regular-rounded/email.png",
         "password": "ventanas/imagenes/password.png",
     }
-    config["bd_clientes"] = {"nombre": "clientes_nuevo.db", "tabla": "personas"}
-    config["bd_usuarios"] = {"nombre": "clientes_nuevo.db", "tabla": "usuarios"}
+    config["bd_clientes"] = {"nombre": "clientes_nuevo.db", "tabla": "personas",}
+    config["bd_usuarios"] = {"nombre": "clientes_nuevo.db", "tabla": "usuarios",}
     config["marco"] = {
         "bg": "#35374B",
         "padx": 5,
@@ -100,25 +99,23 @@ def crear_config():
         "salir": "Salir",
     }
 
-    with open("referencia/config.ini", "w", encoding="utf-8") as config_file:
+    with open("../referencia/config.ini", "w", encoding="utf-8") as config_file:
         config.write(config_file)
 
 
 def leer_config(diccionario):
     dato = {}
     config = configparser.ConfigParser()
-    config.read("referencia/config.ini", encoding="utf-8")
+    config.read("../referencia/config.ini", encoding="utf-8")
 
     config.sections()
     for key in config[diccionario]:
         dato.update({key: config[diccionario][key]})  # config[diccionario][key]
-        print(key, config[diccionario][key])
-    # dato = config.items(diccionario)
     return dato
 
 
 if __name__ == "__main__":
-    crear_config()
+    #crear_config()
 
     imagenes = leer_config("imagenes")
     base_clientes = leer_config("bd_clientes")
@@ -131,17 +128,7 @@ if __name__ == "__main__":
     treeview = leer_config("treeview")
     col_treeview = leer_config("col_treeview")
     val_col_treeview = leer_config("val_col_treeview")
-    texto_botones = leer_config("texto_botones")
-    print("\nImpresión fuera de la función:\n", imagenes)
-    print("\nImpresión fuera de la función:\n", base_clientes)
-    print("\nImpresión fuera de la función:\n", base_usuarios)
-    print("\nImpresión fuera de la función:\n", marco)
-    print("\nImpresión fuera de la función:\n", titulo)
-    print("\nImpresión fuera de la función:\n", campos_etiquetas)
-    print("\nImpresión fuera de la función:\n", campos_entradas)
-    print("\nImpresión fuera de la función:\n", botones)
-    print("\nImpresión fuera de la función:\n", treeview)
-    print("\nImpresión fuera de la función:\n", col_treeview)
-    print("\nImpresión fuera de la función:\n", val_col_treeview)
-    print("\nImpresión fuera de la función:\n", texto_botones)
-    print("\n", texto_botones["salir"])
+    texto_botones = leer_config("texto_botones")  
+    
+
+
