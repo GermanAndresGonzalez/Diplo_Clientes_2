@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Módulo vista &mdash; documentación de UTN - 0.0.1</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=6fcc102b"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=d190bf04"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="prev" title="Módulo validacion" href="validacion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UTN
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="base_datos.html">Módulo base_datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelo.html">Módulomodelo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="registro_errores.html">Módulo registro_errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="validacion.html">Módulovalidacion</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Módulo vista</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vista.Ventana"><code class="docutils literal notranslate"><span class="pre">Ventana</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.actualizar_encabezados"><code class="docutils literal notranslate"><span class="pre">Ventana.actualizar_encabezados()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.ordenar_llave"><code class="docutils literal notranslate"><span class="pre">Ventana.ordenar_llave()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.ordener_col_por"><code class="docutils literal notranslate"><span class="pre">Ventana.ordener_col_por()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.seleccionar"><code class="docutils literal notranslate"><span class="pre">Ventana.seleccionar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.vaciar"><code class="docutils literal notranslate"><span class="pre">Ventana.vaciar()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UTN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Módulo vista</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/vista.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-vista">
+<span id="vista-module"></span><h1>Módulo vista<a class="headerlink" href="#module-vista" title="Link to this heading"></a></h1>
+<p>Módulo para la vista de la aplicación.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="vista.Ventana">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">vista.</span></span><span class="sig-name descname"><span class="pre">Ventana</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">windows</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vista.html#Ventana"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Ventana Tkinter de la aplicación.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="vista.Ventana.actualizar_encabezados">
+<span class="sig-name descname"><span class="pre">actualizar_encabezados</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/vista.html#Ventana.actualizar_encabezados"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.actualizar_encabezados" title="Link to this definition"></a></dt>
+<dd><p>Actualiza encabezados de la columna para mostrar orden.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vista.Ventana.ordenar_llave">
+<span class="sig-name descname"><span class="pre">ordenar_llave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">valor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vista.html#Ventana.ordenar_llave"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.ordenar_llave" title="Link to this definition"></a></dt>
+<dd><p>Convierte los valores a un mismo tipo para ordenar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vista.Ventana.ordener_col_por">
+<span class="sig-name descname"><span class="pre">ordener_col_por</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vista.html#Ventana.ordener_col_por"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.ordener_col_por" title="Link to this definition"></a></dt>
+<dd><p>Ordena el Treeview al hacer 2 veces click en el encabezado elegido.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>col (row): columna del treeview.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vista.Ventana.seleccionar">
+<span class="sig-name descname"><span class="pre">seleccionar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/vista.html#Ventana.seleccionar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.seleccionar" title="Link to this definition"></a></dt>
+<dd><p>Hal hacer clic en el Treeview o mover las flechas se ve la información en los widgets de entrada.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>event (seleccion): tecla de dirección o hacer clic.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="vista.Ventana.vaciar">
+<span class="sig-name descname"><span class="pre">vaciar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/vista.html#Ventana.vaciar"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.vaciar" title="Link to this definition"></a></dt>
+<dd><p>Vacía los valores de los widget de entrada.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="validacion.html" class="btn btn-neutral float-left" title="Módulo validacion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2024, GermanAndresGonzalez.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

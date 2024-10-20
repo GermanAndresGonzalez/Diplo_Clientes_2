@@ -3,6 +3,16 @@ import configparser
 
 def crear_config():
     config = configparser.ConfigParser()
+    config["aplicacion"] = {
+        "Nombre": "Administración de Clientes",
+        "github": "https://github.com/GermanAndresGonzalez",
+        "correo": "gandresgonzalez@gmail.com",
+        "acerca": "Información de Clientes.\nVersión 1.00\nPráctica del Curso de Diplomatura en Python de la UTN.\nCreado por Germán Andrés González.\n",
+        "version": "v1.00",
+        "titulo_p": "Clientes v1.00",
+        "geometria": "1320x750",
+        "titulo": "Acerca de Clientes v1.00",
+    }
     config["imagenes"] = {
         "favicon_icon": "imagenes/favicon.ico",
         "imag_pinky": "imagenes/Pinky_011.png",
@@ -24,9 +34,10 @@ def crear_config():
         "pady": 5,
     }
     config["titulo"] = {
-        "texto": "Administración de Clientes",
+        "text": "Administración de Clientes",
         "bg": "#78A083",
-        "fuente": "Helvetica 16 bold",
+        "fg": "black",
+        "font": "Helvetica 16 bold",
         "width": 60,
         "height": 1,
     }
@@ -49,9 +60,9 @@ def crear_config():
     }
     config["campos_entradas"] = {
         "font": "Helvetica 11 bold",
-        "background": "white",
+        "background": "#78A083",
         "fg": "#35374B",
-        "width": 25,
+        "width": 40,
     }
     # backound campos estrada:"#35374B"
     config["texto_login"] = {
@@ -62,20 +73,23 @@ def crear_config():
     config["botones"] = {
         "font": "Helvetica 11 bold",
         "background": "#78A083",
-        "fg": "white",
+        "fg": "black",
         "padx": 1,
         "pady": 1,
     }
-    config["treeview"] = {
-        "background_headings": "#78A083",
-        "foreground_headings": "white",
-        "fuente_headings": "Helvetica 11 bold",
+    config["val_treeview"] = {
+        "fuente": "Helvetica 11",
+        "fuente_tree": "Helvetica 11",
+        "background": "#4E5275",
+        "foreground": "#bababa",
         "fieldbackground": "#D3D3D3",
-        "fuente_treeview": "Helvetica 11",
-        "fore_treeview": "#bababa",
-        "fondo_treeview": "#4E5275",
-        "selected": "#35374B",
+        "fuente_heading": "Helvetica 11 bold",
+        "background_heading": "#78A083",
+        "foreground_heading": "white",
+        "b_selected": "#35374B",
+        "f_selected": "#35374b",
     }
+
     config["col_treeview"] = {
         "ID": "ID",
         "Nombre": "Nombre",
@@ -121,17 +135,4 @@ def leer_config(diccionario):
 
 
 if __name__ == "__main__":
-    # crear_config()
-
-    """imagenes = leer_config("imagenes")
-    base_clientes = leer_config("bd_clientes")
-    base_usuarios = leer_config("bd_usuarios")
-    marco = leer_config("marco")
-    titulo = leer_config("titulo")
-    campos_etiquetas = leer_config("campos_etiquetas")
-    campos_entradas = leer_config("campos_entradas")
-    botones = leer_config("botones")
-    treeview = leer_config("treeview")
-    col_treeview = leer_config("col_treeview")
-    val_col_treeview = leer_config("val_col_treeview")
-    texto_botones = leer_config("texto_botones")"""
+    crear_config()

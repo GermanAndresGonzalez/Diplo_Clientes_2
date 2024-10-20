@@ -1,14 +1,25 @@
 import tkinter as tk
-from tkinter import LabelFrame, Label, Button
-from tkinter.messagebox import showinfo
+from tkinter import LabelFrame, Label
 from PIL import ImageTk, Image
 import sqlite3
 from librerias.creador_ini import leer_config
-from prueba_vista import Ventana
+from vista2 import Ventana
 from observador import Observer
-from fabrica import FabricaWidgets
 
-# from librerias.creador_ini import leer_config
+
+class WidgetFactory:
+    @staticmethod
+    def crear_widget(tipo_widget, master, **kwargs):
+        if tipo_widget == "entrada":
+            return tk.Entry(master, **kwargs)
+        elif tipo_widget == "etiqueta":
+            return tk.Label(master, **kwargs)
+        elif tipo_widget == "boton":
+            return tk.Button(master, **kwargs)
+        elif tipo_widget == "marco":
+            return tk.Frame(master, **kwargs)
+        else:
+            raise ValueError(f"Tipo de widget desconocido: {tipo_widget}")
 
 
 class Ventana_login:
@@ -30,10 +41,10 @@ class Ventana_login:
         self.root.iconbitmap(self.imagenes["favicon_icon"])
         self.root.resizable(0, 0)
 
-        self.marco_mayor = FabricaWidgets.crear_widget(
+        self.marco_mayor = WidgetFactory.crear_widget(
             "marco", self.root, width=700, height=350, **self.marco
         )
-        self.marco_izq = FabricaWidgets.crear_widget(
+        self.marco_izq = WidgetFactory.crear_widget(
             "marco",
             self.marco_mayor,
             width=300,
@@ -42,7 +53,7 @@ class Ventana_login:
             **self.marco,
         )
         self.pinky = ImageTk.PhotoImage(Image.open(self.imagenes["imag_pinky"]))
-        self.imagen_pinky = FabricaWidgets.crear_widget(
+        self.imagen_pinky = WidgetFactory.crear_widget(
             "etiqueta",
             self.marco_izq,
             image=self.pinky,
@@ -53,11 +64,11 @@ class Ventana_login:
         self.imagen_pinky.place(x=50, y=10)
 
         self.marco_izq.place(x=0, y=0)
-        self.marco_der = FabricaWidgets.crear_widget(
+        self.marco_der = WidgetFactory.crear_widget(
             "marco", self.marco_mayor, width=395, height=345, **self.marco
         )
 
-        self.eti_usuario = FabricaWidgets.crear_widget(
+        self.eti_usuario = WidgetFactory.crear_widget(
             "etiqueta",
             self.marco_der,
             text=self.txt_login["usuario"],
@@ -65,12 +76,12 @@ class Ventana_login:
         )
         self.eti_usuario.place(x=40, y=10, anchor=tk.NW)
 
-        self.entrada_usuario = FabricaWidgets.crear_widget(
+        self.entrada_usuario = WidgetFactory.crear_widget(
             "entrada", self.marco_der, **self.campos_entradas
         )
         self.entrada_usuario.place(x=20, y=50)
 
-        self.eti_pass = FabricaWidgets.crear_widget(
+        self.eti_pass = WidgetFactory.crear_widget(
             "etiqueta",
             self.marco_der,
             text=self.txt_login["contraseña"],
@@ -82,22 +93,22 @@ class Ventana_login:
             anchor=tk.NW,
         )
 
-        self.entrada_pass = FabricaWidgets.crear_widget(
+        self.entrada_pass = WidgetFactory.crear_widget(
             "entrada", self.marco_der, show="*", **self.campos_entradas
         )
         self.entrada_pass.place(x=20, y=120)
 
-        self.btn_login = FabricaWidgets.crear_widget(
+        self.btn_salir = WidgetFactory.crear_widget(
             "boton",
             self.marco_der,
             text=self.txt_login["boton"],
-            command=lambda: self.login(),
+            command=lambda: self.root.destroy(),
             width=15,
             **self.botones,
         )
-        self.btn_login.place(x=20, y=200)
+        self.btn_salir.place(x=20, y=200)
 
-        self.btn_salir = FabricaWidgets.crear_widget(
+        self.btn_salir = WidgetFactory.crear_widget(
             "boton",
             self.marco_der,
             text=self.texto_botones["salir"],
@@ -111,27 +122,25 @@ class Ventana_login:
         self.marco_mayor.place(x=0, y=0)
 
     def login(self):
-        self.usuario = self.entrada_usuario.get()  # entrada_usuario
-        self.contra = self.entrada_pass.get()
+        self.usuario = self.usuario_entry.get()
+        self.contra = self.contra_entry.get()
 
         self.conn = sqlite3.connect("clientes_nuevo.db")
         self.c = self.conn.cursor()
-        self.c.execute(
+        c.execute(
             "SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?",
             (self.usuario, self.contra),
         )
         self.result = self.c.fetchone()
 
         if self.result:
-            print("Login correcto")
             self.root.destroy()
-            self.ventana = tk.Tk()
-            self.objeto_vista = Ventana(self.ventana)
-            self.ventana.mainloop()
+            MI_ID = 0
+            self.objeto_vista = Ventana(self)
             # self.mostrar_datos(self.result)
 
         else:
-            self.root.messagebox.showerror("Login", "Usuario or contraseña inválidos")
+            self.messagebox.showerror("Login", "Usuario or contraseña inválidos")
 
 
 if __name__ == "__main__":

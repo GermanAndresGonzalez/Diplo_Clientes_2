@@ -18,7 +18,7 @@ class Acercade(
         super().__init__()
         self.fondo = "#35374B"
         self.resizable(0, 0)
-        self.iconbitmap("referencia/favicon.ico")
+        self.iconbitmap("imagenes/favicon.ico")
         self.geometry("700x300")
         self.title("Acerca de Clientes v1.00")
 
@@ -103,7 +103,7 @@ class Acercade(
             borderwidth=1,
             relief="flat",
         )
-        self.logo = ImageTk.PhotoImage(Image.open("referencia/pinky_011.png"))
+        self.logo = ImageTk.PhotoImage(Image.open("/imagenes/pinky_011.png"))
         self.marco2 = tk.Label(
             self.frame, image=self.logo, bg=self.fondo, width=200, height=200
         )
@@ -124,3 +124,9 @@ class Acercade(
         self.marco3.pack(side="right", expand=True)
         # self.contenido_marco(frame)
         self.frame.pack(expand=True)
+
+
+if __name__ == "__main__":
+
+    acerca = Acercade()
+    acerca.mainloop()

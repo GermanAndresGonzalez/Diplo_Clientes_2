@@ -1,0 +1,1 @@
+self.login_window.destroy()

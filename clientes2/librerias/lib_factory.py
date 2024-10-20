@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 import sqlite3
-from librerias.creador_ini import leer_config
+from creador_ini import leer_config
 
 # from librerias.creador_ini import leer_config
 
