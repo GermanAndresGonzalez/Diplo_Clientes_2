@@ -6,7 +6,7 @@ import sqlite3
 from librerias.creador_ini import leer_config
 from prueba_vista import Ventana
 from observador import Observer
-from fabrica import FabricaWidgets
+from fabrica2 import FabricaWidgets
 
 # from librerias.creador_ini import leer_config
 

@@ -22,7 +22,7 @@ from librerias.acercade import Acercade
 
 # from vista import Ventana
 # from observador import Observer
-from fabrica import FabricaWidgets
+from fabrica2 import FabricaWidgets, CreadorMultiple
 
 # from librerias.creador_ini import leer_config
 
@@ -118,27 +118,30 @@ class Ventana:
         self.contenedor.columnconfigure(2, weight=1)
         self.contenedor.columnconfigure(3, weight=1)
 
-        for index, (key, value) in enumerate(self.nombre_campos.items()):
-            self.etiqueta = FabricaWidgets.crear_widget(
-                "etiqueta",
-                self.contenedor,
-                text=value,
-                **self.campos_etiquetas,
-            )
-            self.etiqueta.grid(row=index, column=0, padx=1, pady=1)
+        self.etiquetas = CreadorMultiple.crear_multiples_widgets(
+            "etiqueta",
+            self.contenedor,
+            1,
+            0,
+            self.nombre_campos,
+            **self.campos_etiquetas,
+        )
+        self.entradas = CreadorMultiple.crear_multiples_widgets(
+            "entrada",
+            self.contenedor,
+            1,
+            1,
+            self.nombre_campos,
+            *textvariable=self.variables.values(),
+            **self.campos_entradas,
+        )
 
-            self.entrada = FabricaWidgets.crear_widget(
-                "entrada",
-                self.contenedor,
-                textvariable=self.variables[index][0],
-                **self.campos_entradas,
-            )
-            self.entrada.grid(row=index, column=1, padx=1, pady=1)
         self.contenedor.place(
             relx=0.5,
-            rely=0.25,
+            rely=0.26,
             anchor="center",
         )
+        self.var_indice.set(0)
         self.marco_botones = FabricaWidgets.crear_widget(
             "marco",
             self.marco_grande,

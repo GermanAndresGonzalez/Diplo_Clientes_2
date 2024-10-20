@@ -1,2 +1,1 @@
-
-        self.estilo_arbol.theme_use("default")
+self.var_indice, 1, "disabled"

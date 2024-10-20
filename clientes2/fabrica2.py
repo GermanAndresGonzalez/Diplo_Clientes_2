@@ -18,15 +18,31 @@ class FabricaWidgets:
         else:
             raise ValueError(f"Tipo de widget desconocido: {tipo_widget}")
 
-    def colocarwidgets(self, master, **kwargs):
-        for index, (key, value) in enumerate(self.nombre_campos.items()):
-            self.etiqueta = FabricaWidgets.crear_widget(
-                "etiqueta",
-                self.contenedor,
-                text=value,
-                **self.campos_etiquetas,
+
+class CreadorMultiple:
+    @staticmethod
+    def crear_multiples_widgets(
+        tipo_widget,
+        master,
+        inicio_x,
+        inicio_y,
+        textos,
+        vertical=True,
+        *textvariables,
+        **kwargs,
+    ):
+
+        widgets = []
+        for i, (key, texto) in enumerate(textos.items()):
+            row = inicio_x + i if vertical else inicio_x
+            col = inicio_y if vertical else inicio_y + i
+
+            widget = FabricaWidgets.crear_widget(
+                tipo_widget, master, text=texto, *textvariables[i], **kwargs
             )
-            self.etiqueta.grid(row=index, column=0, padx=1, pady=1)
+            widget.grid(row=row, column=col, padx=1, pady=1)
+            widgets.append(widget)
+        return widgets
 
 
 if __name__ == "__main__":
