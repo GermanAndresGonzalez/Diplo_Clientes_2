@@ -28,7 +28,6 @@ class CreadorMultiple:
         inicio_y,
         textos,
         vertical=True,
-        *textvariables,
         **kwargs,
     ):
 
@@ -38,10 +37,30 @@ class CreadorMultiple:
             col = inicio_y if vertical else inicio_y + i
 
             widget = FabricaWidgets.crear_widget(
-                tipo_widget, master, text=texto, *textvariables[i], **kwargs
+                tipo_widget,
+                master,
+                text=texto,
+                **kwargs,
             )
             widget.grid(row=row, column=col, padx=1, pady=1)
             widgets.append(widget)
+        return widgets
+
+
+class CreadorEntradasMultiples:
+    @staticmethod
+    def crear_multiples_widgets(
+        tipo_widget, master, start_x, start_y, nombres, vertical=True, **kwargs
+    ):
+        widgets = {}
+        for i, (nombre, texto) in enumerate(nombres.items()):
+            row = start_x + i if vertical else start_x
+            col = start_y if vertical else start_y + i
+
+            widget = FabricaWidgets.crear_widget(tipo_widget, master, **kwargs)
+            widget.grid(row=row, column=col, padx=5, pady=5)
+            widgets[nombre] = widget
+
         return widgets
 
 

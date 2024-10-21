@@ -22,7 +22,8 @@ from librerias.acercade import Acercade
 
 # from vista import Ventana
 # from observador import Observer
-from fabrica2 import FabricaWidgets, CreadorMultiple
+
+from fabrica2 import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
 
 # from librerias.creador_ini import leer_config
 
@@ -126,22 +127,24 @@ class Ventana:
             self.nombre_campos,
             **self.campos_etiquetas,
         )
-        self.entradas = CreadorMultiple.crear_multiples_widgets(
+
+        self.entradas = CreadorEntradasMultiples.crear_multiples_widgets(
             "entrada",
             self.contenedor,
             1,
             1,
             self.nombre_campos,
-            *textvariable=self.variables.values(),
+            self.variables,
             **self.campos_entradas,
         )
-
+        self.entradas["indice"].insert(0, 0)
+        self.entradas["indice"].config(state="disabled", fore="#78A083")
         self.contenedor.place(
             relx=0.5,
             rely=0.26,
             anchor="center",
         )
-        self.var_indice.set(0)
+        # self.entradas[0].state("disabled")
         self.marco_botones = FabricaWidgets.crear_widget(
             "marco",
             self.marco_grande,

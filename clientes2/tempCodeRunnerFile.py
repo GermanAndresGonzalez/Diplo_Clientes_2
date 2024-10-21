@@ -1,1 +1,1 @@
-self.var_indice, 1, "disabled"
+texto_botones = leer_config("texto_botones")
