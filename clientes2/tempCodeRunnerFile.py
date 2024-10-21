@@ -1,1 +1,1 @@
-texto_botones = leer_config("texto_botones")
+disabled

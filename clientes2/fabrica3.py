@@ -5,7 +5,10 @@ from librerias.creador_ini import leer_config
 
 class FabricaWidgets:
     @staticmethod
-    def crear_widget(tipo_widget, master, **kwargs):
+    def crear_widget(tipo_widget, master, ancho=None, **kwargs):
+        if ancho:
+            kwargs["width"] = ancho
+
         if tipo_widget == "entrada":
             return tk.Entry(master, **kwargs)
         elif tipo_widget == "etiqueta":
@@ -30,6 +33,7 @@ class CreadorMultiple:
         textos,
         vertical=True,
         acciones=None,
+        ancho=None,
         **kwargs,
     ):
         widgets = []
@@ -40,7 +44,8 @@ class CreadorMultiple:
             # Extraer el comando del diccionario de acciones, si existe
             if acciones and key in acciones:
                 kwargs["command"] = acciones[key]
-
+            if ancho:
+                kwargs["width"] = ancho
             widget = FabricaWidgets.crear_widget(
                 tipo_widget, master, text=texto, **kwargs
             )
@@ -53,12 +58,19 @@ class CreadorMultiple:
 class CreadorEntradasMultiples:
     @staticmethod
     def crear_multiples_widgets(
-        tipo_widget, master, start_x, start_y, nombres, estado, vertical=True, **kwargs
+        tipo_widget,
+        master,
+        inicio_x,
+        inicio_y,
+        nombres,
+        estado,
+        vertical=True,
+        **kwargs,
     ):
         widgets = {}
         for i, (nombre, texto) in enumerate(nombres.items()):
-            row = start_x + i if vertical else start_x
-            col = start_y if vertical else start_y + i
+            row = inicio_x + i if vertical else inicio_x
+            col = inicio_y if vertical else inicio_y + i
 
             widget = FabricaWidgets.crear_widget(
                 tipo_widget, master, state=estado[i], **kwargs
@@ -79,6 +91,7 @@ if __name__ == "__main__":
     estado = ["disabled", "normal", "normal"]
     texto_botones = leer_config("texto_botones")
     botones = leer_config("botones")
+    campos_entradas = leer_config("campos_entradas")
 
     root = tk.Tk()
     root.title("Factory Pattern with Named Widgets Example")
@@ -122,7 +135,7 @@ if __name__ == "__main__":
     )
 
     entradas = CreadorEntradasMultiples.crear_multiples_widgets(
-        "entrada", root, 1, 1, nombres_entradas, estado, False
+        "entrada", root, 1, 1, nombres_entradas, estado, False, **campos_entradas
     )
     etiquetas = CreadorMultiple.crear_multiples_widgets(
         "etiqueta",

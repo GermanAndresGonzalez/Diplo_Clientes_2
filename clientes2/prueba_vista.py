@@ -10,6 +10,7 @@ from tkinter import (
     Scrollbar,
     Menu,
 )
+import datetime
 import webbrowser
 from tkinter.messagebox import showinfo
 from PIL import ImageTk, Image
@@ -19,11 +20,12 @@ from librerias.creador_ini import leer_config
 from modelo import Abmc
 from functools import partial
 from librerias.acercade import Acercade
+from registro_errores import RegistroLogError
 
 # from vista import Ventana
 # from observador import Observer
 
-from fabrica2 import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
+from fabrica3 import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
 
 # from librerias.creador_ini import leer_config
 
@@ -56,8 +58,27 @@ class Ventana:
 
         self.colocar_widgets()
         self.menu()
+        self.objeto_acciones.cargar_treeview(self.arbol_vista)
 
     def colocar_widgets(self):
+        self.comandos = {
+            "agregar": lambda: self.root.destroy(),
+            "vaciar": lambda: self.hola(),
+            "borrar": lambda: self.hola(),
+            "modificar": lambda: self.hola(),
+            "importar": lambda: self.hola(),
+            "salir": lambda: self.root.destroy(),
+        }
+        self.estados = {
+            0: "readonly",
+            1: "normal",
+            2: "normal",
+            3: "normal",
+            4: "normal",
+            5: "normal",
+            6: "normal",
+            7: "normal",
+        }
         self.icono = Image.open(self.imagenes["favicon_icon"])
         self.foto = ImageTk.PhotoImage(self.icono)
         self.root.wm_iconphoto(False, self.foto)
@@ -70,17 +91,6 @@ class Ventana:
         self.var_sitio = StringVar()
         self.var_perfil = StringVar()
         self.var_correo_electronico = StringVar()
-
-        self.variables = [
-            (self.var_indice, 1, "disabled"),
-            (self.var_nombre_cliente, 2, "normal"),
-            (self.var_apellido_cliente, 3, "normal"),
-            (self.var_contacto, 4, "normal"),
-            (self.var_correo_electronico, 5, "normal"),
-            (self.var_telefono, 6, "normal"),
-            (self.var_sitio, 7, "normal"),
-            (self.var_perfil, 8, "normal"),
-        ]
 
         self.marco_grande = FabricaWidgets.crear_widget(
             "marco",
@@ -134,11 +144,13 @@ class Ventana:
             1,
             1,
             self.nombre_campos,
-            self.variables,
+            self.estados,
+            vertical=True,
             **self.campos_entradas,
         )
-        self.entradas["indice"].insert(0, 0)
-        self.entradas["indice"].config(state="disabled", fore="#78A083")
+
+        self.llenar_entradas()
+        # self.entradas["indice"].config(state="disabled", fore="#78A083")
         self.contenedor.place(
             relx=0.5,
             rely=0.26,
@@ -156,17 +168,16 @@ class Ventana:
             highlightthickness=2,
             **self.marco,
         )
-
-        for index, (key, value) in enumerate(self.texto_botones.items()):
-            self.botonera = FabricaWidgets.crear_widget(
-                "boton",
-                self.marco_botones,
-                text=value,
-                width=30,
-                command=self.root.destroy,
-                **self.botones,
-            )
-            self.botonera.grid(row=index, column=0, padx=5, pady=5)
+        self.botonera = CreadorMultiple.crear_multiples_widgets(
+            "boton",
+            self.marco_botones,
+            2,
+            1,
+            textos=self.texto_botones,
+            vertical=True,
+            acciones=self.comandos,
+            **self.botones,
+        )
 
         self.marco_botones.place(
             relx=0.15,
@@ -227,6 +238,13 @@ class Ventana:
             self.arbol_vista.heading(col, text=col)
         self.arbol_vista.pack(expand=True, fill="both")
 
+        self.barra_desplazamiento = Scrollbar(
+            self.marco_arbol, command=self.arbol_vista.yview
+        )
+        self.arbol_vista.configure(yscrollcommand=self.barra_desplazamiento.set)
+        self.arbol_vista.bind("<ButtonRelease-1>", self.seleccionar)
+        self.arbol_vista.bind("<KeyRelease-Up>", self.seleccionar)
+        self.arbol_vista.bind("<KeyRelease-Down>", self.seleccionar)
         self.marco_arbol.place(
             relx=0.5,
             rely=0.65,
@@ -241,6 +259,17 @@ class Ventana:
 
     def hola(self):
         print("hola")
+
+    def llenar_entradas(
+        self,
+    ):
+
+        self.entradas["indice"].config
+        for index, (key, value) in enumerate(self.entradas.items()):
+            value.delete(0, "end")
+            value.insert(0, self.nombre_campos[key])
+
+        # self.entradas["indice"].config(state="normal")
 
     def abrir_documentacion(self):
         directorio = getcwd() + "/docs/build/html/index.html"
@@ -271,6 +300,42 @@ class Ventana:
         menu_ayuda.add_command(label="Acerca de", command=self.ventana_acerca)
         menubar.add_cascade(label="Ayuda", menu=menu_ayuda)
         self.root.config(menu=menubar)
+
+    def seleccionar(self, event):
+        """Hal hacer clic en el Treeview o mover las flechas se ve la información en los widgets de entrada.
+
+        Args:
+            event (seleccion): tecla de dirección o hacer clic.
+        """
+        try:
+            item = self.arbol_vista.focus()
+            valor2 = self.arbol_vista.item(item, "text")
+            valores = self.arbol_vista.selection()
+
+            valores = self.arbol_vista.item(item, "values")
+            self.entradas["indice"].config(state="normal")
+            for index, (key, value) in enumerate(self.entradas.items()):
+                value.delete(0, "end")
+                value.insert(0, valores[index])
+
+            self.entradas["indice"].config(state="readonly")
+
+        except Exception:
+            self.reg_errores = RegistroLogError(361, "Vista", datetime.datetime.now())
+            self.reg_errores.registrar_error()
+
+    def vaciar(self):
+        """Vacía los valores de los widget de entrada."""
+
+        self.var_indice.set(0)
+        self.var_nombre_cliente.set(" ")
+        self.var_apellido_cliente.set(" ")
+        self.var_contacto.set(" ")
+        self.var_telefono.set(" ")
+        self.var_sitio.set(" ")
+        self.var_perfil.set(" ")
+        self.var_correo_electronico.set(" ")
+        self.objeto_acciones.cargar_treeview(self.arbol_vista)
 
 
 if __name__ == "__main__":

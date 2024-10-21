@@ -20,11 +20,12 @@ class RegistroLogError(Exception):
     ruta = os.path.join(BASE_DIR, "registro_errores.txt")
     # print(ruta)
 
-    def __init__(self, linea, modulo, fecha, *args):
+    def __init__(self, linea, modulo, fecha, usuario=None, *args):
         self.linea = linea
         self.modulo = modulo
         self.fecha = fecha
         self.varios = args
+        self.usuario = usuario if usuario else None
 
     def registrar_error(self):
         """Guarda los datos en el archivo de log."""

@@ -6,7 +6,7 @@ import sqlite3
 from librerias.creador_ini import leer_config
 from prueba_vista import Ventana
 from observador import Observer
-from fabrica2 import FabricaWidgets
+from fabrica3 import FabricaWidgets
 
 # from librerias.creador_ini import leer_config
 
@@ -92,7 +92,7 @@ class Ventana_login:
             self.marco_der,
             text=self.txt_login["boton"],
             command=lambda: self.login(),
-            width=15,
+            ancho=15,
             **self.botones,
         )
         self.btn_login.place(x=20, y=200)
@@ -102,7 +102,7 @@ class Ventana_login:
             self.marco_der,
             text=self.texto_botones["salir"],
             command=lambda: self.root.destroy(),
-            width=15,
+            ancho=15,
             **self.botones,
         )
         self.btn_salir.place(x=180, y=200)

@@ -63,6 +63,7 @@ def crear_config():
         "background": "#78A083",
         "fg": "#35374B",
         "width": 40,
+        "disabledbackground": "#78A083",
     }
     # backound campos estrada:"#35374B"
     config["texto_login"] = {
@@ -70,12 +71,21 @@ def crear_config():
         "contraseña": "Contraseña",
         "boton": "Iniciar Sesión",
     }
+    config["texto_botones"] = {
+        "agregar": "Agregar",
+        "vaciar": "Vaciar Entradas",
+        "borrar": "Borrar",
+        "modificar": "Modificar",
+        "importar": "Importar Datos",
+        "salir": "Salir",
+    }
     config["botones"] = {
         "font": "Helvetica 11 bold",
         "background": "#78A083",
         "fg": "black",
         "padx": 1,
         "pady": 1,
+        "width": "30",
     }
     config["val_treeview"] = {
         "fuente": "Helvetica 11",
@@ -86,8 +96,8 @@ def crear_config():
         "fuente_heading": "Helvetica 11 bold",
         "background_heading": "#78A083",
         "foreground_heading": "white",
-        "b_selected": "#35374B",
-        "f_selected": "#35374b",
+        "b_selected": "#78A083",
+        "f_selected": "white",
     }
 
     config["col_treeview"] = {
@@ -109,14 +119,6 @@ def crear_config():
         "Tel": 150,
         "Sitio": 150,
         "Perfil": 150,
-    }
-    config["texto_botones"] = {
-        "agregar": "Agregar",
-        "vaciar": "Vaciar Entradas",
-        "borrar": "Borrar",
-        "modificar": "Modificar",
-        "importar": "Importar Datos",
-        "salir": "Salir",
     }
 
     with open("datos/config.ini", "w", encoding="utf-8") as config_file:
