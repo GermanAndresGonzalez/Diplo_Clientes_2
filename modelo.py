@@ -8,7 +8,7 @@ from tkinter.messagebox import showinfo, askquestion
 from validacion import ValidacionCampos
 from base_datos import ManejoBD
 from referencia.diccionario import diccionario
-from registro_errores import RegistroLogError
+from registro import RegistroLogError
 from observador import Sujeto
 
 

@@ -5,7 +5,7 @@ import sqlite3
 from tkinter.messagebox import showinfo
 import datetime
 
-from registro_errores import RegistroLogError
+from registro import RegistroLogError
 
 
 class ManejoBD:

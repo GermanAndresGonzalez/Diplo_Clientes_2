@@ -1,7 +1,7 @@
 registro\_errores module
 ========================
 
-.. automodule:: registro_errores
+.. automodule:: registro
    :members:
    :undoc-members:
    :show-inheritance:

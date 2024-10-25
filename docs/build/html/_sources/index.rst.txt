@@ -13,6 +13,6 @@ La aplicación sirve para administrar Clientes.
 
    base_datos
    modelo
-   registro_errores
+   registro
    validacion
    vista
