@@ -20,7 +20,7 @@ from librerias.creador_ini import leer_config
 from modelo import Abmc
 from functools import partial
 from librerias.acercade import Acercade
-from registro_errores import RegistroLogError
+from registro import RegistroLogError
 
 # from vista import Ventana
 # from observador import Observer
@@ -32,8 +32,10 @@ from fabrica3 import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
 
 class Ventana:
 
-    def __init__(self, _root):
+    def __init__(self, _root, usuario):
         self.root = _root
+        self.usuario = usuario
+        print(self.usuario)
         self.imagenes = leer_config("imagenes")
         self.marco = leer_config("marco")
         self.txt_app = leer_config("aplicacion")
@@ -63,7 +65,7 @@ class Ventana:
     def colocar_widgets(self):
         self.comandos = {
             "agregar": lambda: self.root.destroy(),
-            "vaciar": lambda: self.hola(),
+            "vaciar": lambda: self.vaciar(),
             "borrar": lambda: self.hola(),
             "modificar": lambda: self.hola(),
             "importar": lambda: self.hola(),
@@ -95,7 +97,7 @@ class Ventana:
         self.marco_grande = FabricaWidgets.crear_widget(
             "marco",
             self.root,
-            width=1320,
+            width=1400,
             height=750,
             borderwidth=1,
             **self.marco,
@@ -109,7 +111,7 @@ class Ventana:
         )
         self.et_tit.place(
             relx=0.5,
-            rely=0.020,
+            rely=0.03,
             anchor="center",
         )
 
@@ -190,8 +192,8 @@ class Ventana:
             self.marco_grande,
             borderwidth=1,
             relief="solid",
-            width=1300,
-            height=330,
+            width=1370,
+            height=530,
             highlightbackground="#78A083",
             highlightthickness=2,
             **self.marco,
@@ -229,6 +231,7 @@ class Ventana:
             columns=[col[0] for col in self.columnas],
             show="headings",
             style="Treeview",
+            selectmode="browse",
         )
 
         for col, width, anchor in self.columnas:
@@ -236,22 +239,27 @@ class Ventana:
                 col, width=width, minwidth=width, anchor=anchor if anchor else "w"
             )
             self.arbol_vista.heading(col, text=col)
-        self.arbol_vista.pack(expand=True, fill="both")
 
         self.barra_desplazamiento = Scrollbar(
-            self.marco_arbol, command=self.arbol_vista.yview
+            self.marco_arbol, orient="vertical", command=self.arbol_vista.yview
         )
+        self.barra_desplazamiento.pack(side="right", fill="y")
         self.arbol_vista.configure(yscrollcommand=self.barra_desplazamiento.set)
         self.arbol_vista.bind("<ButtonRelease-1>", self.seleccionar)
         self.arbol_vista.bind("<KeyRelease-Up>", self.seleccionar)
         self.arbol_vista.bind("<KeyRelease-Down>", self.seleccionar)
+        self.arbol_vista.pack(expand=True, fill="both")
         self.marco_arbol.place(
             relx=0.5,
-            rely=0.65,
+            rely=0.66,
             anchor="center",
         )
 
-        self.marco_grande.pack(expand=True, fill="both")
+        self.marco_grande.place(
+            relx=0.5,
+            rely=0.5,
+            anchor="center",
+        )
 
     def ventana_acerca(self):
         acercade = Acercade()
@@ -322,19 +330,17 @@ class Ventana:
 
         except Exception:
             self.reg_errores = RegistroLogError(361, "Vista", datetime.datetime.now())
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
 
     def vaciar(self):
         """Vacía los valores de los widget de entrada."""
 
-        self.var_indice.set(0)
-        self.var_nombre_cliente.set(" ")
-        self.var_apellido_cliente.set(" ")
-        self.var_contacto.set(" ")
-        self.var_telefono.set(" ")
-        self.var_sitio.set(" ")
-        self.var_perfil.set(" ")
-        self.var_correo_electronico.set(" ")
+        self.entradas["indice"].config(state="normal")
+        for index, (key, value) in enumerate(self.entradas.items()):
+            value.delete(0, "end")
+            value.insert(0, "")
+        self.entradas["indice"].insert(0, 0)
+        self.entradas["indice"].config(state="readonly")
         self.objeto_acciones.cargar_treeview(self.arbol_vista)
 
 

@@ -63,7 +63,7 @@ def crear_config():
         "background": "#78A083",
         "fg": "#35374B",
         "width": 40,
-        "disabledbackground": "#78A083",
+        "readonlybackground": "#78A083",
     }
     # backound campos estrada:"#35374B"
     config["texto_login"] = {
@@ -112,10 +112,10 @@ def crear_config():
     }
     config["val_col_treeview"] = {
         "ID": 60,
-        "Nombre": 150,
-        "Apellido": 150,
+        "Nombre": 100,
+        "Apellido": 100,
         "Contacto": 150,
-        "Correo": 150,
+        "Correo": 160,
         "Tel": 150,
         "Sitio": 150,
         "Perfil": 150,

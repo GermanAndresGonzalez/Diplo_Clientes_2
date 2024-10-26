@@ -2,7 +2,7 @@
 
 import re
 from tkinter.messagebox import showinfo
-from registro_errores import RegistroLogError
+from registro import RegistroLogError
 
 
 class ValidacionCampos:

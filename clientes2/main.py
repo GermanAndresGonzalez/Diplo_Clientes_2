@@ -1,12 +1,15 @@
 import tkinter as tk
+import datetime
 from tkinter import LabelFrame, Label, Button
-from tkinter.messagebox import showinfo
+from tkinter import messagebox
 from PIL import ImageTk, Image
 import sqlite3
+
 from librerias.creador_ini import leer_config
 from prueba_vista import Ventana
 from observador import Observer
 from fabrica3 import FabricaWidgets
+from registro import RegistroLogError
 
 # from librerias.creador_ini import leer_config
 
@@ -123,15 +126,26 @@ class Ventana_login:
         self.result = self.c.fetchone()
 
         if self.result:
-            print("Login correcto")
+            login = True
+
             self.root.destroy()
             self.ventana = tk.Tk()
-            self.objeto_vista = Ventana(self.ventana)
+            self.objeto_vista = Ventana(self.ventana, self.usuario)
             self.ventana.mainloop()
             # self.mostrar_datos(self.result)
 
         else:
-            self.root.messagebox.showerror("Login", "Usuario or contraseña inválidos")
+            tk.messagebox.showerror("Login", "Usuario or contraseña inválidos")
+            login = False
+        if not login:
+            mensaje = "Login incorrecto"
+        else:
+            mensaje = "Login correcto"
+
+        self.registro = RegistroLogError(
+            130, "Login", 4, datetime.datetime.now(), self.usuario, mensaje
+        )
+        self.registro.registrar()
 
 
 if __name__ == "__main__":

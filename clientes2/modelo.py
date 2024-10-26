@@ -8,7 +8,7 @@ from tkinter.messagebox import showinfo, askquestion
 from validacion import ValidacionCampos
 from base_datos import ManejoBD
 from librerias.diccionario import diccionario
-from registro_errores import RegistroLogError
+from registro import RegistroLogError
 from observador import Sujeto
 
 
@@ -26,7 +26,7 @@ class Abmc(Sujeto):
     def __init__(self, ventana):
         self.ventana = ventana
         self.esquema = "id integer PRIMARY KEY AUTOINCREMENT, nombre_cliente text NOT NULL, apellido_cliente text NOT NULL, contacto text NOT NULL, correo_electronico text NOT NULL, telefono text NOT NULL, sitio_web text NOT NULL, otro_perfil text NOT NULL"
-        self.nombre_bd = "clientes_nuevo.db"
+        self.nombre_bd = "datos/clientes_nuevo.db"
         self.nombre_tabla = "personas"
         self.validar = ValidacionCampos()
         self.base_datos = ManejoBD()

@@ -1,0 +1,5 @@
+Se registra acción: 2024-10-25 20:22:17.873087 Login 130 ('root',) 4
+Se registra acción: 2024-10-25 20:22:51.109375 Login 130 ('root',) 4
+Se registra acción: 2024-10-25 20:31:36.564358 Login 130 ('root',) 4
+Se registra acción: 2024-10-25 20:34:48.683964 Login 130 ('root',) 4
+Se registra acción: 2024-10-25 20:35:58.095422 Login 130 ('root',) 4

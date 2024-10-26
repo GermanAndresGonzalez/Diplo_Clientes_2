@@ -21,7 +21,7 @@ from PIL import Image, ImageTk
 from functools import partial
 import webbrowser
 from modelo import Abmc
-from registro_errores import RegistroLogError
+from registro import RegistroLogError
 from librerias.acercade import Acercade
 from fabrica import FabricaWidgets
 from librerias.creador_ini import leer_config
