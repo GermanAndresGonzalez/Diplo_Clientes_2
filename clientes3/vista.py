@@ -25,7 +25,7 @@ from registro import RegistroLogError
 # from vista import Ventana
 # from observador import Observer
 
-from fabrica3 import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
+from librerias.fabrica3 import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
 
 # from librerias.creador_ini import leer_config
 

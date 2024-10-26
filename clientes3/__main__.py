@@ -6,9 +6,9 @@ from PIL import ImageTk, Image
 import sqlite3
 
 from librerias.creador_ini import leer_config
-from prueba_vista import Ventana
+from vista import Ventana
 from observador import Observer
-from fabrica3 import FabricaWidgets
+from librerias.fabrica3 import FabricaWidgets
 from registro import RegistroLogError
 
 # from librerias.creador_ini import leer_config
@@ -117,7 +117,7 @@ class Ventana_login:
         self.usuario = self.entrada_usuario.get()  # entrada_usuario
         self.contra = self.entrada_pass.get()
 
-        self.conn = sqlite3.connect("clientes_nuevo.db")
+        self.conn = sqlite3.connect("datos\clientes_nuevo.db")
         self.c = self.conn.cursor()
         self.c.execute(
             "SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?",
