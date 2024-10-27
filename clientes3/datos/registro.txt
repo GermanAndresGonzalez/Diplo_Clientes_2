@@ -110,3 +110,5 @@ Acción registrada: 4 2024-10-27 11:58:33.276390 Login 130 ('invitado', 'Login c
 Acción registrada: 4 2024-10-27 12:18:00.132550 Login 130 ('admin', 'Login correcto')
 Acción registrada: 4 2024-10-27 13:34:08.455985 Login 130 ('invitado', 'Login correcto')
 Acción registrada: 4 2024-10-27 14:02:49.538700 Login 130 ('admin', 'Login correcto')
+Acción registrada: 4 2024-10-27 16:07:35.106048 Login 130 ('root', 'Login correcto')
+Acción registrada: 4 2024-10-27 17:16:56.886073 Login 130 ('root', 'Login correcto')
