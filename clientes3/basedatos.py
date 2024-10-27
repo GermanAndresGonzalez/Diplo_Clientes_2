@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("datos\clientes_nuevo.db")
+conn = sqlite3.connect("datos/clientes_nuevo.db")
 cursor = conn.cursor()
 cursor.execute(
     """CREATE TABLE IF NOT EXISTS usuarios (nombre_usuario TEXT PRIMARY KEY, contrasena TEXT NOT NULL, correo_electronico TEXT NOT NULL, nombre TEXT NOT NULL)"""

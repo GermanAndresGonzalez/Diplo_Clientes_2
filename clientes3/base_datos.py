@@ -28,7 +28,7 @@ class ManejoBD:
                 self.reg_errores = RegistroLogError(
                     25, "ManejoBD", datetime.datetime.now(), e
                 )
-                self.reg_errores.registrar_error()
+                self.reg_errores.registrar()
         else:
             RES = showinfo("No hay una base de datos conectada.")
         return False
@@ -45,7 +45,7 @@ class ManejoBD:
             self.reg_errores = RegistroLogError(
                 41, "ManejoBD", datetime.datetime.now(), e
             )
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
 
     def crear_tabla(self, nombre_tabla, esquema):
         """Crea una tabla."""
@@ -62,7 +62,7 @@ class ManejoBD:
                 self.reg_errores = RegistroLogError(
                     51, "ManejoBD", datetime.datetime.now(), e
                 )
-                self.reg_errores.registrar_error()
+                self.reg_errores.registrar()
 
         else:
             RES = showinfo("No se creo la base de datos.")
@@ -78,7 +78,7 @@ class ManejoBD:
             self.reg_errores = RegistroLogError(
                 64, "ManejoBD", datetime.datetime.now(), e
             )
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
 
     def cerrar_db(self):
         """Cierra la conexión con la base de datos."""
@@ -102,13 +102,13 @@ class ManejoBD:
                 self.reg_errores = RegistroLogError(
                     56, "ManejoBD", datetime.datetime.now(), e
                 )
-                self.reg_errores.registrar_error()
+                self.reg_errores.registrar()
         else:
             RES = showinfo("No hay una base de datos conectada.")
             self.reg_errores = RegistroLogError(
                 56, "ManejoBD", datetime.datetime.now(), e
             )
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
 
     def cargar_datos(self, solicitud):
         """Busca los datos de la base para usarlos."""
@@ -121,7 +121,7 @@ class ManejoBD:
                 self.reg_errores = RegistroLogError(
                     82, "ManejoBD", datetime.datetime.now(), e
                 )
-                self.reg_errores.registrar_error()
+                self.reg_errores.registrar()
         else:
             RES = showinfo("No hay conexión con la base de datos.")
         return []
@@ -148,7 +148,7 @@ class ManejoBD:
                     self.reg_errores = RegistroLogError(
                         117, "ManejoBD", datetime.datetime.now(), e
                     )
-                    self.reg_errores.registrar_error()
+                    self.reg_errores.registrar()
             else:
                 print("No hay conexión con la base de datos.")
 
@@ -165,7 +165,7 @@ class ManejoBD:
                 self.reg_errores = RegistroLogError(
                     134, "ManejoBD", datetime.datetime.now(), e
                 )
-                self.reg_errores.registrar_error()
+                self.reg_errores.registrar()
         else:
             print("No hay una base conectada.")
 
@@ -185,7 +185,7 @@ class ManejoBD:
                 self.reg_errores = RegistroLogError(
                     138, "ManejoBD", datetime.datetime.now(), e
                 )
-                self.reg_errores.registrar_error()
+                self.reg_errores.registrar()
 
         else:
             print("No hay base conectadada.")

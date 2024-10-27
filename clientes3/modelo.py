@@ -28,6 +28,7 @@ class Abmc(Sujeto):
         self.esquema = "id integer PRIMARY KEY AUTOINCREMENT, nombre_cliente text NOT NULL, apellido_cliente text NOT NULL, contacto text NOT NULL, correo_electronico text NOT NULL, telefono text NOT NULL, sitio_web text NOT NULL, otro_perfil text NOT NULL"
         self.nombre_bd = "datos/clientes_nuevo.db"
         self.nombre_tabla = "personas"
+
         self.validar = ValidacionCampos()
         self.base_datos = ManejoBD()
         self.base_datos.crear_db(self.nombre_bd)
@@ -60,7 +61,9 @@ class Abmc(Sujeto):
                 #    datos = diccionario2[i]
                 self.base_datos.agregar_datos("personas", datos)
             self.base_datos.cerrar_db()
-            self.cargar_treeview(tree)
+            self.cargar_treeview(
+                tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
+            )
         except sqlite3.Error as e:
             res = showinfo("Error", "No se pudo modificar el cliente: " + str(e))
             self.reg_errores = RegistroLogError(55, "Modelo", datetime.datetime.now())
@@ -118,7 +121,9 @@ class Abmc(Sujeto):
                     self.base_datos.agregar_datos("personas", datos)
                     self.base_datos.cerrar_db()
                     self.notificar("Alta:", datos)
-                    self.cargar_treeview(tree)
+                    self.cargar_treeview(
+                        tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
+                    )
                     self.vaciar_todo(tree)
                 except sqlite3.Error as e:
                     res = showinfo(
@@ -151,7 +156,9 @@ class Abmc(Sujeto):
                     self.base_datos.borrar_datos(self.nombre_tabla, (str(valor2[0])))
                     self.base_datos.cerrar_db()
                     self.notificar("Baja:", valor2)
-                    self.cargar_treeview(tree)
+                    self.cargar_treeview(
+                        tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
+                    )
             except Exception:
                 self.reg_errores = RegistroLogError(
                     139, "Modelo", datetime.datetime.now()
@@ -213,7 +220,9 @@ class Abmc(Sujeto):
                     )
                     self.base_datos.cerrar_db()
                     self.notificar("Modificación:", datos)
-                    self.cargar_treeview(tree)
+                    self.cargar_treeview(
+                        tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
+                    )
                     self.vaciar_todo(tree)
 
                 except sqlite3.Error as e:
@@ -229,17 +238,17 @@ class Abmc(Sujeto):
                 res = showinfo(
                     "¡Atención!", "No se realizó la modificación del cliente."
                 )
-            # cargar_treeview(tree)
 
-    def cargar_treeview(self, tree):
+    def cargar_treeview(self, tree, nombre_bd, nombre_tabla):
         """Llena el Treeview con los datos de la base de datos."""
+        # nombre_tabla = "personas"
 
-        # global indice
-        self.base_datos.conectar_bd(self.nombre_bd)
+        self.base_datos.conectar_bd(nombre_bd)
         tree.delete(*tree.get_children())
-        for row in self.base_datos.cargar_datos("SELECT * FROM personas"):
+        for row in self.base_datos.cargar_datos(f"SELECT * FROM {nombre_tabla}"):
             tree.insert("", "end", values=row)
         self.base_datos.cerrar_db()
+        # global indice
 
     def vaciar_todo(
         self,
@@ -249,4 +258,6 @@ class Abmc(Sujeto):
 
         self.ventana.vaciar()
         # self.entry.delete(0, "end")
-        self.cargar_treeview(tree)
+        self.cargar_treeview(
+            tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
+        )

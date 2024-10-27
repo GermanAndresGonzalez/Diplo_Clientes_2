@@ -110,6 +110,18 @@ def crear_config():
         "Sitio": "Sitio Web",
         "Perfil": "Perfil",
     }
+    config["usuarios"] = {
+        "Usuario": "Usuario",
+        "Contrasena": "Contrasena",
+        "Email": "Email",
+        "Nombre": "Nombre",
+    }
+    config["val_usuarios"] = {
+        "Usuario": 100,
+        "Contrasena": 100,
+        "Email": 150,
+        "Nombre": 100,
+    }
     config["val_col_treeview"] = {
         "ID": 60,
         "Nombre": 100,

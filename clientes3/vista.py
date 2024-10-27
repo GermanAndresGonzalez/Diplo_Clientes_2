@@ -48,6 +48,7 @@ class Ventana:
         self.titulo = leer_config("titulo")
         self.nombres_arbol = leer_config("col_treeview")
         self.datos_arbol = leer_config("val_treeview")
+
         self.col_cals = leer_config("val_col_treeview")
         # self.objeto_acciones = Abmc(self)
         self.objeto_acciones = Abmc(self)
@@ -60,7 +61,10 @@ class Ventana:
 
         self.colocar_widgets()
         self.menu()
-        self.objeto_acciones.cargar_treeview(self.arbol_vista)
+        self.objeto_acciones.cargar_treeview(
+            self.arbol_vista, "datos/clientes_nuevo.db", "personas"
+        )
+        self.llenar_entradas()
 
     def colocar_widgets(self):
         self.comandos = {
@@ -152,13 +156,13 @@ class Ventana:
         )
 
         self.llenar_entradas()
-        # self.entradas["indice"].config(state="disabled", fore="#78A083")
+
         self.contenedor.place(
             relx=0.5,
             rely=0.26,
             anchor="center",
         )
-        # self.entradas[0].state("disabled")
+
         self.marco_botones = FabricaWidgets.crear_widget(
             "marco",
             self.marco_grande,
@@ -187,74 +191,18 @@ class Ventana:
             anchor="center",
         )
 
-        self.marco_arbol = FabricaWidgets.crear_widget(
-            "marco",
+        self.crear_arbol(
             self.marco_grande,
-            borderwidth=1,
-            relief="solid",
-            width=1370,
-            height=530,
-            highlightbackground="#78A083",
-            highlightthickness=2,
-            **self.marco,
+            self.marco,
+            self.datos_arbol,
+            self.nombres_arbol,
+            self.col_cals,
+            0.5,
+            0.66,
+            marcox=1370,
+            marcoy=530,
+            barra=True,
         )
-
-        self.estilo_arbol = ttk.Style()
-        self.estilo_arbol.theme_use("default")
-        self.estilo_arbol.configure(
-            "Treeview",
-            font=self.datos_arbol["fuente"],
-            background=self.datos_arbol["background"],
-            foreground=self.datos_arbol["foreground"],
-            fieldbackground=self.datos_arbol["fieldbackground"],
-        )
-        self.estilo_arbol.configure(
-            "Treeview.Heading",
-            font=(self.datos_arbol["fuente_heading"]),
-            background=self.datos_arbol["background_heading"],
-            foreground=self.datos_arbol["foreground_heading"],
-        )
-        self.estilo_arbol.map(
-            "Treeview",
-            background=[("selected", self.datos_arbol["b_selected"])],
-            foreground=[("selected", self.datos_arbol["f_selected"])],
-        )
-
-        cols = list(self.col_cals.values())
-        self.columnas = []
-        for index, (key, value) in enumerate(self.nombres_arbol.items()):
-            self.columnas.append((value, cols[index], "w"))
-
-        self.arbol_vista = FabricaWidgets.crear_widget(
-            "arbol",
-            self.marco_arbol,
-            columns=[col[0] for col in self.columnas],
-            show="headings",
-            style="Treeview",
-            selectmode="browse",
-        )
-
-        for col, width, anchor in self.columnas:
-            self.arbol_vista.column(
-                col, width=width, minwidth=width, anchor=anchor if anchor else "w"
-            )
-            self.arbol_vista.heading(col, text=col)
-
-        self.barra_desplazamiento = Scrollbar(
-            self.marco_arbol, orient="vertical", command=self.arbol_vista.yview
-        )
-        self.barra_desplazamiento.pack(side="right", fill="y")
-        self.arbol_vista.configure(yscrollcommand=self.barra_desplazamiento.set)
-        self.arbol_vista.bind("<ButtonRelease-1>", self.seleccionar)
-        self.arbol_vista.bind("<KeyRelease-Up>", self.seleccionar)
-        self.arbol_vista.bind("<KeyRelease-Down>", self.seleccionar)
-        self.arbol_vista.pack(expand=True, fill="both")
-        self.marco_arbol.place(
-            relx=0.5,
-            rely=0.66,
-            anchor="center",
-        )
-
         self.marco_grande.place(
             relx=0.5,
             rely=0.5,
@@ -273,16 +221,109 @@ class Ventana:
     ):
 
         self.entradas["indice"].config
+
         for index, (key, value) in enumerate(self.entradas.items()):
             value.delete(0, "end")
             value.insert(0, self.nombre_campos[key])
-
+        self.entradas["indice"].config(state="normal")
+        self.entradas["indice"].delete(0, "end")
+        self.entradas["indice"].insert(0, 0)
+        self.entradas["indice"].config(state="readonly")
         # self.entradas["indice"].config(state="normal")
 
     def abrir_documentacion(self):
         directorio = getcwd() + "/docs/build/html/index.html"
         print(directorio)
         webbrowser.open(directorio)
+
+    def crear_arbol(
+        self,
+        marco_contenedor,
+        marco,
+        datos_arbol,
+        nombres_arbol,
+        col_cals,
+        x,
+        y,
+        marcox,
+        marcoy,
+        barra=True,
+    ):
+        self.marco_arbol = FabricaWidgets.crear_widget(
+            "marco",
+            marco_contenedor,
+            borderwidth=1,
+            relief="solid",
+            width=marcox,
+            height=marcoy,
+            highlightbackground="#78A083",
+            highlightthickness=2,
+            **marco,
+        )
+
+        self.estilo_arbol = ttk.Style()
+        self.estilo_arbol.theme_use("default")
+        self.estilo_arbol.configure(
+            "Treeview",
+            font=datos_arbol["fuente"],
+            background=datos_arbol["background"],
+            foreground=datos_arbol["foreground"],
+            fieldbackground=datos_arbol["fieldbackground"],
+        )
+        self.estilo_arbol.configure(
+            "Treeview.Heading",
+            font=(datos_arbol["fuente_heading"]),
+            background=datos_arbol["background_heading"],
+            foreground=datos_arbol["foreground_heading"],
+        )
+        self.estilo_arbol.map(
+            "Treeview",
+            background=[("selected", datos_arbol["b_selected"])],
+            foreground=[("selected", datos_arbol["f_selected"])],
+        )
+
+        cols = list(col_cals.values())
+        self.columnas = []
+        for index, (key, value) in enumerate(nombres_arbol.items()):
+            self.columnas.append((value, cols[index], "w"))
+
+        self.arbol_vista = FabricaWidgets.crear_widget(
+            "arbol",
+            self.marco_arbol,
+            columns=[col[0] for col in self.columnas],
+            show="headings",
+            style="Treeview",
+            selectmode="browse",
+        )
+
+        for col, width, anchor in self.columnas:
+            self.arbol_vista.column(
+                col, width=width, minwidth=width, anchor=anchor if anchor else "w"
+            )
+            self.arbol_vista.heading(col, text=col)
+
+        self.barra_desplazamiento = (
+            Scrollbar(
+                self.marco_arbol, orient="vertical", command=self.arbol_vista.yview
+            )
+            if barra
+            else False
+        )
+        self.barra_desplazamiento.pack(side="right", fill="y") if barra else False
+        (
+            self.arbol_vista.configure(yscrollcommand=self.barra_desplazamiento.set)
+            if barra
+            else False
+        )
+        self.arbol_vista.bind("<ButtonRelease-1>", self.seleccionar)
+        self.arbol_vista.bind("<KeyRelease-Up>", self.seleccionar)
+        self.arbol_vista.bind("<KeyRelease-Down>", self.seleccionar)
+        self.arbol_vista.pack()  # expand=True, fill="both")
+        self.marco_arbol.place(
+            relx=x,
+            rely=y,
+            anchor="center",
+        )
 
     def menu(self):
         menubar = Menu(self.root)
@@ -317,7 +358,7 @@ class Ventana:
         """
         try:
             item = self.arbol_vista.focus()
-            valor2 = self.arbol_vista.item(item, "text")
+            # valor2 = self.arbol_vista.item(item, "text")
             valores = self.arbol_vista.selection()
 
             valores = self.arbol_vista.item(item, "values")
@@ -341,7 +382,9 @@ class Ventana:
             value.insert(0, "")
         self.entradas["indice"].insert(0, 0)
         self.entradas["indice"].config(state="readonly")
-        self.objeto_acciones.cargar_treeview(self.arbol_vista)
+        self.objeto_acciones.cargar_treeview(
+            self.arbol_vista, "datos/clientes_nuevo.db", "personas"
+        )
 
 
 if __name__ == "__main__":
