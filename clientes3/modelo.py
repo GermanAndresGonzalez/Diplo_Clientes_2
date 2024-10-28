@@ -51,7 +51,7 @@ class Abmc(Sujeto):
         except Exception as e:
             res = showinfo("Error", f"No se pudo abrir el archivo shelve {e}")
             self.reg_errores = RegistroLogError(42, "Modelo", datetime.datetime.now())
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
 
         try:
             self.base_datos.conectar_bd(self.nombre_bd)
@@ -67,7 +67,7 @@ class Abmc(Sujeto):
         except sqlite3.Error as e:
             res = showinfo("Error", "No se pudo modificar el cliente: " + str(e))
             self.reg_errores = RegistroLogError(55, "Modelo", datetime.datetime.now())
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
 
     def agregar_cliente_diccionario(self, diccionario):
         """Usado para agregar datos a la base de datos cuando está vacía."""
@@ -88,7 +88,16 @@ class Abmc(Sujeto):
         var_perfil,
     ):
         """Alta de clientes en la base de datos."""
-
+        print(
+            var_indice,
+            var_nombre_cliente,
+            var_apellido_cliente,
+            var_contacto,
+            var_correo_electronico,
+            var_telefono,
+            var_sitio,
+            var_perfil,
+        )
         accion = "agregaron"
 
         valor = self.validar.validar(
@@ -132,7 +141,7 @@ class Abmc(Sujeto):
                     self.reg_errores = RegistroLogError(
                         113, "Modelo", datetime.datetime.now()
                     )
-                    self.reg_errores.registrar_error()
+                    self.reg_errores.registrar()
 
             else:
                 res = showinfo("¡Atención!", "No se agregó el cliente")
@@ -154,17 +163,18 @@ class Abmc(Sujeto):
                 for item in val_seleccionados:
                     valor2 = tree.item(item, "values")
                     self.base_datos.borrar_datos(self.nombre_tabla, (str(valor2[0])))
-                    self.base_datos.cerrar_db()
                     self.notificar("Baja:", valor2)
-                    self.cargar_treeview(
-                        tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
-                    )
+                self.base_datos.cerrar_db()
+                self.cargar_treeview(
+                    tree,
+                    nombre_bd=self.nombre_bd,
+                    nombre_tabla=self.nombre_tabla,
+                )
             except Exception:
                 self.reg_errores = RegistroLogError(
                     139, "Modelo", datetime.datetime.now()
                 )
-                self.reg_errores.registrar_error()
-
+                self.reg_errores.registrar()
         else:
             res = showinfo("¡Atención!", "No se borró el cliente")
 
@@ -188,6 +198,7 @@ class Abmc(Sujeto):
         item = tree.focus()
         valor = tree.selection()
         accion = "modificaron"
+        print(item, valor, accion)
         valor = self.validar.validar(
             accion,
             var_indice,
@@ -232,7 +243,7 @@ class Abmc(Sujeto):
                     self.reg_errores = RegistroLogError(
                         201, "Modelo", datetime.datetime.now()
                     )
-                    self.reg_errores.registrar_error()
+                    self.reg_errores.registrar()
 
             else:
                 res = showinfo(

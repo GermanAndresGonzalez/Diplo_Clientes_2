@@ -82,7 +82,7 @@ class ValidacionCampos:
             self.reg_errores = RegistroLogError(
                 80, "Validacion", datetime.datetime.now()
             )
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
             return False
 
     # def validar_sitio(self, sitio):
@@ -103,7 +103,7 @@ class ValidacionCampos:
             self.reg_errores = RegistroLogError(
                 100, "Validacion", datetime.datetime.now()
             )
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
             return False
 
     def validar(
@@ -138,6 +138,7 @@ class ValidacionCampos:
         """
 
         id = var_indice
+
         nombre_cliente = " ".join(var_nombre_cliente.split())
         apellido_cliente = " ".join(var_apellido_cliente.split())
         contacto = " ".join(var_contacto.split())
@@ -145,6 +146,7 @@ class ValidacionCampos:
         telefono = " ".join(var_telefono.split())
         sitio_web = " ".join(var_sitio.split())
         otro_perfil = " ".join(var_perfil.split())
+        print(type(nombre_cliente), nombre_cliente)
 
         criterios_mensaje = f"{self.criterio_correo}.\n{self.criterio_campos}.\n{self.criterio_sitio}.\n{self.criterio_perfil}.\n{self.criterio_telefono}."
 
@@ -175,6 +177,6 @@ class ValidacionCampos:
             self.reg_errores = RegistroLogError(
                 170, "Validacion", datetime.datetime.now()
             )
-            self.reg_errores.registrar_error()
+            self.reg_errores.registrar()
 
             return False

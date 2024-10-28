@@ -12,15 +12,19 @@ from tkinter import (
 )
 import datetime
 import webbrowser
-from tkinter.messagebox import showinfo
+
+# from tkinter.messagebox import showinfo
 from PIL import ImageTk, Image
 from os import getcwd
+import sqlite3
 
 from librerias.creador_ini import leer_config
 from modelo import Abmc
 from functools import partial
 from librerias.acercade import Acercade
 from registro import RegistroLogError
+from base_datos import ManejoBD
+from observador import Observer
 
 # from vista import Ventana
 # from observador import Observer
@@ -68,10 +72,30 @@ class Ventana:
 
     def colocar_widgets(self):
         self.comandos = {
-            "agregar": lambda: self.root.destroy(),
+            "agregar": lambda: self.objeto_acciones.alta_cliente(
+                self.arbol_vista,
+                self.var_indice,
+                self.entradas["nombre"].get(),
+                self.entradas["apellido"].get(),
+                self.entradas["contacto"].get(),
+                self.entradas["email"].get(),
+                self.entradas["telefono"].get(),
+                self.entradas["sitio"].get(),
+                self.entradas["perfil"].get(),
+            ),
             "vaciar": lambda: self.vaciar(),
-            "borrar": lambda: self.hola(),
-            "modificar": lambda: self.hola(),
+            "borrar": lambda: self.objeto_acciones.borrar(self.arbol_vista),
+            "modificar": lambda: self.objeto_acciones.actualizar(
+                self.arbol_vista,
+                self.entradas["indice"].get(),
+                self.entradas["nombre"].get(),
+                self.entradas["apellido"].get(),
+                self.entradas["contacto"].get(),
+                self.entradas["email"].get(),
+                self.entradas["telefono"].get(),
+                self.entradas["sitio"].get(),
+                self.entradas["perfil"].get(),
+            ),
             "importar": lambda: self.hola(),
             "salir": lambda: self.root.destroy(),
         }
@@ -89,14 +113,25 @@ class Ventana:
         self.foto = ImageTk.PhotoImage(self.icono)
         self.root.wm_iconphoto(False, self.foto)
 
-        self.var_indice = IntVar()
-        self.var_nombre_cliente = StringVar()
-        self.var_apellido_cliente = StringVar()
-        self.var_contacto = StringVar()
-        self.var_telefono = StringVar()
-        self.var_sitio = StringVar()
-        self.var_perfil = StringVar()
-        self.var_correo_electronico = StringVar()
+        self.var_indice = IntVar
+        self.var_nombre_cliente = StringVar
+        self.var_apellido_cliente = StringVar
+        self.var_contacto = StringVar
+        self.var_telefono = StringVar
+        self.var_sitio = StringVar
+        self.var_perfil = StringVar
+        self.var_correo_electronico = StringVar
+
+        variables = [
+            self.var_indice,
+            self.var_nombre_cliente,
+            self.var_apellido_cliente,
+            self.var_contacto,
+            self.var_telefono,
+            self.var_sitio,
+            self.var_perfil,
+            self.var_correo_electronico,
+        ]
 
         self.marco_grande = FabricaWidgets.crear_widget(
             "marco",
@@ -151,6 +186,7 @@ class Ventana:
             1,
             self.nombre_campos,
             self.estados,
+            variables,
             vertical=True,
             **self.campos_entradas,
         )
@@ -293,7 +329,7 @@ class Ventana:
             columns=[col[0] for col in self.columnas],
             show="headings",
             style="Treeview",
-            selectmode="browse",
+            selectmode="extended",
         )
 
         for col, width, anchor in self.columnas:
@@ -385,6 +421,72 @@ class Ventana:
         self.objeto_acciones.cargar_treeview(
             self.arbol_vista, "datos/clientes_nuevo.db", "personas"
         )
+
+    def ordener_col_por(self, col):
+        """Ordena el Treeview al hacer 2 veces click en el encabezado elegido.
+
+        Args:
+            col (row): columna del treeview
+        """
+
+        # Obtener índice de la columna
+        try:
+            col_index = self.tree["columns"].index(col)
+
+            # Cambiar orden si se hace clic en la misma columna
+            if self.sort_column == col:
+                self.sort_order *= -1
+            else:
+                self.sort_order = 1
+                self.sort_column = col
+
+            # Obtiene los artículos y ordena
+            items = [
+                (self.tree.item(item_id)["values"], item_id)
+                for item_id in self.tree.get_children()
+            ]
+            items.sort(
+                key=lambda x: self.ordenar_llave(x[0][col_index]),
+                reverse=self.sort_order == -1,
+            )
+            # items.sort(key=lambda x: x[0][col_index], reverse=self.sort_order == -1)
+
+            # Actualiza el  Treeview
+            for index, (values, item_id) in enumerate(items):
+                self.tree.move(item_id, "", index)
+
+            # Actualiza encabezado de columna para mostrar indicador
+            self.actualizar_encabezados()
+        except TypeError as e:
+            self.reg_errores = RegistroLogError(
+                323, "Vista", datetime.datetime.now(), e
+            )
+            self.reg_errores.registrar_error()
+
+    def ordenar_llave(self, valor):
+        """Convierte los valores a un mismo tipo para ordenar."""
+        try:
+            # Intento convertir el valor a un float para su comparación
+            return float(valor)
+        except ValueError:
+            # Si falla la conversión, el valor es una cadena
+            return valor
+
+    def actualizar_encabezados(self):
+        """Actualiza encabezados de la columna para mostrar orden."""
+
+        try:
+            for col in self.tree["columns"]:
+                heading_text = col
+                if col == self.sort_column:
+                    if self.sort_order == 1:
+                        heading_text += " ▲"  # Ascendente
+                    else:
+                        heading_text += " ▼"  # Descendente
+                self.tree.heading(col, text=heading_text)
+        except Exception:
+            self.reg_errores = RegistroLogError(337, "Vista", datetime.datetime.now())
+            self.reg_errores.registrar_error()
 
 
 class Ventana_login:
@@ -519,6 +621,7 @@ class Ventana_login:
             self.root.destroy()
             self.ventana = tk.Tk()
             self.objeto_vista = Ventana(self.ventana, self.usuario)
+            obser = Observer(self.objeto_vista.objeto_acciones)
             self.ventana.mainloop()
             # self.mostrar_datos(self.result)
 

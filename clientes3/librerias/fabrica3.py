@@ -64,6 +64,7 @@ class CreadorEntradasMultiples:
         inicio_y,
         nombres,
         estado,
+        textvariables=None,
         vertical=True,
         **kwargs,
     ):
@@ -72,12 +73,14 @@ class CreadorEntradasMultiples:
             row = inicio_x + i if vertical else inicio_x
             col = inicio_y if vertical else inicio_y + i
 
-            widget = FabricaWidgets.crear_widget(
-                tipo_widget, master, state=estado[i], **kwargs
-            )
+            widget_kwargs = kwargs.copy()
+            widget_kwargs["state"] = estado[i]
+            if textvariables:
+                widget_kwargs["textvariable"] = textvariables[i]
+
+            widget = FabricaWidgets.crear_widget(tipo_widget, master, **widget_kwargs)
             widget.grid(row=row, column=col, padx=5, pady=5)
             widgets[nombre] = widget
-
         return widgets
 
 
