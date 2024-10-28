@@ -1,0 +1,1 @@
+Acción registrada: 4 2024-10-27 21:27:44.526806 Login 130 ('root', 'Login correcto')

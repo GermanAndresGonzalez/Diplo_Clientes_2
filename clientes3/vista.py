@@ -69,6 +69,8 @@ class Ventana:
             self.arbol_vista, "datos/clientes_nuevo.db", "personas"
         )
         self.llenar_entradas()
+        self.sort_column = None
+        self.sort_order = 1
 
     def colocar_widgets(self):
         self.comandos = {
@@ -336,7 +338,9 @@ class Ventana:
             self.arbol_vista.column(
                 col, width=width, minwidth=width, anchor=anchor if anchor else "w"
             )
-            self.arbol_vista.heading(col, text=col)
+            self.arbol_vista.heading(
+                col, text=col, command=lambda _col=col: self.ordenar_col_por(_col)
+            )
 
         self.barra_desplazamiento = (
             Scrollbar(
@@ -422,7 +426,7 @@ class Ventana:
             self.arbol_vista, "datos/clientes_nuevo.db", "personas"
         )
 
-    def ordener_col_por(self, col):
+    def ordenar_col_por(self, col):
         """Ordena el Treeview al hacer 2 veces click en el encabezado elegido.
 
         Args:
@@ -431,7 +435,7 @@ class Ventana:
 
         # Obtener índice de la columna
         try:
-            col_index = self.tree["columns"].index(col)
+            col_index = self.arbol_vista["columns"].index(col)
 
             # Cambiar orden si se hace clic en la misma columna
             if self.sort_column == col:
@@ -442,8 +446,8 @@ class Ventana:
 
             # Obtiene los artículos y ordena
             items = [
-                (self.tree.item(item_id)["values"], item_id)
-                for item_id in self.tree.get_children()
+                (self.arbol_vista.item(item_id)["values"], item_id)
+                for item_id in self.arbol_vista.get_children()
             ]
             items.sort(
                 key=lambda x: self.ordenar_llave(x[0][col_index]),
@@ -453,7 +457,7 @@ class Ventana:
 
             # Actualiza el  Treeview
             for index, (values, item_id) in enumerate(items):
-                self.tree.move(item_id, "", index)
+                self.arbol_vista.move(item_id, "", index)
 
             # Actualiza encabezado de columna para mostrar indicador
             self.actualizar_encabezados()
@@ -476,14 +480,14 @@ class Ventana:
         """Actualiza encabezados de la columna para mostrar orden."""
 
         try:
-            for col in self.tree["columns"]:
+            for col in self.arbol_vista["columns"]:
                 heading_text = col
                 if col == self.sort_column:
                     if self.sort_order == 1:
                         heading_text += " ▲"  # Ascendente
                     else:
                         heading_text += " ▼"  # Descendente
-                self.tree.heading(col, text=heading_text)
+                self.arbol_vista.heading(col, text=heading_text)
         except Exception:
             self.reg_errores = RegistroLogError(337, "Vista", datetime.datetime.now())
             self.reg_errores.registrar_error()

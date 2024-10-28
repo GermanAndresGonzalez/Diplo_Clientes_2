@@ -34,3 +34,15 @@ Se produjo un error: Modelo 139 () 2024-10-16 18:56:25.143222
 Se produjo un error: Modelo 139 () 2024-10-16 18:57:15.673900
 Se produjo un error: Modelo 139 () 2024-10-16 18:57:32.462185
 Se produjo un error: Modelo 139 () 2024-10-16 19:01:29.875930
+Se produjo un error: Vista 361 () 2024-10-27 21:26:26.605588
+Se produjo un error: Vista 361 () 2024-10-27 21:26:27.827672
+Se produjo un error: Vista 361 () 2024-10-27 21:26:28.437036
+Se produjo un error: Vista 361 () 2024-10-27 21:26:29.154579
+Se produjo un error: Vista 361 () 2024-10-27 21:26:30.444306
+Se produjo un error: Vista 361 () 2024-10-27 21:26:31.240248
+Se produjo un error: Vista 361 () 2024-10-27 21:26:32.053777
+Se produjo un error: Vista 361 () 2024-10-27 21:26:32.731408
+Se produjo un error: Vista 361 () 2024-10-27 21:26:33.452706
+Se produjo un error: Vista 361 () 2024-10-27 21:26:34.008357
+Se produjo un error: Vista 361 () 2024-10-27 21:26:34.582268
+Se produjo un error: Vista 361 () 2024-10-27 21:26:35.338883
