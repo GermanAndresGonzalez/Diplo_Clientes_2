@@ -22,6 +22,7 @@ from librerias.creador_ini import leer_config
 from modelo import Abmc
 from functools import partial
 from librerias.acercade import Acercade
+from librerias.importar import Importar
 from registro import RegistroLogError
 from base_datos import ManejoBD
 from observador import Observer
@@ -98,7 +99,7 @@ class Ventana:
                 self.entradas["sitio"].get(),
                 self.entradas["perfil"].get(),
             ),
-            "importar": lambda: self.hola(),
+            "importar": lambda: self.importar(),
             "salir": lambda: self.root.destroy(),
         }
         self.estados = {
@@ -249,7 +250,12 @@ class Ventana:
 
     def ventana_acerca(self):
         acercade = Acercade()
-        acercade.grab_set()
+
+    def importar(self):
+        importar = Importar()  # (print("hola")
+
+    def exportar(self):
+        print("hola")
 
     def hola(self):
         print("hola")
@@ -372,7 +378,7 @@ class Ventana:
             label="Importar",
             command=partial(self.objeto_acciones.importar_datos, self.arbol_vista),
         )
-        menu_archivo.add_command(label="Exportar", command=self.hola)
+        menu_archivo.add_command(label="Exportar", command=self.exportar)
         menu_archivo.add_separator()
         menu_archivo.add_command(label="Salir", command=self.root.quit)
         menubar.add_cascade(label="Archivo", menu=menu_archivo)

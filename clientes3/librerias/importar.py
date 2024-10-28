@@ -8,7 +8,7 @@ from librerias.carpetas import obtAnterior
 # from tkhtmlview import HTMLLabel
 
 
-class Acercade(
+class Importar(
     tk.Toplevel,
 ):
     """Ventana Acerca de la aplicación Clientes."""
