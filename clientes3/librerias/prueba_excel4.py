@@ -6,6 +6,8 @@ from openpyxl import load_workbook
 from carpetas import obtAnterior
 from creador_ini import leer_config
 from fabrica1 import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
+from collections import defaultdict
+from datetime import datetime
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -26,15 +28,20 @@ class ExcelLoaderApp:
         self.marco = leer_config("marco")
         self.campos_etiquetas = leer_config("campos_etiquetas")
         self.nombre_campos = leer_config("nombre_campos_entradas")
-
+        self.categorias_validacion = {
+            "nombre": ("nombre", "apellido", "contacto"),
+            "sitio_web": ("sitio_web", "otro_perfil"),
+            "correo_electronico": ("correo_electronico",),
+            "telefono": ("telefono",),
+        }
         self.nombres_arbol_viejo = leer_config("col_treeview")
         self.nombres_arbol = {
             k: v for i, (k, v) in enumerate(self.nombres_arbol_viejo.items()) if i != 0
         }
-        self.nombres_arbol["Error"] = "Error"
+
         self.datos_arbol = leer_config("val_treeview")
         self.col_cals = leer_config("val_col_treeview")
-        print(self.nombre_campos)
+
         self.lista_nombres = (
             "nombre",
             "apellido",
@@ -46,7 +53,7 @@ class ExcelLoaderApp:
         self.marco_grande = FabricaWidgets.crear_widget(
             "marco",
             self.root,
-            width=1400,
+            width=1320,
             height=750,
             borderwidth=1,
             **self.marco,
@@ -62,15 +69,15 @@ class ExcelLoaderApp:
 
         Ventana.crear_arbol(
             self,
-            marco_contenedor=self.marco_grande,
-            marco=self.marco,
-            datos_arbol=self.datos_arbol,
-            nombres_arbol=self.nombres_arbol,
-            col_cals=self.col_cals,
-            x=0.5,
-            y=0.6,
-            marcox=1370,
-            marcoy=530,
+            self.marco_grande,
+            self.marco,
+            self.datos_arbol,
+            self.nombres_arbol,
+            self.col_cals,
+            0.5,
+            0.6,
+            1300,
+            750,
             barra=True,
         )
         self.marco_grande.place(
@@ -94,7 +101,7 @@ class ExcelLoaderApp:
         try:
             df = pd.read_excel(file_path)
             self.mostrar_datos_en_treeview(df, self.arbol_vista)
-            self.validar_datos(df, self.arbol_vista)
+            self.validar_datos(df)
 
         except Exception as e:
             messagebox.showerror("Error", f"No se pudo cargar el archivo:\n{e}")
@@ -108,39 +115,45 @@ class ExcelLoaderApp:
 
         # Insertar filas en el Treeview
 
-    def validar_datos(self, df, tree):
-        self.error = True
+    def validar_datos(self, df):
+
         self.errores = []
+
         for i, fila in df.iterrows():
             for col in df.columns:
-                if col in self.lista_nombres:
-                    error = self.validador.validar_nombres(fila[col])
-                    print(error, fila[col])
-                    if error == False:
-                        sself.errores.append((i, error, col, fila[col]))
+                # Inicializar error como None
+                self.error = True
+                valor = fila[col]
 
-                if col in self.lista_urls:
-                    error = self.validador.sitios_web(fila[col], col)
-                    print(error, fila[col])
-                    if error == False:
-                        self.errores.append((i, error, col, fila[col]))
-                if col in self.lista_correos:
-                    error = self.validador.validar_correo(fila[col])
-                    print(error, fila[col])
-                    if error == False:
-                        self.errores.append((i, error, col, fila[col]))
-                if col in self.lista_telefonos:
-                    error = self.validador.validar_telefono(fila[col])
-                    print(error, fila[col])
-                    if error == False:
-                        self.errores.append((i, error, col, fila[col]))
+                # Determinar tipo de validación según la categoría de la columna
+                if col in self.categorias_validacion["nombre"]:
+                    self.error = self.validador.validar_nombres(valor)
+                    if not self.error:
+                        self.errores.append({i + 1: col})
+                elif col in self.categorias_validacion["sitio_web"]:
+                    self.error = self.validador.sitios_web(valor, col)
+                    if not self.error:
+                        self.errores.append({i + 1: col})
+                elif col == "correo_electronico":
+                    self.error = self.validador.validar_correo(valor)
+                    if not self.error:
+                        self.errores.append({i + 1: col})
+                elif col == "telefono":
+                    self.error = self.validador.validar_telefono(valor)
+                    if not self.error:
+                        self.errores.append({i + 1: col})
 
+                # Agregar error con posición si existe
+
+        # Mostrar errores en formato amigable
         if self.errores:
-            print(self.errores)
-            # tree.insert("", "end", values="Error")
-            for i, error, col, fila in self.errores:
-                # tree.set(f"{i-1}", "Error", f"{error}")
-                print(tree.get_children(f"{i}"))
+            collected_values = defaultdict(list)
+            for d in self.errores:
+                for key, value in d.items():
+                    collected_values[key].append(value)
+            diccionario = {k: ", ".join(v) for k, v in collected_values.items()}
+
+        print(diccionario)
 
 
 root = tk.Tk()

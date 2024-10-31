@@ -40,9 +40,23 @@ class Ventana:
     def __init__(self, _root, usuario):
         self.root = _root
         self.usuario = usuario
-        print(self.usuario)
+        self.asignaciones_varias()
+        self.colocar_widgets()
+        self.menu()
+        self.objeto_acciones.cargar_treeview(
+            self.arbol_vista, "datos/clientes_nuevo.db", "personas"
+        )
+        self.llenar_entradas()
+        self.sort_column = None
+        self.sort_order = 1
+
+    def asignaciones_varias(self):
         self.imagenes = leer_config("imagenes")
         self.marco = leer_config("marco")
+        self.marco_mayor = leer_config("marco_mayor")
+        self.marco_izq = leer_config("marco_izq")
+        self.marco_con = leer_config("contenedor")
+        self.marco_bot = leer_config("marco_botones")
         self.txt_app = leer_config("aplicacion")
         self.campos_etiquetas = leer_config("campos_etiquetas")
         self.nombre_campos = leer_config("nombre_campos_entradas")
@@ -55,25 +69,9 @@ class Ventana:
         self.datos_arbol = leer_config("val_treeview")
 
         self.col_cals = leer_config("val_col_treeview")
-        # self.objeto_acciones = Abmc(self)
         self.objeto_acciones = Abmc(self)
-        # self.root = tk_windows
-
         self.root.title(self.txt_app["titulo_p"])
-        # self.title(self.txt_app["titulo_p"])
-        # self.root.title(titulo)
         self.root.geometry(self.txt_app["geometria"])
-
-        self.colocar_widgets()
-        self.menu()
-        self.objeto_acciones.cargar_treeview(
-            self.arbol_vista, "datos/clientes_nuevo.db", "personas"
-        )
-        self.llenar_entradas()
-        self.sort_column = None
-        self.sort_order = 1
-
-    def colocar_widgets(self):
         self.comandos = {
             "agregar": lambda: self.objeto_acciones.alta_cliente(
                 self.arbol_vista,
@@ -116,6 +114,7 @@ class Ventana:
         self.foto = ImageTk.PhotoImage(self.icono)
         self.root.wm_iconphoto(False, self.foto)
 
+    def colocar_widgets(self):
         self.var_indice = IntVar
         self.var_nombre_cliente = StringVar
         self.var_apellido_cliente = StringVar
@@ -139,34 +138,20 @@ class Ventana:
         self.marco_grande = FabricaWidgets.crear_widget(
             "marco",
             self.root,
-            width=1400,
-            height=750,
-            borderwidth=1,
-            **self.marco,
-        )
-        self.et_tit = FabricaWidgets.crear_widget(
-            "etiqueta",
-            self.marco_grande,
-            padx=1,
-            pady=1,
-            **self.titulo,
-        )
-        self.et_tit.place(
-            relx=0.5,
-            rely=0.03,
-            anchor="center",
+            **self.marco_mayor,
         )
 
+        self.crear_titulo(
+            self.marco_grande,
+            self.titulo,
+            0.5,
+            0.03,
+            "center",
+        )
         self.contenedor = FabricaWidgets.crear_widget(
             "marco",
             self.marco_grande,
-            borderwidth=1,
-            relief="solid",
-            width=1319,
-            height=730,
-            highlightbackground="#78A083",
-            highlightthickness=2,
-            **self.marco,
+            **self.marco_con,
         )
 
         self.contenedor.columnconfigure(1, weight=1)
@@ -198,38 +183,12 @@ class Ventana:
 
         self.contenedor.place(
             relx=0.5,
-            rely=0.26,
+            rely=0.28,
             anchor="center",
         )
-
-        self.marco_botones = FabricaWidgets.crear_widget(
-            "marco",
-            self.marco_grande,
-            borderwidth=1,
-            relief="solid",
-            width=1300,
-            height=330,
-            highlightbackground="#78A083",
-            highlightthickness=2,
-            **self.marco,
+        self.crear_botonera(
+            self.marco_grande, self.marco_bot, self.botones, 2, 1, 0.15, 0.25
         )
-        self.botonera = CreadorMultiple.crear_multiples_widgets(
-            "boton",
-            self.marco_botones,
-            2,
-            1,
-            textos=self.texto_botones,
-            vertical=True,
-            acciones=self.comandos,
-            **self.botones,
-        )
-
-        self.marco_botones.place(
-            relx=0.15,
-            rely=0.25,
-            anchor="center",
-        )
-
         self.crear_arbol(
             self.marco_grande,
             self.marco,
@@ -237,9 +196,9 @@ class Ventana:
             self.nombres_arbol,
             self.col_cals,
             0.5,
-            0.66,
+            0.69,
             marcox=1370,
-            marcoy=530,
+            marcoy=570,
             barra=True,
         )
         self.marco_grande.place(
@@ -247,6 +206,81 @@ class Ventana:
             rely=0.5,
             anchor="center",
         )
+
+    def crear_titulo(
+        self,
+        marco_contenedor,
+        con_titulo,
+        marcox,
+        marcoy,
+        alineacion,
+    ):
+        self.et_tit = FabricaWidgets.crear_widget(
+            "etiqueta",
+            marco_contenedor,
+            padx=1,
+            pady=1,
+            **con_titulo,
+        )
+        self.et_tit.place(
+            relx=marcox,
+            rely=marcoy,
+            anchor=alineacion,
+        )
+
+    # relx=0.5,
+    # rely=0.03,
+    # self.marco_grande
+    # anchor="center"
+    # self.titulo
+    def crear_botonera(
+        self,
+        marco_contenedor,
+        marco_bot,
+        con_botones,
+        x,
+        y,
+        marcox,
+        marcoy,
+    ):
+        self.marco_botones = FabricaWidgets.crear_widget(
+            "marco",
+            marco_contenedor,
+            **marco_bot,
+        )
+        # self.marco_grande
+        self.botonera = CreadorMultiple.crear_multiples_widgets(
+            "boton",
+            self.marco_botones,
+            x,
+            y,
+            textos=self.texto_botones,
+            vertical=True,
+            acciones=self.comandos,
+            **con_botones,
+        )
+
+        self.marco_botones.place(
+            relx=marcox,
+            rely=marcoy,
+            anchor="center",
+        )
+
+    # relx=0.15,
+    # rely=0.25,
+    def crear_entradas(
+        self,
+        marco_contenedor,
+        marco,
+        datos_arbol,
+        nombres_arbol,
+        col_cals,
+        x,
+        y,
+        marcox,
+        marcoy,
+    ):
+        pass
 
     def ventana_acerca(self):
         acercade = Acercade()
@@ -296,10 +330,9 @@ class Ventana:
         self.marco_arbol = FabricaWidgets.crear_widget(
             "marco",
             marco_contenedor,
-            borderwidth=1,
             relief="solid",
-            width=marcox,
-            height=marcoy,
+            ancho=marcox,
+            alto=marcoy,
             highlightbackground="#78A083",
             highlightthickness=2,
             **marco,
@@ -525,14 +558,13 @@ class Ventana_login:
         # self.root.resizable(0, 0)
         self.col_cals = leer_config("val_usuarios")
         self.marco_mayor = FabricaWidgets.crear_widget(
-            "marco", self.root, width=700, height=400, **self.marco
+            "marco", self.root, ancho=700, alto=400, **self.marco
         )
         self.marco_izq = FabricaWidgets.crear_widget(
             "marco",
             self.marco_mayor,
-            width=300,
-            height=345,
-            borderwidth=1,
+            ancho=300,
+            alto=345,
             **self.marco,
         )
         self.pinky = ImageTk.PhotoImage(Image.open(self.imagenes["imag_pinky"]))
@@ -548,7 +580,7 @@ class Ventana_login:
 
         self.marco_izq.place(x=0, y=0)
         self.marco_der = FabricaWidgets.crear_widget(
-            "marco", self.marco_mayor, width=395, height=400, **self.marco
+            "marco", self.marco_mayor, ancho=395, alto=400, **self.marco
         )
 
         self.eti_usuario = FabricaWidgets.crear_widget(
@@ -586,17 +618,17 @@ class Ventana_login:
             self.marco_der,
             text=self.txt_login["boton"],
             command=lambda: self.login(self.nombre_bd, self.nombre_tabla),
-            ancho=15,
+            ancho=10,
             **self.botones,
         )
-        self.btn_login.place(x=20, y=200)
+        self.btn_login.place(x=15, y=200)
 
         self.btn_salir = FabricaWidgets.crear_widget(
             "boton",
             self.marco_der,
             text=self.texto_botones["salir"],
             command=lambda: self.root.destroy(),
-            ancho=15,
+            ancho=10,
             **self.botones,
         )
         self.btn_salir.place(x=180, y=200)

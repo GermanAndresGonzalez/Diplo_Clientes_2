@@ -65,6 +65,7 @@ class ExcelLoaderApp:
             self.tree.heading(col, text=col)
             self.tree.column(col, width=100, anchor="w")
         for _, row in df.iterrows():
+            print(list(row))
             self.tree.insert("", "end", values=list(row))
 
     def validar_datos(self, df):

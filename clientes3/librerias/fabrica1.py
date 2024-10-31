@@ -1,15 +1,13 @@
 import tkinter as tk
 from tkinter import ttk, LabelFrame, Label, Entry, Button
-from librerias.creador_ini import leer_config
+from creador_ini import leer_config
 
 
 class FabricaWidgets:
     @staticmethod
-    def crear_widget(tipo_widget, master, ancho=None, alto=None, **kwargs):
-        if ancho in kwargs:
+    def crear_widget(tipo_widget, master, ancho=None, **kwargs):
+        if ancho:
             kwargs["width"] = ancho
-        if alto in kwargs:
-            kwargs["height"] = alto
 
         if tipo_widget == "entrada":
             return tk.Entry(master, **kwargs)
