@@ -27,6 +27,12 @@ from registro import RegistroLogError
 from base_datos import ManejoBD
 from observador import Observer
 
+# ---
+# import socket
+# import sys
+# import binascii
+
+
 # from vista import Ventana
 # from observador import Observer
 
@@ -49,6 +55,7 @@ class Ventana:
         self.llenar_entradas()
         self.sort_column = None
         self.sort_order = 1
+        # --
 
     def asignaciones_varias(self):
         self.imagenes = leer_config("imagenes")
@@ -552,6 +559,12 @@ class Ventana_login:
         self.nombre_tabla = "usuarios"
         self.base_datos = ManejoBD()
 
+        # ---
+        # self.HOST, self.PORT = "localhost", 9999
+        # self.data = " ".join(sys.argv[1:])
+        # self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # ---
+
         self.root.title("Pantalla de login")
         self.root.geometry("700x400")
         self.root.iconbitmap(self.imagenes["favicon_icon"])
@@ -673,7 +686,11 @@ class Ventana_login:
         mensaje = "Login correcto"
         if not login:
             mensaje = "Login incorrecto"
-
+        # fecha_env = datetime.datetime.now()
+        # fecha_env = fecha_env.strftime("%Y-%m-%d %H:%M:%S")
+        # mensaje_env = " ".join(mensaje) + " 130 Login 4 " + fecha_env
+        # mensaje_env = (str((mensaje_env)).encode("utf-8")).strip()
+        # self.sock.sendto((mensaje_env), (self.HOST, self.PORT))
         self.registro = RegistroLogError(
             130, "Login", 4, datetime.datetime.now(), self.usuario, mensaje
         )
