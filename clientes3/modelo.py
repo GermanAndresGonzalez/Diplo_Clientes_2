@@ -11,13 +11,36 @@ from librerias.diccionario import diccionario
 from registro import RegistroLogError
 from observador import Sujeto
 
+# ------- UDP ------
+import socket
+import sys
+import binascii
+
 
 def registro(funcion):
     def envoltura(*args, **kwargs):
         funcion(*args, **kwargs)
+
         print("Se ejecutó:", funcion.__name__, *args, **kwargs)
+        cliente_udp(*args, **kwargs)
 
     return envoltura
+
+
+def cliente_udp(*args, **kwargs):
+    HOST, PORT = "localhost", 9999
+    data = " ".join(sys.argv[1:])
+    args_str = ", ".join(map(str, args))
+    kwargs_str = ", ".join(f"{key}={value}" for key, value in kwargs.items())
+    mensaje = f"({args_str}, {kwargs_str})"
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    datos = [data, mensaje]
+    mensaje = (str(" ".join(map(str, datos))).encode("utf-8")).strip()
+    print(mensaje)
+    sock.sendto((mensaje), (HOST, PORT))
+    recibido = sock.recv(1024)
+    recibido = recibido.strip()
+    print(recibido)
 
 
 class Abmc(Sujeto):

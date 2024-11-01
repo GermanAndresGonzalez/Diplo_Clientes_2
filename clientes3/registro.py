@@ -20,9 +20,9 @@ class RegistroLogError(Exception):
 
     BASE_DIR = os.path.dirname((os.path.abspath(__file__)))
     ruta = BASE_DIR + ("/datos/") + ("registro.txt")
-    HOST, PORT = "localhost", 9999
-    data = " ".join(sys.argv[1:])
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # HOST, PORT = "localhost", 9999
+    # data = " ".join(sys.argv[1:])
+    # sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     # print(ruta)
 
     def __init__(self, linea, modulo, fecha, usuario=None, *args):
@@ -43,15 +43,23 @@ class RegistroLogError(Exception):
             self.varios,
             self.usuario if self.usuario else "",
         ]  #
-        mensaje = (str(" ".join(map(str, datos))).encode("utf-8")).strip()
-        print(mensaje)
-        self.sock.sendto((mensaje), (self.HOST, self.PORT))
-        recibido = self.sock.recv(1024)
-        recibido = recibido.strip()
+        # -----------------
+        # -----------------
+
+        # mensaje = (str(" ".join(map(str, datos))).encode("utf-8")).strip()
+        # print(mensaje)
+        # self.sock.sendto((mensaje), (self.HOST, self.PORT))
+        # recibido = self.sock.recv(1024)
+        # recibido = recibido.strip()
+        # print(recibido)
+
         # recibido = recibido.decode("utf-8")
         # .decode("utf-8")
-        print(recibido)
 
+        # -----------------
+        # -----------------
+
+        mensaje = ""
         log = open(self.ruta, "a", encoding="utf8")
         print(
             "Acción registrada:",
