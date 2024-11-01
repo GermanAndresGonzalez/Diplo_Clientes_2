@@ -48,7 +48,7 @@ class RegistroLogError(Exception):
         self.sock.sendto((mensaje), (self.HOST, self.PORT))
         recibido = self.sock.recv(1024)
         recibido = recibido.strip()
-        recibido = recibido.decode("utf-8")
+        # recibido = recibido.decode("utf-8")
         # .decode("utf-8")
         print(recibido)
 

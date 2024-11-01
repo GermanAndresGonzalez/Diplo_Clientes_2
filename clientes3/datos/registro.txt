@@ -193,3 +193,4 @@ Acción registrada: 4 2024-10-29 17:27:05.649646 Login 130 ('root', 'Login corre
 Acción registrada: 4 2024-10-29 17:43:55.071543 Login 130 ('root', 'Login correcto')
 Acción registrada: 4 2024-10-29 17:54:54.865380 Login 130 ('root', 'Login correcto')
 Acción registrada: 4 2024-11-01 00:00:36.739487 Login 130 ('root', 'Login correcto')
+Acción registrada: 4 2024-11-01 01:33:06.351454 Login 130 root Login correcto
