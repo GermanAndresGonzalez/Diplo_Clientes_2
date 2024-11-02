@@ -33,7 +33,7 @@ class ClienteServidor:
     ):
         try:
 
-            self.mensaje = f"Linea: {self.linea}, Módulo: {self.modulo}, Fecha: {self.fecha}, Usuario: {self.usuario} {self.mensaje if self.mensaje else None} ,"
+            self.mensaje = f"Linea: {self.linea}, Módulo: {self.modulo}, Fecha: {self.fecha}, Usuario: {self.usuario} {self.mensaje if self.mensaje else None}"
             HOST, PORT = "localhost", 8080
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.connect((HOST, PORT))
@@ -79,20 +79,22 @@ class RegistroLogError(Exception):
 
     def registrar(self):
         """Guarda los datos en el archivo de log."""
-        datos = [
-            self.fecha,
-            self.linea,
-            self.modulo,
-            self.varios,
-            self.usuario,
-        ]  #
+        # datos = [self.fecha, self.linea,self.modulo, self.varios, self.usuario, ]
+        if not self.mensaje:
+            self.mensaje = "App Local"
+        else:
+            self.mensaje = self.mensaje + " App Local"
 
         log = open(self.ruta, "a", encoding="utf8")
         print(
-            f"Acción registrada: Línea: {self.linea}, Módulo: {self.modulo}, Fecha: {self.fecha}, Usuario: {self.usuario} {self.mensaje if self.mensaje else None} ,",
+            f"Acción registrada: Línea: {self.linea}, Módulo: {self.modulo}, Fecha: {self.fecha}, Usuario: {self.usuario} {self.mensaje if self.mensaje else None}",
             file=log,
         )
         # f"Linea: {self.linea},Módulo: {self.modulo},Fecha: {self.fecha},Usuario: {self.usuario} {self.mensaje if self.mensaje else None} ,"
+        if not self.mensaje:
+            self.mensaje = "Servidor"
+        else:
+            self.mensaje = self.mensaje + " Servidor"
         self.cliente = ClienteServidor(
             self.linea,
             self.modulo,
