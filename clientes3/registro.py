@@ -17,23 +17,36 @@ import socket
 # import binascii
 class ClienteServidor:
 
-    def __init__(self):
+    def __init__(
+        self, linea, modulo, fecha, usuario=None, mensaje=None, *args, **kwargs
+    ):
         self.mensaje = ""
+        self.linea = str(linea)
+        self.modulo = str(modulo)
+        self.fecha = str(fecha)
+        self.varios = args if args else None
+        self.usuario = usuario if usuario else None
+        self.mensaje = mensaje if mensaje else None
 
     def enviar_datos(
-        self, linea=None, modulo=None, fecha=None, usuario=None, *args, **kwargs
+        self,
     ):
-        self.mensaje = f"Linea: {linea},Módulo: {modulo},Fecha: {fecha},Usuario: {usuario},{args},{kwargs}"
-        HOST, PORT = "localhost", 8080
-        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((HOST, PORT))
+        try:
 
-        # mensaje = "Login incorrecto"
-        client_socket.send(self.mensaje.encode("utf-8"))
+            self.mensaje = f"Linea: {self.linea}, Módulo: {self.modulo}, Fecha: {self.fecha}, Usuario: {self.usuario} {self.mensaje if self.mensaje else None} ,"
+            HOST, PORT = "localhost", 8080
+            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            client_socket.connect((HOST, PORT))
 
-        respuesta = client_socket.recv(1024).decode("utf-8")
-        print(f"Respuesta del servidor: {respuesta}")
-        client_socket.close()
+            # mensaje = "Login incorrecto"
+            client_socket.send(self.mensaje.encode("utf-8"))
+
+            respuesta = client_socket.recv(1024).decode("utf-8")
+            print(f"Respuesta del servidor: {respuesta}")
+            client_socket.close()
+
+        except Exception as e:
+            print(f"Error al conectar con el servidor: {e}")
 
 
 class RegistroLogError(Exception):
@@ -41,9 +54,17 @@ class RegistroLogError(Exception):
 
     BASE_DIR = os.path.dirname((os.path.abspath(__file__)))
     ruta = BASE_DIR + ("/datos/") + ("registro_app.log")
-    cliente = ClienteServidor()
 
-    def __init__(self, linea, modulo, fecha, usuario=None, *args):
+    def __init__(
+        self,
+        linea,
+        modulo,
+        fecha,
+        usuario=None,
+        mensaje=None,
+        *args,
+        **kwargs,
+    ):
         self.linea = str(linea)
         self.modulo = modulo
         self.fecha = fecha
@@ -51,6 +72,10 @@ class RegistroLogError(Exception):
         self.usuario = usuario if usuario else None
         self.varios = " ".join(map(str, args)) if args else None
         self.usuario = usuario if usuario else None
+        self.mensaje = mensaje if mensaje else None
+        # --
+        print(self.usuario)
+        # --
 
     def registrar(self):
         """Guarda los datos en el archivo de log."""
@@ -59,27 +84,24 @@ class RegistroLogError(Exception):
             self.linea,
             self.modulo,
             self.varios,
-            self.usuario if self.usuario else "",
+            self.usuario,
         ]  #
 
         log = open(self.ruta, "a", encoding="utf8")
         print(
-            "Acción registrada:",
-            self.fecha,
-            self.usuario if self.usuario else "",
-            self.modulo,
-            self.linea,
-            self.varios,
+            f"Acción registrada: Línea: {self.linea}, Módulo: {self.modulo}, Fecha: {self.fecha}, Usuario: {self.usuario} {self.mensaje if self.mensaje else None} ,",
             file=log,
         )
-        # self, linea, modulo, fecha, usuario=None, *args
-        self.cliente.enviar_datos(
-            self,
+        # f"Linea: {self.linea},Módulo: {self.modulo},Fecha: {self.fecha},Usuario: {self.usuario} {self.mensaje if self.mensaje else None} ,"
+        self.cliente = ClienteServidor(
             self.linea,
             self.modulo,
             self.fecha,
-            self.usuario if self.usuario else "",
-        )  # self.cliente(mensaje)
+            self.usuario,
+            self.mensaje if self.mensaje else None,
+        )
+        # self, linea, modulo, fecha, usuario=None, *args
+        self.cliente.enviar_datos()  # self.cliente(mensaje)
 
 
 """def registrar_fuera():

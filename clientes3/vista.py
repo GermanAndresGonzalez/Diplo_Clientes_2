@@ -56,6 +56,8 @@ class Ventana:
         self.sort_column = None
         self.sort_order = 1
         # --
+        print(self.usuario)
+        # --
 
     def asignaciones_varias(self):
         self.imagenes = leer_config("imagenes")
@@ -76,7 +78,7 @@ class Ventana:
         self.datos_arbol = leer_config("val_treeview")
 
         self.col_cals = leer_config("val_col_treeview")
-        self.objeto_acciones = Abmc(self)
+        self.objeto_acciones = Abmc(self, self.usuario)
         self.root.title(self.txt_app["titulo_p"])
         self.root.geometry(self.txt_app["geometria"])
         self.comandos = {
@@ -456,7 +458,12 @@ class Ventana:
             self.entradas["indice"].config(state="readonly")
 
         except Exception:
-            self.reg_errores = RegistroLogError(361, "Vista", datetime.datetime.now())
+            self.reg_errores = RegistroLogError(
+                361,
+                "Vista",
+                datetime.datetime.now(),
+                self.usuario,
+            )
             self.reg_errores.registrar()
 
     def vaciar(self):
@@ -558,6 +565,9 @@ class Ventana_login:
         self.nombre_bd = "datos/clientes_nuevo.db"
         self.nombre_tabla = "usuarios"
         self.base_datos = ManejoBD()
+        # --------------------------------------------------
+        # self.val_login = False
+        # --------------------------------------------------
 
         self.root.title("Pantalla de login")
         self.root.geometry("700x400")
@@ -655,7 +665,7 @@ class Ventana_login:
     def login(self, nombre_bd, nombre_tabla):
         self.usuario = self.entrada_usuario.get()  # entrada_usuario
         self.contra = self.entrada_pass.get()
-
+        self.mensaje = ""
         self.conn = sqlite3.connect(nombre_bd)
         self.c = self.conn.cursor()
         self.c.execute(
@@ -665,26 +675,29 @@ class Ventana_login:
         self.result = self.c.fetchone()
 
         if self.result:
-            login = True
-
+            self.mensaje = "Login correcto"
             self.root.destroy()
             self.ventana = tk.Tk()
+            self.registro = RegistroLogError(
+                702, "Login", datetime.datetime.now(), self.usuario, self.mensaje
+            )
+            self.registro.registrar()
             self.objeto_vista = Ventana(self.ventana, self.usuario)
             obser = Observer(self.objeto_vista.objeto_acciones)
+
             self.ventana.mainloop()
             # self.mostrar_datos(self.result)
 
+            # self.val_login = True
         else:
             tk.messagebox.showerror("Login", "Usuario o contraseña inválidos")
-            login = False
-        mensaje = "Login correcto"
-        if not login:
-            mensaje = "Login incorrecto"
-
-        self.registro = RegistroLogError(
-            130, "Login", 4, datetime.datetime.now(), self.usuario, mensaje
-        )
-        self.registro.registrar()
+            self.mensaje = "Login incorrecto"
+            self.registro = RegistroLogError(
+                702, "Login", datetime.datetime.now(), self.usuario, self.mensaje
+            )
+            self.registro.registrar()
+        print(self.usuario, self.mensaje)
+        # self.val_login = False
 
     def texto_etiqueta(self, nombre_bd, nombre_tabla):
         """Valores de las contraseñas."""

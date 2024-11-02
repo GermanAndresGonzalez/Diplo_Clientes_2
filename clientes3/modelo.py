@@ -30,18 +30,22 @@ def registro(funcion):
 class Abmc(Sujeto):
     """Crea Altas, Bajas, Modificaciones de datos."""
 
-    def __init__(self, ventana):
+    def __init__(self, ventana, usuario=None):
+        self.usuario = usuario if usuario else None
         self.ventana = ventana
         self.esquema = "id integer PRIMARY KEY AUTOINCREMENT, nombre_cliente text NOT NULL, apellido_cliente text NOT NULL, contacto text NOT NULL, correo_electronico text NOT NULL, telefono text NOT NULL, sitio_web text NOT NULL, otro_perfil text NOT NULL"
         self.nombre_bd = "datos/clientes_nuevo.db"
         self.nombre_tabla = "personas"
-        self.cliente = ClienteServidor()
+        # self.cliente = ClienteServidor()
         self.validar = ValidacionCampos()
         self.base_datos = ManejoBD()
         self.base_datos.crear_db(self.nombre_bd)
         self.base_datos.crear_tabla(self.nombre_tabla, self.esquema)
         # print(self.nombre_bd)
         # print(self.esquema)
+        # --
+        print(self.usuario)
+        # --
         if not self.base_datos.tiene_datos(self.nombre_tabla):
             self.base_datos.conectar_bd(self.nombre_bd)
             self.agregar_cliente_diccionario(diccionario)
@@ -57,9 +61,11 @@ class Abmc(Sujeto):
             db.close()
         except Exception as e:
             res = showinfo("Error", f"No se pudo abrir el archivo shelve {e}")
-            self.reg_errores = RegistroLogError(42, "Modelo", datetime.datetime.now())
-            self.reg_errores.clientes(42, "Modelo", datetime.datetime.now())
-            self.reg_errores.registrar()
+            self.reg_errores = RegistroLogError(
+                42, "Modelo", datetime.datetime.now(), self.usuario
+            )
+            # self.reg_errores.clientes(42, "Modelo", datetime.datetime.now(), self.usuario)
+            # self.reg_errores.registrar()
 
         try:
             self.base_datos.conectar_bd(self.nombre_bd)
@@ -74,7 +80,9 @@ class Abmc(Sujeto):
             )
         except sqlite3.Error as e:
             res = showinfo("Error", "No se pudo modificar el cliente: " + str(e))
-            self.reg_errores = RegistroLogError(55, "Modelo", datetime.datetime.now())
+            self.reg_errores = RegistroLogError(
+                55, "Modelo", datetime.datetime.now(), self.usuario
+            )
             self.reg_errores.registrar()
 
     def agregar_cliente_diccionario(self, diccionario):
@@ -142,7 +150,7 @@ class Abmc(Sujeto):
                         tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
                     )
                     self.reg_errores = RegistroLogError(
-                        142, "Alta", datetime.datetime.now()
+                        142, "Alta", datetime.datetime.now(), self.usuario
                     )
                     self.reg_errores.registrar()
                     self.vaciar_todo(tree)
@@ -151,11 +159,9 @@ class Abmc(Sujeto):
                         "Error", "No se pudo modificar el cliente: " + str(e)
                     )
                     self.reg_errores = RegistroLogError(
-                        113, "Modelo", datetime.datetime.now()
-                    )
-                    self.cliente.enviar_datos(
                         113, "Modelo", datetime.datetime.now(), self.usuario
                     )
+                    # self.cliente.enviar_datos(113, "Modelo", datetime.datetime.now(), self.usuario)
                     self.reg_errores.registrar()
 
             else:
@@ -186,12 +192,15 @@ class Abmc(Sujeto):
                     nombre_tabla=self.nombre_tabla,
                 )
                 self.reg_errores = RegistroLogError(
-                    184, "Borrar", datetime.datetime.now()
+                    184, "Borrar", datetime.datetime.now(), self.usuario
                 )
                 self.reg_errores.registrar()
             except Exception:
                 self.reg_errores = RegistroLogError(
-                    139, "Modelo", datetime.datetime.now()
+                    139,
+                    "Modelo",
+                    datetime.datetime.now(),
+                    self.usuario,
                 )
                 self.reg_errores.registrar()
         else:
@@ -230,7 +239,7 @@ class Abmc(Sujeto):
             var_perfil,
             tree,
         )
-        # print(valor)
+
         if valor is True:
             res = askquestion("¡Atención!", "¿Desea modificar el cliente?")
             if res == "yes":
@@ -264,7 +273,7 @@ class Abmc(Sujeto):
                         "Error", "No se pudo modificar el cliente: " + str(e)
                     )
                     self.reg_errores = RegistroLogError(
-                        201, "Modelo", datetime.datetime.now()
+                        201, "Modelo", datetime.datetime.now(), self.usuario
                     )
                     self.reg_errores.registrar()
 

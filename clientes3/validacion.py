@@ -146,7 +146,7 @@ class ValidacionCampos:
         telefono = " ".join(var_telefono.split())
         sitio_web = " ".join(var_sitio.split())
         otro_perfil = " ".join(var_perfil.split())
-        print(type(nombre_cliente), nombre_cliente)
+        # print(type(nombre_cliente), nombre_cliente)
 
         criterios_mensaje = f"{self.criterio_correo}.\n{self.criterio_campos}.\n{self.criterio_sitio}.\n{self.criterio_perfil}.\n{self.criterio_telefono}."
 
