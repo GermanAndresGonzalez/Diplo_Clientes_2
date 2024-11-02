@@ -10,6 +10,7 @@ from base_datos import ManejoBD
 from librerias.diccionario import diccionario
 from registro import RegistroLogError
 from observador import Sujeto
+from registro import ClienteServidor
 
 # ------- UDP ------
 import socket
@@ -22,25 +23,8 @@ def registro(funcion):
         funcion(*args, **kwargs)
 
         print("Se ejecutó:", funcion.__name__, *args, **kwargs)
-        cliente_udp(*args, **kwargs)
 
     return envoltura
-
-
-def cliente_udp(*args, **kwargs):
-    HOST, PORT = "localhost", 9999
-    data = " ".join(sys.argv[1:])
-    args_str = ", ".join(map(str, args))
-    kwargs_str = ", ".join(f"{key}={value}" for key, value in kwargs.items())
-    mensaje = f"({args_str}, {kwargs_str})"
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    datos = [data, mensaje]
-    mensaje = (str(" ".join(map(str, datos))).encode("utf-8")).strip()
-    print(mensaje)
-    sock.sendto((mensaje), (HOST, PORT))
-    recibido = sock.recv(1024)
-    recibido = recibido.strip()
-    print(recibido)
 
 
 class Abmc(Sujeto):
@@ -51,7 +35,7 @@ class Abmc(Sujeto):
         self.esquema = "id integer PRIMARY KEY AUTOINCREMENT, nombre_cliente text NOT NULL, apellido_cliente text NOT NULL, contacto text NOT NULL, correo_electronico text NOT NULL, telefono text NOT NULL, sitio_web text NOT NULL, otro_perfil text NOT NULL"
         self.nombre_bd = "datos/clientes_nuevo.db"
         self.nombre_tabla = "personas"
-
+        self.cliente = ClienteServidor()
         self.validar = ValidacionCampos()
         self.base_datos = ManejoBD()
         self.base_datos.crear_db(self.nombre_bd)
@@ -74,6 +58,7 @@ class Abmc(Sujeto):
         except Exception as e:
             res = showinfo("Error", f"No se pudo abrir el archivo shelve {e}")
             self.reg_errores = RegistroLogError(42, "Modelo", datetime.datetime.now())
+            self.reg_errores.clientes(42, "Modelo", datetime.datetime.now())
             self.reg_errores.registrar()
 
         try:
@@ -156,6 +141,10 @@ class Abmc(Sujeto):
                     self.cargar_treeview(
                         tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
                     )
+                    self.reg_errores = RegistroLogError(
+                        142, "Alta", datetime.datetime.now()
+                    )
+                    self.reg_errores.registrar()
                     self.vaciar_todo(tree)
                 except sqlite3.Error as e:
                     res = showinfo(
@@ -163,6 +152,9 @@ class Abmc(Sujeto):
                     )
                     self.reg_errores = RegistroLogError(
                         113, "Modelo", datetime.datetime.now()
+                    )
+                    self.cliente.enviar_datos(
+                        113, "Modelo", datetime.datetime.now(), self.usuario
                     )
                     self.reg_errores.registrar()
 
@@ -193,6 +185,10 @@ class Abmc(Sujeto):
                     nombre_bd=self.nombre_bd,
                     nombre_tabla=self.nombre_tabla,
                 )
+                self.reg_errores = RegistroLogError(
+                    184, "Borrar", datetime.datetime.now()
+                )
+                self.reg_errores.registrar()
             except Exception:
                 self.reg_errores = RegistroLogError(
                     139, "Modelo", datetime.datetime.now()
@@ -258,6 +254,10 @@ class Abmc(Sujeto):
                         tree, nombre_bd=self.nombre_bd, nombre_tabla=self.nombre_tabla
                     )
                     self.vaciar_todo(tree)
+                    self.reg_errores = RegistroLogError(
+                        252, "Actualizar", datetime.datetime.now()
+                    )
+                    self.reg_errores.registrar()
 
                 except sqlite3.Error as e:
                     res = showinfo(

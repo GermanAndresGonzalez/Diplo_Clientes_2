@@ -11,19 +11,37 @@
 import os
 import datetime
 import socket
-import sys
-import binascii
+
+
+# import sys
+# import binascii
+class ClienteServidor:
+
+    def __init__(self):
+        self.mensaje = ""
+
+    def enviar_datos(
+        self, linea=None, modulo=None, fecha=None, usuario=None, *args, **kwargs
+    ):
+        self.mensaje = f"Linea: {linea},Módulo: {modulo},Fecha: {fecha},Usuario: {usuario},{args},{kwargs}"
+        HOST, PORT = "localhost", 8080
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((HOST, PORT))
+
+        # mensaje = "Login incorrecto"
+        client_socket.send(self.mensaje.encode("utf-8"))
+
+        respuesta = client_socket.recv(1024).decode("utf-8")
+        print(f"Respuesta del servidor: {respuesta}")
+        client_socket.close()
 
 
 class RegistroLogError(Exception):
     """Registro de errores."""
 
     BASE_DIR = os.path.dirname((os.path.abspath(__file__)))
-    ruta = BASE_DIR + ("/datos/") + ("registro.txt")
-    # HOST, PORT = "localhost", 9999
-    # data = " ".join(sys.argv[1:])
-    # sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    # print(ruta)
+    ruta = BASE_DIR + ("/datos/") + ("registro_app.log")
+    cliente = ClienteServidor()
 
     def __init__(self, linea, modulo, fecha, usuario=None, *args):
         self.linea = str(linea)
@@ -43,23 +61,7 @@ class RegistroLogError(Exception):
             self.varios,
             self.usuario if self.usuario else "",
         ]  #
-        # -----------------
-        # -----------------
 
-        # mensaje = (str(" ".join(map(str, datos))).encode("utf-8")).strip()
-        # print(mensaje)
-        # self.sock.sendto((mensaje), (self.HOST, self.PORT))
-        # recibido = self.sock.recv(1024)
-        # recibido = recibido.strip()
-        # print(recibido)
-
-        # recibido = recibido.decode("utf-8")
-        # .decode("utf-8")
-
-        # -----------------
-        # -----------------
-
-        mensaje = ""
         log = open(self.ruta, "a", encoding="utf8")
         print(
             "Acción registrada:",
@@ -70,16 +72,24 @@ class RegistroLogError(Exception):
             self.varios,
             file=log,
         )
+        # self, linea, modulo, fecha, usuario=None, *args
+        self.cliente.enviar_datos(
+            self,
+            self.linea,
+            self.modulo,
+            self.fecha,
+            self.usuario if self.usuario else "",
+        )  # self.cliente(mensaje)
 
 
-def registrar_fuera():
-    """Solo para testing."""
+"""def registrar_fuera():
+    Solo para testing.
     raise RegistroLogError(7, "Validacion", datetime.datetime.now(), "Correo")
-
+"""
 
 if __name__ == "__main__":
-
-    try:
+    pass
+    """try:
         registrar_fuera()
     except RegistroLogError as log:
-        log.registrar()
+        log.registrar()"""
