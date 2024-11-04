@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>registro &mdash; documentación de Clientes_UTN - 0.0.1</title>
+  <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+
+  <script src="../_static/jquery.js?v=5d32c60e"></script>
+  <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+  <script src="../_static/documentation_options.js?v=6fcc102b"></script>
+  <script src="../_static/doctools.js?v=9bcbadda"></script>
+  <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+  <script src="../_static/translations.js?v=f85f4cfb"></script>
+  <script src="../_static/js/theme.js"></script>
+  <link rel="index" title="Índice" href="../genindex.html" />
+  <link rel="search" title="Búsqueda" href="../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+          <a href="../index.html" class="icon icon-home">
+            Clientes_UTN
+          </a>
+          <div role="search">
+            <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+              <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+          <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+          <ul>
+            <li class="toctree-l1"><a class="reference internal" href="../base_datos.html">Módulo base_datos</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../basedatos.html">Módulo basedatos</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../cliente-comando.html">cliente-comando
+                module</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../creador_ini.html">Módulo creador_ini</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../librerias.html">Paquete librerias</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../modelo.html">Módulo modelo</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../observador.html">Módulo observador</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../registro.html">Módulo registro</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../validacion.html">Módulo validacion</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="../vista.html">Módulo vista</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Clientes_UTN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+            <ul class="wy-breadcrumbs">
+              <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+              <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+              <li class="breadcrumb-item active">registro</li>
+              <li class="wy-breadcrumbs-aside">
+              </li>
+            </ul>
+            <hr />
+          </div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div itemprop="articleBody">
+
+              <h1>Código fuente para registro</h1>
+              <div class="highlight">
+                <pre>
+<span></span><span class="sd">&quot;&quot;&quot;Clase para realizar un registro de la aplicación</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        RegistroLogError: error</span>
+<span class="sd">    La clase registra errores durante la ejecución.</span>
+<span class="sd">    Esto se hace visible cuando se hace clic en &quot;Teléfono&quot; en el treeview.</span>
+<span class="sd">    Se genera un error que se registra en &#39;registro_errores.txt&#39;.</span>
+<span class="sd">    El archivo &#39;programa_errores.txt&#39; es el archivo de log de la aplicación.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1">#import datetime</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+
+<div class="viewcode-block" id="ClienteServidor">
+<a class="viewcode-back" href="../registro.html#registro.ClienteServidor">[documentos]</a>
+<span class="k">class</span> <span class="nc">ClienteServidor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Usado para enviar datos a registrar en el servidor.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">linea</span><span class="p">,</span> <span class="n">modulo</span><span class="p">,</span> <span class="n">fecha</span><span class="p">,</span> <span class="n">usuario</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mensaje</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linea</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">linea</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modulo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">modulo</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fecha</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fecha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">varios</span> <span class="o">=</span> <span class="n">args</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="n">usuario</span> <span class="k">if</span> <span class="n">usuario</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="n">mensaje</span> <span class="k">if</span> <span class="n">mensaje</span> <span class="k">else</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ClienteServidor.enviar_datos">
+<a class="viewcode-back" href="../registro.html#registro.ClienteServidor.enviar_datos">[documentos]</a>
+    <span class="k">def</span> <span class="nf">enviar_datos</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Envía los datos al servidor.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Linea: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">linea</span><span class="si">}</span><span class="s2">, Módulo: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">modulo</span><span class="si">}</span><span class="s2">, Fecha: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fecha</span><span class="si">}</span><span class="s2">, Usuario: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="kc">None</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">8080</span>
+            <span class="n">client_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+            <span class="n">client_socket</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+
+            <span class="c1"># mensaje = &quot;Login incorrecto&quot;</span>
+            <span class="n">client_socket</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+
+            <span class="n">respuesta</span> <span class="o">=</span> <span class="n">client_socket</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Respuesta del servidor: </span><span class="si">{</span><span class="n">respuesta</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">client_socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error al conectar con el servidor: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RegistroLogError">
+<a class="viewcode-back" href="../registro.html#registro.RegistroLogError">[documentos]</a>
+<span class="k">class</span> <span class="nc">RegistroLogError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Registro de errores.&quot;&quot;&quot;</span>
+
+    <span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">((</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+    <span class="n">ruta</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;/datos/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="s2">&quot;registro_app.log&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">linea</span><span class="p">,</span>
+        <span class="n">modulo</span><span class="p">,</span>
+        <span class="n">fecha</span><span class="p">,</span>
+        <span class="n">usuario</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mensaje</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linea</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">linea</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modulo</span> <span class="o">=</span> <span class="n">modulo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fecha</span> <span class="o">=</span> <span class="n">fecha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">varios</span> <span class="o">=</span> <span class="n">args</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="n">usuario</span> <span class="k">if</span> <span class="n">usuario</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">varios</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="n">usuario</span> <span class="k">if</span> <span class="n">usuario</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="n">mensaje</span> <span class="k">if</span> <span class="n">mensaje</span> <span class="k">else</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="RegistroLogError.registrar">
+<a class="viewcode-back" href="../registro.html#registro.RegistroLogError.registrar">[documentos]</a>
+    <span class="k">def</span> <span class="nf">registrar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Guarda los datos en el archivo de log.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="s2">&quot;App Local&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">+</span> <span class="s2">&quot; App Local&quot;</span>
+
+        <span class="n">log</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ruta</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Acción registrada: Línea: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">linea</span><span class="si">}</span><span class="s2">, Módulo: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">modulo</span><span class="si">}</span><span class="s2">, Fecha: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fecha</span><span class="si">}</span><span class="s2">, Usuario: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="kc">None</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">file</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="s2">&quot;Servidor&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">+</span> <span class="s2">&quot; Servidor&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cliente</span> <span class="o">=</span> <span class="n">ClienteServidor</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">linea</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modulo</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cliente</span><span class="o">.</span><span class="n">enviar_datos</span><span class="p">()</span>  <span class="c1"># self.cliente(mensaje)</span></div>
+</div>
+
+
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre>
+              </div>
+
+            </div>
+          </div>
+          <footer>
+
+            <hr />
+
+            <div role="contentinfo">
+              <p>&#169; Derechos de autor 2024, Germán Andrés González.</p>
+            </div>
+
+            Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+            <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+            proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+          </footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+    });
+  </script>
+
+</body>
+
+</html>

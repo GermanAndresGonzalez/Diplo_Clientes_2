@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>creador_ini &mdash; documentación de Clientes_UTN - 0.0.1</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=6fcc102b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+    <div class="wy-grid-for-nav">
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-scroll">
+                <div class="wy-side-nav-search">
+
+
+
+                    <a href="../index.html" class="icon icon-home">
+                        Clientes_UTN
+                    </a>
+                    <div role="search">
+                        <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                            <input type="text" name="q" placeholder="Buscar documentos"
+                                aria-label="Buscar documentos" />
+                            <input type="hidden" name="check_keywords" value="yes" />
+                            <input type="hidden" name="area" value="default" />
+                        </form>
+                    </div>
+                </div>
+                <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+                    <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+                    <ul>
+                        <li class="toctree-l1"><a class="reference internal" href="../base_datos.html">módulo
+                                base_datos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../basedatos.html">Módulo
+                                basedatos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../cliente-comando.html">Módulo
+                                cliente-comando</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../creador_ini.html">creador_ini
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../librerias.html">librerias
+                                package</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../modelo.html">Módulo modelo</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../observador.html">observador
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../registro.html">Módulo registro</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../validacion.html">validacion
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../vista.html">Módulo vista</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+            <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="../index.html">Clientes_UTN</a>
+            </nav>
+
+            <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="navigation" aria-label="Page navigation">
+                        <ul class="wy-breadcrumbs">
+                            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+                            <li class="breadcrumb-item active">creador_ini</li>
+                            <li class="wy-breadcrumbs-aside">
+                            </li>
+                        </ul>
+                        <hr />
+                    </div>
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                        <div itemprop="articleBody">
+
+                            <h1>Código fuente para creador_ini</h1>
+                            <div class="highlight">
+                                <pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Usado para crear un archivo de configuración.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">configparser</span>
+
+
+<div class="viewcode-block" id="crear_config">
+<a class="viewcode-back" href="../creador_ini.html#creador_ini.crear_config">[documentos]</a>
+<span class="k">def</span> <span class="nf">crear_config</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Genera el archivo de configuración.&quot;&quot;&quot;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;aplicacion&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Administración de Clientes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;github&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/GermanAndresGonzalez&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;correo&quot;</span><span class="p">:</span> <span class="s2">&quot;gandresgonzalez@gmail.com&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;acerca&quot;</span><span class="p">:</span> <span class="s2">&quot;Información de Clientes.</span><span class="se">\n</span><span class="s2">Versión 1.00</span><span class="se">\n</span><span class="s2">Práctica del Curso de Diplomatura en Python de la UTN.</span><span class="se">\n</span><span class="s2">Creado por Germán Andrés González.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.00&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;titulo_p&quot;</span><span class="p">:</span> <span class="s2">&quot;Clientes v1.00&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;geometria&quot;</span><span class="p">:</span> <span class="s2">&quot;1320x750&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;titulo&quot;</span><span class="p">:</span> <span class="s2">&quot;Acerca de Clientes v1.00&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;imagenes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;favicon_icon&quot;</span><span class="p">:</span> <span class="s2">&quot;imagenes/favicon.ico&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;imag_pinky&quot;</span><span class="p">:</span> <span class="s2">&quot;imagenes/Pinky_011.png&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bloqueado_icon&quot;</span><span class="p">:</span> <span class="s2">&quot;imagenes/locked.png&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;usuario&quot;</span><span class="p">:</span> <span class="s2">&quot;imagenes/user_icon.png&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;ventanas/imagenes/password.png&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;bd_clientes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;clientes_nuevo.db&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tabla&quot;</span><span class="p">:</span> <span class="s2">&quot;personas&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;bd_usuarios&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;clientes_nuevo.db&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tabla&quot;</span><span class="p">:</span> <span class="s2">&quot;usuarios&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;marco&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;bg&quot;</span><span class="p">:</span> <span class="s2">&quot;#35374B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padx&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;pady&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">1400</span><span class="p">,</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">750</span><span class="p">,</span>
+        <span class="s2">&quot;borderwidth&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;marco_mayor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;bg&quot;</span><span class="p">:</span> <span class="s2">&quot;#35374B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padx&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;pady&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">1400</span><span class="p">,</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">700</span><span class="p">,</span>
+        <span class="s2">&quot;borderwidth&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;marco_izq&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;bg&quot;</span><span class="p">:</span> <span class="s2">&quot;#35374B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padx&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;pady&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">345</span><span class="p">,</span>
+        <span class="s2">&quot;borderwidth&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;marco_botones&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;bg&quot;</span><span class="p">:</span> <span class="s2">&quot;#35374B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padx&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;pady&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">1300</span><span class="p">,</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">330</span><span class="p">,</span>
+        <span class="s2">&quot;relief&quot;</span><span class="p">:</span> <span class="s2">&quot;solid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;highlightbackground&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;highlightthickness&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;borderwidth&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;contenedor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;bg&quot;</span><span class="p">:</span> <span class="s2">&quot;#35374B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padx&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;pady&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">1319</span><span class="p">,</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">730</span><span class="p">,</span>
+        <span class="s2">&quot;relief&quot;</span><span class="p">:</span> <span class="s2">&quot;solid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;highlightbackground&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;highlightthickness&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;borderwidth&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;titulo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Administración de Clientes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bg&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fg&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;font&quot;</span><span class="p">:</span> <span class="s2">&quot;Helvetica 16 bold&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;campos_etiquetas&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;font&quot;</span><span class="p">:</span> <span class="s2">&quot;Helvetica 12&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="s2">&quot;#35374B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fg&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padx&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;pady&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;nombre_campos_entradas&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;indice&quot;</span><span class="p">:</span> <span class="s2">&quot;Indice&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Nombre&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;apellido&quot;</span><span class="p">:</span> <span class="s2">&quot;Apellido&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;contacto&quot;</span><span class="p">:</span> <span class="s2">&quot;Persona de contacto&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;Correo electrónico&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;telefono&quot;</span><span class="p">:</span> <span class="s2">&quot;Número de telefono&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sitio&quot;</span><span class="p">:</span> <span class="s2">&quot;Sitio web&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;perfil&quot;</span><span class="p">:</span> <span class="s2">&quot;Otro Perfil&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;campos_entradas&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;font&quot;</span><span class="p">:</span> <span class="s2">&quot;Helvetica 11 bold&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fg&quot;</span><span class="p">:</span> <span class="s2">&quot;#35374B&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+        <span class="s2">&quot;readonlybackground&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="c1"># backound campos estrada:&quot;#35374B&quot;</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;texto_login&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;usuario&quot;</span><span class="p">:</span> <span class="s2">&quot;Nombre de Usuario&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;contraseña&quot;</span><span class="p">:</span> <span class="s2">&quot;Contraseña&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;boton&quot;</span><span class="p">:</span> <span class="s2">&quot;Iniciar Sesión&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;texto_botones&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;agregar&quot;</span><span class="p">:</span> <span class="s2">&quot;Agregar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;vaciar&quot;</span><span class="p">:</span> <span class="s2">&quot;Vaciar Entradas&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;borrar&quot;</span><span class="p">:</span> <span class="s2">&quot;Borrar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;modificar&quot;</span><span class="p">:</span> <span class="s2">&quot;Modificar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;importar&quot;</span><span class="p">:</span> <span class="s2">&quot;Importar Datos&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;salir&quot;</span><span class="p">:</span> <span class="s2">&quot;Salir&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;botones&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;font&quot;</span><span class="p">:</span> <span class="s2">&quot;Helvetica 11 bold&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fg&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;padx&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;pady&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;15&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;val_treeview&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;fuente&quot;</span><span class="p">:</span> <span class="s2">&quot;Helvetica 11&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fuente_tree&quot;</span><span class="p">:</span> <span class="s2">&quot;Helvetica 11&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="s2">&quot;#4E5275&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;foreground&quot;</span><span class="p">:</span> <span class="s2">&quot;#bababa&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fieldbackground&quot;</span><span class="p">:</span> <span class="s2">&quot;#D3D3D3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fuente_heading&quot;</span><span class="p">:</span> <span class="s2">&quot;Helvetica 11 bold&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;background_heading&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;foreground_heading&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;b_selected&quot;</span><span class="p">:</span> <span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;f_selected&quot;</span><span class="p">:</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;col_treeview&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="s2">&quot;ID&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Nombre&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Apellido&quot;</span><span class="p">:</span> <span class="s2">&quot;Apellido&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Contacto&quot;</span><span class="p">:</span> <span class="s2">&quot;Contacto&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Correo&quot;</span><span class="p">:</span> <span class="s2">&quot;Correo-E&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Tel&quot;</span><span class="p">:</span> <span class="s2">&quot;Teléfono&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Sitio&quot;</span><span class="p">:</span> <span class="s2">&quot;Sitio Web&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Perfil&quot;</span><span class="p">:</span> <span class="s2">&quot;Perfil&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;usuarios&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Usuario&quot;</span><span class="p">:</span> <span class="s2">&quot;Usuario&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Contrasena&quot;</span><span class="p">:</span> <span class="s2">&quot;Contrasena&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Email&quot;</span><span class="p">:</span> <span class="s2">&quot;Email&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Nombre&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;val_usuarios&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Usuario&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;Contrasena&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;Email&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+        <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;val_col_treeview&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;ID&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+        <span class="s2">&quot;Nombre&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;Apellido&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s2">&quot;Contacto&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+        <span class="s2">&quot;Correo&quot;</span><span class="p">:</span> <span class="mi">160</span><span class="p">,</span>
+        <span class="s2">&quot;Tel&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+        <span class="s2">&quot;Sitio&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+        <span class="s2">&quot;Perfil&quot;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;datos/config.ini&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_file</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="leer_config">
+<a class="viewcode-back" href="../creador_ini.html#creador_ini.leer_config">[documentos]</a>
+<span class="k">def</span> <span class="nf">leer_config</span><span class="p">(</span><span class="n">diccionario</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lee un archivo de configuración.&quot;&quot;&quot;</span>
+    <span class="n">dato</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;datos/config.ini&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="n">diccionario</span><span class="p">]:</span>
+        <span class="n">dato</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">key</span><span class="p">:</span> <span class="n">config</span><span class="p">[</span><span class="n">diccionario</span><span class="p">][</span><span class="n">key</span><span class="p">]})</span>  <span class="c1"># config[diccionario][key]</span>
+    <span class="k">return</span> <span class="n">dato</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">crear_config</span><span class="p">()</span>
+</pre>
+                            </div>
+
+                        </div>
+                    </div>
+                    <footer>
+
+                        <hr />
+
+                        <div role="contentinfo">
+                            <p>&#169; Derechos de autor 2024, Germán Andrés González.</p>
+                        </div>
+
+                        Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+                        <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+                        proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+
+</html>

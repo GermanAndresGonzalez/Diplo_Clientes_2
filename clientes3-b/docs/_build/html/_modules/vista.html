@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vista &mdash; documentación de Clientes_UTN - 0.0.1</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=6fcc102b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+    <div class="wy-grid-for-nav">
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-scroll">
+                <div class="wy-side-nav-search">
+
+
+
+                    <a href="../index.html" class="icon icon-home">
+                        Clientes_UTN
+                    </a>
+                    <div role="search">
+                        <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                            <input type="text" name="q" placeholder="Buscar documentos"
+                                aria-label="Buscar documentos" />
+                            <input type="hidden" name="check_keywords" value="yes" />
+                            <input type="hidden" name="area" value="default" />
+                        </form>
+                    </div>
+                </div>
+                <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+                    <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+                    <ul>
+                        <li class="toctree-l1"><a class="reference internal" href="../base_datos.html">módulo
+                                base_datos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../basedatos.html">Módulo
+                                basedatos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../cliente-comando.html">Módulo
+                                cliente-comando</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../creador_ini.html">creador_ini
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../librerias.html">librerias
+                                package</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../modelo.html">Módulo modelo</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../observador.html">observador
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../registro.html">Módulo registro</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../validacion.html">validacion
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../vista.html">Módulo vista</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+            <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="../index.html">Clientes_UTN</a>
+            </nav>
+
+            <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="navigation" aria-label="Page navigation">
+                        <ul class="wy-breadcrumbs">
+                            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+                            <li class="breadcrumb-item active">vista</li>
+                            <li class="wy-breadcrumbs-aside">
+                            </li>
+                        </ul>
+                        <hr />
+                    </div>
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                        <div itemprop="articleBody">
+
+                            <h1>Código fuente para vista</h1>
+                            <div class="highlight">
+                                <pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Versión modificada de la vista de la aplicación.</span>
+<span class="sd">    Tiene una ventana de inicio de la aplicación.</span>
+<span class="sd">    Tiene otra ventana donde se realiza el CRUD de la aplicación.</span>
+<span class="sd">    Además del registro/historial de acciones local, se crea uno en el servidor.</span>
+<span class="sd">    Uso del patrón Factory para agilizar la creación de widgets.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ttk</span><span class="p">,</span>
+    <span class="n">LabelFrame</span><span class="p">,</span>
+    <span class="n">Label</span><span class="p">,</span>
+    <span class="n">IntVar</span><span class="p">,</span>
+    <span class="n">StringVar</span><span class="p">,</span>
+    <span class="n">Entry</span><span class="p">,</span>
+    <span class="n">Button</span><span class="p">,</span>
+    <span class="n">Scrollbar</span><span class="p">,</span>
+    <span class="n">Menu</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="c1"># from tkinter.messagebox import showinfo</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">ImageTk</span><span class="p">,</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getcwd</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+
+<span class="kn">from</span> <span class="nn">librerias.creador_ini</span> <span class="kn">import</span> <span class="n">leer_config</span>
+<span class="kn">from</span> <span class="nn">modelo</span> <span class="kn">import</span> <span class="n">Abmc</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">librerias.acercade</span> <span class="kn">import</span> <span class="n">Acercade</span>
+<span class="kn">from</span> <span class="nn">librerias.importar</span> <span class="kn">import</span> <span class="n">Importar</span>
+<span class="kn">from</span> <span class="nn">registro</span> <span class="kn">import</span> <span class="n">RegistroLogError</span>
+<span class="kn">from</span> <span class="nn">base_datos</span> <span class="kn">import</span> <span class="n">ManejoBD</span>
+<span class="kn">from</span> <span class="nn">observador</span> <span class="kn">import</span> <span class="n">Observer</span>
+
+
+
+<span class="kn">from</span> <span class="nn">librerias.fabrica</span> <span class="kn">import</span> <span class="n">FabricaWidgets</span><span class="p">,</span> <span class="n">CreadorMultiple</span><span class="p">,</span> <span class="n">CreadorEntradasMultiples</span>
+
+<span class="c1"># from librerias.creador_ini import leer_config</span>
+
+
+<div class="viewcode-block" id="Ventana">
+<a class="viewcode-back" href="../vista.html#vista.Ventana">[documentos]</a>
+<span class="k">class</span> <span class="nc">Ventana</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_root</span><span class="p">,</span> <span class="n">usuario</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">_root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="n">usuario</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">asignaciones_varias</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colocar_widgets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objeto_acciones</span><span class="o">.</span><span class="n">cargar_treeview</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">,</span> <span class="s2">&quot;datos/clientes_nuevo.db&quot;</span><span class="p">,</span> <span class="s2">&quot;personas&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llenar_entradas</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort_order</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># --</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">)</span>
+        <span class="c1"># --</span>
+
+<div class="viewcode-block" id="Ventana.asignaciones_varias">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.asignaciones_varias">[documentos]</a>
+    <span class="k">def</span> <span class="nf">asignaciones_varias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imagenes</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;imagenes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;marco&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_mayor</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;marco_mayor&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_izq</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;marco_izq&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_con</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;contenedor&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_bot</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;marco_botones&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_app</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;aplicacion&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">campos_etiquetas</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;campos_etiquetas&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre_campos</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;nombre_campos_entradas&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">campos_entradas</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;campos_entradas&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">botones</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;botones&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_login</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;texto_login&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texto_botones</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;texto_botones&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titulo</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;titulo&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombres_arbol</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;col_treeview&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datos_arbol</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;val_treeview&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_cals</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;val_col_treeview&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objeto_acciones</span> <span class="o">=</span> <span class="n">Abmc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_app</span><span class="p">[</span><span class="s2">&quot;titulo_p&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_app</span><span class="p">[</span><span class="s2">&quot;geometria&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comandos</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;agregar&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">objeto_acciones</span><span class="o">.</span><span class="n">alta_cliente</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">var_indice</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;nombre&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;apellido&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;contacto&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;telefono&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;sitio&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;perfil&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;vaciar&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">vaciar</span><span class="p">(),</span>
+            <span class="s2">&quot;borrar&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">objeto_acciones</span><span class="o">.</span><span class="n">borrar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">),</span>
+            <span class="s2">&quot;modificar&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">objeto_acciones</span><span class="o">.</span><span class="n">actualizar</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;nombre&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;apellido&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;contacto&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;telefono&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;sitio&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;perfil&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;importar&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">importar</span><span class="p">(),</span>
+            <span class="s2">&quot;salir&quot;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">destroy</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estados</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;readonly&quot;</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+            <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icono</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imagenes</span><span class="p">[</span><span class="s2">&quot;favicon_icon&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">foto</span> <span class="o">=</span> <span class="n">ImageTk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icono</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">wm_iconphoto</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">foto</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.colocar_widgets">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.colocar_widgets">[documentos]</a>
+    <span class="k">def</span> <span class="nf">colocar_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_indice</span> <span class="o">=</span> <span class="n">IntVar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_nombre_cliente</span> <span class="o">=</span> <span class="n">StringVar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_apellido_cliente</span> <span class="o">=</span> <span class="n">StringVar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_contacto</span> <span class="o">=</span> <span class="n">StringVar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_telefono</span> <span class="o">=</span> <span class="n">StringVar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_sitio</span> <span class="o">=</span> <span class="n">StringVar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_perfil</span> <span class="o">=</span> <span class="n">StringVar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_correo_electronico</span> <span class="o">=</span> <span class="n">StringVar</span>
+
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_indice</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_nombre_cliente</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_apellido_cliente</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_contacto</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_telefono</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_sitio</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_perfil</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_correo_electronico</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_grande</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;marco&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">marco_mayor</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">crear_titulo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_grande</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">titulo</span><span class="p">,</span>
+            <span class="mf">0.5</span><span class="p">,</span>
+            <span class="mf">0.03</span><span class="p">,</span>
+            <span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contenedor</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;marco&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_grande</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">marco_con</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">contenedor</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contenedor</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contenedor</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">etiquetas</span> <span class="o">=</span> <span class="n">CreadorMultiple</span><span class="o">.</span><span class="n">crear_multiples_widgets</span><span class="p">(</span>
+            <span class="s2">&quot;etiqueta&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contenedor</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nombre_campos</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_etiquetas</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span> <span class="o">=</span> <span class="n">CreadorEntradasMultiples</span><span class="o">.</span><span class="n">crear_multiples_widgets</span><span class="p">(</span>
+            <span class="s2">&quot;entrada&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contenedor</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nombre_campos</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estados</span><span class="p">,</span>
+            <span class="n">variables</span><span class="p">,</span>
+            <span class="n">vertical</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_entradas</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">llenar_entradas</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">contenedor</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+            <span class="n">relx</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">rely</span><span class="o">=</span><span class="mf">0.28</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crear_botonera</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_grande</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">marco_bot</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">botones</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.25</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crear_arbol</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_grande</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">datos_arbol</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nombres_arbol</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">col_cals</span><span class="p">,</span>
+            <span class="mf">0.5</span><span class="p">,</span>
+            <span class="mf">0.69</span><span class="p">,</span>
+            <span class="n">marcox</span><span class="o">=</span><span class="mi">1370</span><span class="p">,</span>
+            <span class="n">marcoy</span><span class="o">=</span><span class="mi">570</span><span class="p">,</span>
+            <span class="n">barra</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_grande</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+            <span class="n">relx</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">rely</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.crear_titulo">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.crear_titulo">[documentos]</a>
+    <span class="k">def</span> <span class="nf">crear_titulo</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">marco_contenedor</span><span class="p">,</span>
+        <span class="n">con_titulo</span><span class="p">,</span>
+        <span class="n">marcox</span><span class="p">,</span>
+        <span class="n">marcoy</span><span class="p">,</span>
+        <span class="n">alineacion</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">et_tit</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;etiqueta&quot;</span><span class="p">,</span>
+            <span class="n">marco_contenedor</span><span class="p">,</span>
+            <span class="n">padx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">pady</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">con_titulo</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">et_tit</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+            <span class="n">relx</span><span class="o">=</span><span class="n">marcox</span><span class="p">,</span>
+            <span class="n">rely</span><span class="o">=</span><span class="n">marcoy</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="n">alineacion</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># relx=0.5,</span>
+    <span class="c1"># rely=0.03,</span>
+    <span class="c1"># self.marco_grande</span>
+    <span class="c1"># anchor=&quot;center&quot;</span>
+    <span class="c1"># self.titulo</span>
+<div class="viewcode-block" id="Ventana.crear_botonera">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.crear_botonera">[documentos]</a>
+    <span class="k">def</span> <span class="nf">crear_botonera</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">marco_contenedor</span><span class="p">,</span>
+        <span class="n">marco_bot</span><span class="p">,</span>
+        <span class="n">con_botones</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">,</span>
+        <span class="n">marcox</span><span class="p">,</span>
+        <span class="n">marcoy</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_botones</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;marco&quot;</span><span class="p">,</span>
+            <span class="n">marco_contenedor</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">marco_bot</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># self.marco_grande</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">botonera</span> <span class="o">=</span> <span class="n">CreadorMultiple</span><span class="o">.</span><span class="n">crear_multiples_widgets</span><span class="p">(</span>
+            <span class="s2">&quot;boton&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_botones</span><span class="p">,</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">y</span><span class="p">,</span>
+            <span class="n">textos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">texto_botones</span><span class="p">,</span>
+            <span class="n">vertical</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">acciones</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">comandos</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">con_botones</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_botones</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+            <span class="n">relx</span><span class="o">=</span><span class="n">marcox</span><span class="p">,</span>
+            <span class="n">rely</span><span class="o">=</span><span class="n">marcoy</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># relx=0.15,</span>
+    <span class="c1"># rely=0.25,</span>
+<div class="viewcode-block" id="Ventana.crear_entradas">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.crear_entradas">[documentos]</a>
+    <span class="k">def</span> <span class="nf">crear_entradas</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">marco_contenedor</span><span class="p">,</span>
+        <span class="n">marco</span><span class="p">,</span>
+        <span class="n">datos_arbol</span><span class="p">,</span>
+        <span class="n">nombres_arbol</span><span class="p">,</span>
+        <span class="n">col_cals</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">,</span>
+        <span class="n">marcox</span><span class="p">,</span>
+        <span class="n">marcoy</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Ventana.ventana_acerca">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.ventana_acerca">[documentos]</a>
+    <span class="k">def</span> <span class="nf">ventana_acerca</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">acercade</span> <span class="o">=</span> <span class="n">Acercade</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Ventana.importar">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.importar">[documentos]</a>
+    <span class="k">def</span> <span class="nf">importar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">importar</span> <span class="o">=</span> <span class="n">Importar</span><span class="p">()</span>  <span class="c1"># (print(&quot;hola&quot;)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.exportar">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.exportar">[documentos]</a>
+    <span class="k">def</span> <span class="nf">exportar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.hola">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.hola">[documentos]</a>
+    <span class="k">def</span> <span class="nf">hola</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.llenar_entradas">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.llenar_entradas">[documentos]</a>
+    <span class="k">def</span> <span class="nf">llenar_entradas</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">config</span>
+
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">)</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre_campos</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;readonly&quot;</span><span class="p">)</span></div>
+
+        <span class="c1"># self.entradas[&quot;indice&quot;].config(state=&quot;normal&quot;)</span>
+
+<div class="viewcode-block" id="Ventana.abrir_documentacion">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.abrir_documentacion">[documentos]</a>
+    <span class="k">def</span> <span class="nf">abrir_documentacion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">directorio</span> <span class="o">=</span> <span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/docs/build/html/index.html&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">directorio</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">directorio</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.crear_arbol">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.crear_arbol">[documentos]</a>
+    <span class="k">def</span> <span class="nf">crear_arbol</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">marco_contenedor</span><span class="p">,</span>
+        <span class="n">marco</span><span class="p">,</span>
+        <span class="n">datos_arbol</span><span class="p">,</span>
+        <span class="n">nombres_arbol</span><span class="p">,</span>
+        <span class="n">col_cals</span><span class="p">,</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">,</span>
+        <span class="n">marcox</span><span class="p">,</span>
+        <span class="n">marcoy</span><span class="p">,</span>
+        <span class="n">barra</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_arbol</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;marco&quot;</span><span class="p">,</span>
+            <span class="n">marco_contenedor</span><span class="p">,</span>
+            <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span>
+            <span class="n">ancho</span><span class="o">=</span><span class="n">marcox</span><span class="p">,</span>
+            <span class="n">alto</span><span class="o">=</span><span class="n">marcoy</span><span class="p">,</span>
+            <span class="n">highlightbackground</span><span class="o">=</span><span class="s2">&quot;#78A083&quot;</span><span class="p">,</span>
+            <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">marco</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">estilo_arbol</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Style</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estilo_arbol</span><span class="o">.</span><span class="n">theme_use</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estilo_arbol</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
+            <span class="s2">&quot;Treeview&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;fuente&quot;</span><span class="p">],</span>
+            <span class="n">background</span><span class="o">=</span><span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;background&quot;</span><span class="p">],</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;foreground&quot;</span><span class="p">],</span>
+            <span class="n">fieldbackground</span><span class="o">=</span><span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;fieldbackground&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estilo_arbol</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
+            <span class="s2">&quot;Treeview.Heading&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;fuente_heading&quot;</span><span class="p">]),</span>
+            <span class="n">background</span><span class="o">=</span><span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;background_heading&quot;</span><span class="p">],</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;foreground_heading&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">estilo_arbol</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+            <span class="s2">&quot;Treeview&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;selected&quot;</span><span class="p">,</span> <span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;b_selected&quot;</span><span class="p">])],</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;selected&quot;</span><span class="p">,</span> <span class="n">datos_arbol</span><span class="p">[</span><span class="s2">&quot;f_selected&quot;</span><span class="p">])],</span>
+        <span class="p">)</span>
+
+        <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">col_cals</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columnas</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nombres_arbol</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">columnas</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">value</span><span class="p">,</span> <span class="n">cols</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="s2">&quot;w&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;arbol&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_arbol</span><span class="p">,</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnas</span><span class="p">],</span>
+            <span class="n">show</span><span class="o">=</span><span class="s2">&quot;headings&quot;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="s2">&quot;Treeview&quot;</span><span class="p">,</span>
+            <span class="n">selectmode</span><span class="o">=</span><span class="s2">&quot;extended&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">anchor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnas</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">column</span><span class="p">(</span>
+                <span class="n">col</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">minwidth</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">anchor</span> <span class="k">if</span> <span class="n">anchor</span> <span class="k">else</span> <span class="s2">&quot;w&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span>
+                <span class="n">col</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_col</span><span class="o">=</span><span class="n">col</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ordenar_col_por</span><span class="p">(</span><span class="n">_col</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">barra_desplazamiento</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">Scrollbar</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">marco_arbol</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">yview</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">barra</span>
+            <span class="k">else</span> <span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">barra_desplazamiento</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">barra</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">yscrollcommand</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">barra_desplazamiento</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">barra</span>
+            <span class="k">else</span> <span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;ButtonRelease-1&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;KeyRelease-Up&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;KeyRelease-Down&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seleccionar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>  <span class="c1"># expand=True, fill=&quot;both&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_arbol</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+            <span class="n">relx</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+            <span class="n">rely</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.menu">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.menu">[documentos]</a>
+    <span class="k">def</span> <span class="nf">menu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">menubar</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">menu_archivo</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">menu_archivo</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Importar&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objeto_acciones</span><span class="o">.</span><span class="n">importar_datos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">menu_archivo</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exportar&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exportar</span><span class="p">)</span>
+        <span class="n">menu_archivo</span><span class="o">.</span><span class="n">add_separator</span><span class="p">()</span>
+        <span class="n">menu_archivo</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Salir&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+        <span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Archivo&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menu_archivo</span><span class="p">)</span>
+
+        <span class="n">menu_tema</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">menu_tema</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Claro&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hola</span><span class="p">)</span>
+        <span class="n">menu_tema</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Oscuro&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hola</span><span class="p">)</span>
+        <span class="c1"># menu_tema.add_separator()</span>
+        <span class="c1"># menu_tema.add_command(label=&quot;Cortar&quot;, command=master.quit)</span>
+        <span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Temas&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menu_tema</span><span class="p">)</span>
+
+        <span class="n">menu_ayuda</span> <span class="o">=</span> <span class="n">Menu</span><span class="p">(</span><span class="n">menubar</span><span class="p">,</span> <span class="n">tearoff</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">menu_ayuda</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Documentación&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">abrir_documentacion</span><span class="p">)</span>
+        <span class="n">menu_ayuda</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Acerca de&quot;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ventana_acerca</span><span class="p">)</span>
+        <span class="n">menubar</span><span class="o">.</span><span class="n">add_cascade</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Ayuda&quot;</span><span class="p">,</span> <span class="n">menu</span><span class="o">=</span><span class="n">menu_ayuda</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="n">menubar</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.seleccionar">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.seleccionar">[documentos]</a>
+    <span class="k">def</span> <span class="nf">seleccionar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Hal hacer clic en el Treeview o mover las flechas se ve la información en los widgets de entrada.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event (seleccion): tecla de dirección o hacer clic.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">focus</span><span class="p">()</span>
+            <span class="c1"># valor2 = self.arbol_vista.item(item, &quot;text&quot;)</span>
+            <span class="n">valores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+
+            <span class="n">valores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="n">value</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">)</span>
+                <span class="n">value</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">valores</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;readonly&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">361</span><span class="p">,</span>
+                <span class="s2">&quot;Vista&quot;</span><span class="p">,</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Ventana.vaciar">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.vaciar">[documentos]</a>
+    <span class="k">def</span> <span class="nf">vaciar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Vacía los valores de los widget de entrada.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">)</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entradas</span><span class="p">[</span><span class="s2">&quot;indice&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;readonly&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objeto_acciones</span><span class="o">.</span><span class="n">cargar_treeview</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">,</span> <span class="s2">&quot;datos/clientes_nuevo.db&quot;</span><span class="p">,</span> <span class="s2">&quot;personas&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Ventana.ordenar_col_por">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.ordenar_col_por">[documentos]</a>
+    <span class="k">def</span> <span class="nf">ordenar_col_por</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ordena el Treeview al hacer 2 veces click en el encabezado elegido.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            col (row): columna del treeview</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Obtener índice de la columna</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">col_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+            <span class="c1"># Cambiar orden si se hace clic en la misma columna</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span> <span class="o">==</span> <span class="n">col</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sort_order</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sort_order</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span> <span class="o">=</span> <span class="n">col</span>
+
+            <span class="c1"># Obtiene los artículos y ordena</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)[</span><span class="s2">&quot;values&quot;</span><span class="p">],</span> <span class="n">item_id</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">item_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+            <span class="p">]</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span>
+                <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ordenar_llave</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">col_index</span><span class="p">]),</span>
+                <span class="n">reverse</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_order</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># items.sort(key=lambda x: x[0][col_index], reverse=self.sort_order == -1)</span>
+
+            <span class="c1"># Actualiza el  Treeview</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">item_id</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+            <span class="c1"># Actualiza encabezado de columna para mostrar indicador</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actualizar_encabezados</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">323</span><span class="p">,</span> <span class="s2">&quot;Vista&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">e</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Ventana.ordenar_llave">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.ordenar_llave">[documentos]</a>
+    <span class="k">def</span> <span class="nf">ordenar_llave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">valor</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convierte los valores a un mismo tipo para ordenar.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Intento convertir el valor a un float para su comparación</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c1"># Si falla la conversión, el valor es una cadena</span>
+            <span class="k">return</span> <span class="n">valor</span></div>
+
+
+<div class="viewcode-block" id="Ventana.actualizar_encabezados">
+<a class="viewcode-back" href="../vista.html#vista.Ventana.actualizar_encabezados">[documentos]</a>
+    <span class="k">def</span> <span class="nf">actualizar_encabezados</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Actualiza encabezados de la columna para mostrar orden.&quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]:</span>
+                <span class="n">heading_text</span> <span class="o">=</span> <span class="n">col</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_order</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">heading_text</span> <span class="o">+=</span> <span class="s2">&quot; ▲&quot;</span>  <span class="c1"># Ascendente</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">heading_text</span> <span class="o">+=</span> <span class="s2">&quot; ▼&quot;</span>  <span class="c1"># Descendente</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arbol_vista</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">heading_text</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span><span class="mi">337</span><span class="p">,</span> <span class="s2">&quot;Vista&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Ventana_login">
+<a class="viewcode-back" href="../vista.html#vista.Ventana_login">[documentos]</a>
+<span class="k">class</span> <span class="nc">Ventana_login</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_root</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">_root</span>  <span class="c1"># Inicializar self.root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imagenes</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;imagenes&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;marco&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">titulo</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;titulo&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">campos_etiquetas</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;campos_etiquetas&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre_campos</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;nombre_campos_entradas&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">campos_entradas</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;campos_entradas&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">botones</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;botones&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_login</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;texto_login&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">texto_botones</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;texto_botones&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;marco&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">datos_arbol</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;val_treeview&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombres_arbol</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;usuarios&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span> <span class="o">=</span> <span class="s2">&quot;datos/clientes_nuevo.db&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span> <span class="o">=</span> <span class="s2">&quot;usuarios&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span> <span class="o">=</span> <span class="n">ManejoBD</span><span class="p">()</span>
+        <span class="c1"># --------------------------------------------------</span>
+        <span class="c1"># self.val_login = False</span>
+        <span class="c1"># --------------------------------------------------</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pantalla de login&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;700x400&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imagenes</span><span class="p">[</span><span class="s2">&quot;favicon_icon&quot;</span><span class="p">])</span>
+        <span class="c1"># self.root.resizable(0, 0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_cals</span> <span class="o">=</span> <span class="n">leer_config</span><span class="p">(</span><span class="s2">&quot;val_usuarios&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_mayor</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;marco&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">ancho</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">alto</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">marco</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_izq</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;marco&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_mayor</span><span class="p">,</span>
+            <span class="n">ancho</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+            <span class="n">alto</span><span class="o">=</span><span class="mi">345</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">marco</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pinky</span> <span class="o">=</span> <span class="n">ImageTk</span><span class="o">.</span><span class="n">PhotoImage</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imagenes</span><span class="p">[</span><span class="s2">&quot;imag_pinky&quot;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imagen_pinky</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;etiqueta&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_izq</span><span class="p">,</span>
+            <span class="n">image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pinky</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_etiquetas</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">imagen_pinky</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_izq</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;marco&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">marco_mayor</span><span class="p">,</span> <span class="n">ancho</span><span class="o">=</span><span class="mi">395</span><span class="p">,</span> <span class="n">alto</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">marco</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eti_usuario</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;etiqueta&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_login</span><span class="p">[</span><span class="s2">&quot;usuario&quot;</span><span class="p">],</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_etiquetas</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eti_usuario</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">NW</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entrada_usuario</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;entrada&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_entradas</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entrada_usuario</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eti_pass</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;etiqueta&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_login</span><span class="p">[</span><span class="s2">&quot;contraseña&quot;</span><span class="p">],</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_etiquetas</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eti_pass</span><span class="o">.</span><span class="n">place</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span>
+            <span class="n">anchor</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">NW</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entrada_pass</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;entrada&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_entradas</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entrada_pass</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_login</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;boton&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_login</span><span class="p">[</span><span class="s2">&quot;boton&quot;</span><span class="p">],</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span><span class="p">),</span>
+            <span class="n">ancho</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">botones</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_login</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_salir</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;boton&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">texto_botones</span><span class="p">[</span><span class="s2">&quot;salir&quot;</span><span class="p">],</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">destroy</span><span class="p">(),</span>
+            <span class="n">ancho</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">botones</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_salir</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">eti_dat_log</span> <span class="o">=</span> <span class="n">FabricaWidgets</span><span class="o">.</span><span class="n">crear_widget</span><span class="p">(</span>
+            <span class="s2">&quot;etiqueta&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marco_mayor</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">texto_etiqueta</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span><span class="p">),</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">campos_etiquetas</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eti_dat_log</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_der</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">301</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">marco_mayor</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Ventana_login.login">
+<a class="viewcode-back" href="../vista.html#vista.Ventana_login.login">[documentos]</a>
+    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre_bd</span><span class="p">,</span> <span class="n">nombre_tabla</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entrada_usuario</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># entrada_usuario</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entrada_pass</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">nombre_bd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;SELECT * FROM </span><span class="si">{</span><span class="n">nombre_tabla</span><span class="si">}</span><span class="s2"> WHERE nombre_usuario = ? AND contrasena = ?&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">contra</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="s2">&quot;Login correcto&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registro</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">702</span><span class="p">,</span> <span class="s2">&quot;Login&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registro</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objeto_vista</span> <span class="o">=</span> <span class="n">Ventana</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">)</span>
+            <span class="n">obser</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objeto_vista</span><span class="o">.</span><span class="n">objeto_acciones</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+            <span class="c1"># self.mostrar_datos(self.result)</span>
+
+            <span class="c1"># self.val_login = True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tk</span><span class="o">.</span><span class="n">messagebox</span><span class="o">.</span><span class="n">showerror</span><span class="p">(</span><span class="s2">&quot;Login&quot;</span><span class="p">,</span> <span class="s2">&quot;Usuario o contraseña inválidos&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span> <span class="o">=</span> <span class="s2">&quot;Login incorrecto&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registro</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">702</span><span class="p">,</span> <span class="s2">&quot;Login&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registro</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mensaje</span><span class="p">)</span></div>
+
+        <span class="c1"># self.val_login = False</span>
+
+<div class="viewcode-block" id="Ventana_login.texto_etiqueta">
+<a class="viewcode-back" href="../vista.html#vista.Ventana_login.texto_etiqueta">[documentos]</a>
+    <span class="k">def</span> <span class="nf">texto_etiqueta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre_bd</span><span class="p">,</span> <span class="n">nombre_tabla</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Valores de las contraseñas.&quot;&quot;&quot;</span>
+        <span class="c1"># nombre_tabla = &quot;personas&quot;</span>
+        <span class="n">texto</span> <span class="o">=</span> <span class="s2">&quot;Usuario&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="s2">&quot;Contraseña</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">conectar_bd</span><span class="p">(</span><span class="n">nombre_bd</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cargar_datos</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SELECT * FROM </span><span class="si">{</span><span class="n">nombre_tabla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[:</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="n">texto</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">5</span>
+            <span class="n">texto</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cerrar_db</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">texto</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="n">rut</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+    <span class="n">ventana_clientes</span> <span class="o">=</span> <span class="n">Ventana</span><span class="p">(</span><span class="n">rut</span><span class="p">)</span>
+    <span class="c1"># obser = Observer(aplicacion_login.objeto_vista.objeto_acciones)</span>
+    <span class="n">rut</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre>
+                            </div>
+
+                        </div>
+                    </div>
+                    <footer>
+
+                        <hr />
+
+                        <div role="contentinfo">
+                            <p>&#169; Derechos de autor 2024, Germán Andrés González.</p>
+                        </div>
+
+                        Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+                        <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+                        proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+
+</html>

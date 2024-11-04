@@ -1,0 +1,32 @@
+Acción registrada: 4 2024-11-01 23:32:10.688847 Login 130 root Login correcto
+Acción registrada: 4 2024-11-01 23:39:22.457406 Login 130 root Login incorrecto
+Acción registrada: 2024-11-01 23:39:38.349527  Modificación 252 None
+Acción registrada: 2024-11-01 23:39:50.424858  Alta 142 None
+Acción registrada: 4 2024-11-01 23:40:10.459447 Login 130 root Login correcto
+Acción registrada: 4 2024-11-01 23:41:32.292727 Login 130 admin Login incorrecto
+Acción registrada: 4 2024-11-01 23:41:37.969485 Login 130 admin Login incorrecto
+Acción registrada: 2024-11-01 23:42:02.352932  Alta 142 None
+Acción registrada: 2024-11-01 23:42:31.452774  Alta 142 None
+Acción registrada: 2024-11-01 23:42:37.074467  Baja 184 None
+Acción registrada: 4 2024-11-01 23:42:37.993111 Login 130 admin Login correcto
+Acción registrada: 4 2024-11-01 23:47:12.685137 Login 130 admin Login incorrecto
+Acción registrada: 4 2024-11-01 23:47:19.766080 Login 130 admin Login incorrecto
+Acción registrada: 4 2024-11-01 23:47:24.402090 Login 130 admin2 Login incorrecto
+Acción registrada: 4 2024-11-01 23:47:26.496978 Login 130 admin23 Login incorrecto
+Acción registrada: 4 2024-11-01 23:47:37.094454 Login 130 admin Login correcto
+Acción registrada: 4 2024-11-01 23:48:17.885931 Login 130 root Login correcto
+Cliente: Linea: 702, Módulo: Login, Fecha: 2024-11-02 18:28:15.646136, Usuario: root Login incorrecto App Local Servidor, ('127.0.0.1', 65372)
+Cliente: Linea: 702, Módulo: Login, Fecha: 2024-11-02 18:30:34.938343, Usuario: root Login incorrecto App Local Servidor, ('127.0.0.1', 52459)
+Cliente: Linea: 702, Módulo: Login, Fecha: 2024-11-02 18:30:41.716667, Usuario: root Login correcto App Local Servidor, ('127.0.0.1', 52623)
+Cliente: Linea: 142, Módulo: Alta, Fecha: 2024-11-02 18:31:51.046964, Usuario: root App Local Servidor, ('127.0.0.1', 54345)
+Cliente: Linea: 142, Módulo: Alta, Fecha: 2024-11-02 18:32:05.780916, Usuario: root App Local Servidor, ('127.0.0.1', 54698)
+Cliente: Linea: 142, Módulo: Alta, Fecha: 2024-11-02 18:32:18.452750, Usuario: root App Local Servidor, ('127.0.0.1', 54996)
+Cliente: Linea: 702, Módulo: Login, Fecha: 2024-11-04 00:53:55.594348, Usuario: root Login correcto App Local Servidor, ('127.0.0.1', 51831)
+Cliente: Linea: 142, Módulo: Alta, Fecha: 2024-11-04 00:54:10.250577, Usuario: root App Local Servidor, ('127.0.0.1', 52002)
+Cliente: Linea: 142, Módulo: Alta, Fecha: 2024-11-04 00:54:25.441642, Usuario: root App Local Servidor, ('127.0.0.1', 52178)
+Cliente: Linea: 252, Módulo: Modificación, Fecha: 2024-11-04 00:54:32.655099, Usuario: None App Local Servidor, ('127.0.0.1', 52262)
+Cliente: Linea: 184, Módulo: Baja, Fecha: 2024-11-04 00:54:40.140982, Usuario: root App Local Servidor, ('127.0.0.1', 52349)
+Cliente: Linea: 184, Módulo: Baja, Fecha: 2024-11-04 00:54:43.886035, Usuario: root App Local Servidor, ('127.0.0.1', 52402)
+Cliente: Linea: 702, Módulo: Login, Fecha: 2024-11-04 00:56:34.404952, Usuario: root Login incorrecto App Local Servidor, ('127.0.0.1', 53717)
+Cliente: Linea: 702, Módulo: Login, Fecha: 2024-11-04 00:56:40.492238, Usuario: root Login incorrecto App Local Servidor, ('127.0.0.1', 53790)
+Cliente: Linea: 702, Módulo: Login, Fecha: 2024-11-04 00:56:47.107402, Usuario: admin Login correcto App Local Servidor, ('127.0.0.1', 53877)

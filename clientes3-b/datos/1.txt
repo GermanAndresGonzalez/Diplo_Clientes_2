@@ -1,0 +1,41 @@
+	self,
+        marco_contenedor,
+        marco,
+        datos_arbol,
+        nombres_arbol,
+        col_cals,
+        x,
+        y,
+        marcox,
+        marcoy,
+        barra=True,
+
+carlos ={'indice': 'Indice', 'nombre': 'Nombre', 'apellido': 'Apellido', 'contacto': 'Persona 
+de contacto', 'email': 'Correo electrónico', 'telefono': 
+
+def obtener_id_de_fila(self, tree, i):
+    # Obtener la lista de IDs de los ítems en el Treeview
+    lista_ids = tree.get_children()
+    # Verificar si el índice i está dentro del rango de la lista de IDs
+    if i < len(lista_ids):
+        # Obtener el ID de la fila correspondiente
+        id_fila = lista_ids[i]
+        return id_fila
+    else:
+        return None
+
+def validar_datos(self, df, tree):
+    self.error = True
+    self.errores = []
+    for i, fila in df.iterrows():
+        # Obtener el ID de la fila correspondiente
+        id_fila = self.obtener_id_de_fila(tree, i)
+        if id_fila is not None:
+            for col in df.columns:
+                if col in self.lista_nombres:
+                    error = self.validador.validar_nombres(fila[col])
+                    print(error, fila[col])
+                    if error == False:
+                        self.errores.append((i, error, col, fila[col]))
+                        self.insertar_error(tree, id_fila)
+                # ...

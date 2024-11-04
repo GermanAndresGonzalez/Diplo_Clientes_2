@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Módulo vista &mdash; documentación de Clientes_UTN - 0.0.1</title>
+  <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+  <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+
+  <script src="_static/jquery.js?v=5d32c60e"></script>
+  <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+  <script src="_static/documentation_options.js?v=6fcc102b"></script>
+  <script src="_static/doctools.js?v=9bcbadda"></script>
+  <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+  <script src="_static/translations.js?v=f85f4cfb"></script>
+  <script src="_static/js/theme.js"></script>
+  <link rel="index" title="Índice" href="genindex.html" />
+  <link rel="search" title="Búsqueda" href="search.html" />
+  <link rel="prev" title="Módulo validacion" href="validacion.html" />
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+          <a href="index.html" class="icon icon-home">
+            Clientes_UTN
+          </a>
+          <div role="search">
+            <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+              <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+          <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+          <ul class="current">
+            <li class="toctree-l1"><a class="reference internal" href="base_datos.html">Módulo base_datos</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="basedatos.html">Módulo basedatos</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="cliente-comando.html">Módulo cliente-comando</a>
+            </li>
+            <li class="toctree-l1"><a class="reference internal" href="creador_ini.html">Módulo creador_ini</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="librerias.html">Paquete librerias</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="modelo.html">Módulo modelo</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="observador.html">Módulo observador</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="registro.html">Módulo registro</a></li>
+            <li class="toctree-l1"><a class="reference internal" href="validacion.html">Módulo validacion</a></li>
+            <li class="toctree-l1 current"><a class="current reference internal" href="#">Módulo vista</a>
+              <ul>
+                <li class="toctree-l2"><a class="reference internal" href="#vista.Ventana"><code
+                      class="docutils literal notranslate"><span class="pre">Ventana</span></code></a>
+                  <ul>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.abrir_documentacion"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.abrir_documentacion()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal"
+                        href="#vista.Ventana.actualizar_encabezados"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.actualizar_encabezados()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.asignaciones_varias"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.asignaciones_varias()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.colocar_widgets"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.colocar_widgets()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.crear_arbol"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.crear_arbol()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.crear_botonera"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.crear_botonera()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.crear_entradas"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.crear_entradas()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.crear_titulo"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.crear_titulo()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.exportar"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.exportar()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.hola"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.hola()</span></code></a></li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.importar"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.importar()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.llenar_entradas"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.llenar_entradas()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.menu"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.menu()</span></code></a></li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.ordenar_col_por"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.ordenar_col_por()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.ordenar_llave"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.ordenar_llave()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.seleccionar"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.seleccionar()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.vaciar"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.vaciar()</span></code></a></li>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana.ventana_acerca"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana.ventana_acerca()</span></code></a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="#vista.Ventana_login"><code
+                      class="docutils literal notranslate"><span class="pre">Ventana_login</span></code></a>
+                  <ul>
+                    <li class="toctree-l3"><a class="reference internal" href="#vista.Ventana_login.login"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana_login.login()</span></code></a>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal"
+                        href="#vista.Ventana_login.texto_etiqueta"><code
+                          class="docutils literal notranslate"><span class="pre">Ventana_login.texto_etiqueta()</span></code></a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Clientes_UTN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+            <ul class="wy-breadcrumbs">
+              <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+              <li class="breadcrumb-item active">Módulo vista</li>
+              <li class="wy-breadcrumbs-aside">
+                <a href="_sources/vista.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+              </li>
+            </ul>
+            <hr />
+          </div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div itemprop="articleBody">
+
+              <section id="module-vista">
+                <span id="vista-module"></span>
+                <h1>Módulo vista<a class="headerlink" href="#module-vista" title="Link to this heading"></a></h1>
+                <p>Versión modificada de la vista de la aplicación.
+                  Tiene una ventana de inicio de la aplicación.
+                  Tiene otra ventana donde se realiza el CRUD de la aplicación.
+                  Además del registro/historial de acciones local, se crea uno en el servidor.
+                  Uso del patrón Factory para agilizar la creación de widgets.</p>
+                <dl class="py class">
+                  <dt class="sig sig-object py" id="vista.Ventana">
+                    <em class="property"><span class="pre">class</span><span class="w"> </span></em><span
+                      class="sig-prename descclassname"><span class="pre">vista.</span></span><span
+                      class="sig-name descname"><span class="pre">Ventana</span></span><span
+                      class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                          class="pre">_root</span></span></em>, <em class="sig-param"><span class="n"><span
+                          class="pre">usuario</span></span></em><span class="sig-paren">)</span><a
+                      class="reference internal" href="_modules/vista.html#Ventana"><span class="viewcode-link"><span
+                          class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana"
+                      title="Link to this definition"></a>
+                  </dt>
+                  <dd>
+                    <p>Bases: <code
+                        class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.abrir_documentacion">
+                        <span class="sig-name descname"><span class="pre">abrir_documentacion</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.abrir_documentacion"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.abrir_documentacion" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.actualizar_encabezados">
+                        <span class="sig-name descname"><span class="pre">actualizar_encabezados</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.actualizar_encabezados"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.actualizar_encabezados" title="Link to this definition"></a>
+                      </dt>
+                      <dd>
+                        <p>Actualiza encabezados de la columna para mostrar orden.</p>
+                      </dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.asignaciones_varias">
+                        <span class="sig-name descname"><span class="pre">asignaciones_varias</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.asignaciones_varias"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.asignaciones_varias" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.colocar_widgets">
+                        <span class="sig-name descname"><span class="pre">colocar_widgets</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.colocar_widgets"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.colocar_widgets" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.crear_arbol">
+                        <span class="sig-name descname"><span class="pre">crear_arbol</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">marco_contenedor</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marco</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">datos_arbol</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">nombres_arbol</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">col_cals</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcox</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcoy</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">barra</span></span><span class="o"><span
+                              class="pre">=</span></span><span class="default_value"><span
+                              class="pre">True</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana.crear_arbol"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.crear_arbol" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.crear_botonera">
+                        <span class="sig-name descname"><span class="pre">crear_botonera</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">marco_contenedor</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marco_bot</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">con_botones</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcox</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcoy</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana.crear_botonera"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.crear_botonera" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.crear_entradas">
+                        <span class="sig-name descname"><span class="pre">crear_entradas</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">marco_contenedor</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marco</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">datos_arbol</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">nombres_arbol</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">col_cals</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcox</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcoy</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana.crear_entradas"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.crear_entradas" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.crear_titulo">
+                        <span class="sig-name descname"><span class="pre">crear_titulo</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">marco_contenedor</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">con_titulo</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcox</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">marcoy</span></span></em>, <em class="sig-param"><span
+                            class="n"><span class="pre">alineacion</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana.crear_titulo"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.crear_titulo" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.exportar">
+                        <span class="sig-name descname"><span class="pre">exportar</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.exportar"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.exportar"
+                          title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.hola">
+                        <span class="sig-name descname"><span class="pre">hola</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.hola"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.hola"
+                          title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.importar">
+                        <span class="sig-name descname"><span class="pre">importar</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.importar"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.importar"
+                          title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.llenar_entradas">
+                        <span class="sig-name descname"><span class="pre">llenar_entradas</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.llenar_entradas"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.llenar_entradas" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.menu">
+                        <span class="sig-name descname"><span class="pre">menu</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.menu"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.menu"
+                          title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.ordenar_col_por">
+                        <span class="sig-name descname"><span class="pre">ordenar_col_por</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">col</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana.ordenar_col_por"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.ordenar_col_por" title="Link to this definition"></a>
+                      </dt>
+                      <dd>
+                        <p>Ordena el Treeview al hacer 2 veces click en el encabezado elegido.</p>
+                        <dl class="simple">
+                          <dt>Args:</dt>
+                          <dd>
+                            <p>col (row): columna del treeview</p>
+                          </dd>
+                        </dl>
+                      </dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.ordenar_llave">
+                        <span class="sig-name descname"><span class="pre">ordenar_llave</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">valor</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana.ordenar_llave"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.ordenar_llave" title="Link to this definition"></a>
+                      </dt>
+                      <dd>
+                        <p>Convierte los valores a un mismo tipo para ordenar.</p>
+                      </dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.seleccionar">
+                        <span class="sig-name descname"><span class="pre">seleccionar</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">event</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana.seleccionar"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.seleccionar" title="Link to this definition"></a>
+                      </dt>
+                      <dd>
+                        <p>Hal hacer clic en el Treeview o mover las flechas se ve la información en los widgets de
+                          entrada.</p>
+                        <dl class="simple">
+                          <dt>Args:</dt>
+                          <dd>
+                            <p>event (seleccion): tecla de dirección o hacer clic.</p>
+                          </dd>
+                        </dl>
+                      </dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.vaciar">
+                        <span class="sig-name descname"><span class="pre">vaciar</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.vaciar"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink" href="#vista.Ventana.vaciar"
+                          title="Link to this definition"></a>
+                      </dt>
+                      <dd>
+                        <p>Vacía los valores de los widget de entrada.</p>
+                      </dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana.ventana_acerca">
+                        <span class="sig-name descname"><span class="pre">ventana_acerca</span></span><span
+                          class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal"
+                          href="_modules/vista.html#Ventana.ventana_acerca"><span class="viewcode-link"><span
+                              class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana.ventana_acerca" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                  </dd>
+                </dl>
+
+                <dl class="py class">
+                  <dt class="sig sig-object py" id="vista.Ventana_login">
+                    <em class="property"><span class="pre">class</span><span class="w"> </span></em><span
+                      class="sig-prename descclassname"><span class="pre">vista.</span></span><span
+                      class="sig-name descname"><span class="pre">Ventana_login</span></span><span
+                      class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                          class="pre">_root</span></span></em><span class="sig-paren">)</span><a
+                      class="reference internal" href="_modules/vista.html#Ventana_login"><span
+                        class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                      href="#vista.Ventana_login" title="Link to this definition"></a>
+                  </dt>
+                  <dd>
+                    <p>Bases: <code
+                        class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana_login.login">
+                        <span class="sig-name descname"><span class="pre">login</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">nombre_bd</span></span></em>, <em class="sig-param"><span class="n"><span
+                              class="pre">nombre_tabla</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana_login.login"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana_login.login" title="Link to this definition"></a>
+                      </dt>
+                      <dd></dd>
+                    </dl>
+
+                    <dl class="py method">
+                      <dt class="sig sig-object py" id="vista.Ventana_login.texto_etiqueta">
+                        <span class="sig-name descname"><span class="pre">texto_etiqueta</span></span><span
+                          class="sig-paren">(</span><em class="sig-param"><span class="n"><span
+                              class="pre">nombre_bd</span></span></em>, <em class="sig-param"><span class="n"><span
+                              class="pre">nombre_tabla</span></span></em><span class="sig-paren">)</span><a
+                          class="reference internal" href="_modules/vista.html#Ventana_login.texto_etiqueta"><span
+                            class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink"
+                          href="#vista.Ventana_login.texto_etiqueta" title="Link to this definition"></a>
+                      </dt>
+                      <dd>
+                        <p>Valores de las contraseñas.</p>
+                      </dd>
+                    </dl>
+
+                  </dd>
+                </dl>
+
+              </section>
+
+
+            </div>
+          </div>
+          <footer>
+            <div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+              <a href="validacion.html" class="btn btn-neutral float-left" title="Módulo validacion" accesskey="p"
+                rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+            </div>
+
+            <hr />
+
+            <div role="contentinfo">
+              <p>&#169; Derechos de autor 2024, Germán Andrés González.</p>
+            </div>
+
+            Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+            <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+            proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+          </footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>modelo &mdash; documentación de Clientes_UTN - 0.0.1</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=6fcc102b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+    <div class="wy-grid-for-nav">
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-scroll">
+                <div class="wy-side-nav-search">
+
+
+
+                    <a href="../index.html" class="icon icon-home">
+                        Clientes_UTN
+                    </a>
+                    <div role="search">
+                        <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                            <input type="text" name="q" placeholder="Buscar documentos"
+                                aria-label="Buscar documentos" />
+                            <input type="hidden" name="check_keywords" value="yes" />
+                            <input type="hidden" name="area" value="default" />
+                        </form>
+                    </div>
+                </div>
+                <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+                    <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+                    <ul>
+                        <li class="toctree-l1"><a class="reference internal" href="../base_datos.html">módulo
+                                base_datos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../basedatos.html">Módulo
+                                basedatos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../cliente-comando.html">Módulo
+                                cliente-comando</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../creador_ini.html">creador_ini
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../librerias.html">librerias
+                                package</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../modelo.html">Módulo modelo</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../observador.html">observador
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../registro.html">Módulo registro</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../validacion.html">validacion
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../vista.html">Módulo vista</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+            <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="../index.html">Clientes_UTN</a>
+            </nav>
+
+            <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="navigation" aria-label="Page navigation">
+                        <ul class="wy-breadcrumbs">
+                            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+                            <li class="breadcrumb-item active">modelo</li>
+                            <li class="wy-breadcrumbs-aside">
+                            </li>
+                        </ul>
+                        <hr />
+                    </div>
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                        <div itemprop="articleBody">
+
+                            <h1>Código fuente para modelo</h1>
+                            <div class="highlight">
+                                <pre>
+<span></span><span class="sd">&quot;&quot;&quot;Modelo CRUD de la base de datos.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+
+<span class="kn">import</span> <span class="nn">shelve</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">showinfo</span><span class="p">,</span> <span class="n">askquestion</span>
+<span class="kn">from</span> <span class="nn">validacion</span> <span class="kn">import</span> <span class="n">ValidacionCampos</span>
+<span class="kn">from</span> <span class="nn">base_datos</span> <span class="kn">import</span> <span class="n">ManejoBD</span>
+<span class="kn">from</span> <span class="nn">librerias.diccionario</span> <span class="kn">import</span> <span class="n">diccionario</span>
+<span class="kn">from</span> <span class="nn">registro</span> <span class="kn">import</span> <span class="n">RegistroLogError</span>
+<span class="kn">from</span> <span class="nn">observador</span> <span class="kn">import</span> <span class="n">Sujeto</span>
+<span class="kn">from</span> <span class="nn">registro</span> <span class="kn">import</span> <span class="n">ClienteServidor</span>
+
+<span class="c1"># ------- UDP ------</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+
+
+<div class="viewcode-block" id="registro">
+<a class="viewcode-back" href="../modelo.html#modelo.registro">[documentos]</a>
+<span class="k">def</span> <span class="nf">registro</span><span class="p">(</span><span class="n">funcion</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">envoltura</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">funcion</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Se ejecutó:&quot;</span><span class="p">,</span> <span class="n">funcion</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">envoltura</span></div>
+
+
+
+<div class="viewcode-block" id="Abmc">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc">[documentos]</a>
+<span class="k">class</span> <span class="nc">Abmc</span><span class="p">(</span><span class="n">Sujeto</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Crea Altas, Bajas, Modificaciones de datos.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ventana</span><span class="p">,</span> <span class="n">usuario</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span> <span class="o">=</span> <span class="n">usuario</span> <span class="k">if</span> <span class="n">usuario</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span> <span class="o">=</span> <span class="n">ventana</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">esquema</span> <span class="o">=</span> <span class="s2">&quot;id integer PRIMARY KEY AUTOINCREMENT, nombre_cliente text NOT NULL, apellido_cliente text NOT NULL, contacto text NOT NULL, correo_electronico text NOT NULL, telefono text NOT NULL, sitio_web text NOT NULL, otro_perfil text NOT NULL&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span> <span class="o">=</span> <span class="s2">&quot;datos/clientes_nuevo.db&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span> <span class="o">=</span> <span class="s2">&quot;personas&quot;</span>
+        <span class="c1"># self.cliente = ClienteServidor()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validar</span> <span class="o">=</span> <span class="n">ValidacionCampos</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span> <span class="o">=</span> <span class="n">ManejoBD</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">crear_db</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">crear_tabla</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">esquema</span><span class="p">)</span>
+        <span class="c1"># print(self.nombre_bd)</span>
+        <span class="c1"># print(self.esquema)</span>
+        <span class="c1"># --</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">)</span>
+        <span class="c1"># --</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">tiene_datos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">conectar_bd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agregar_cliente_diccionario</span><span class="p">(</span><span class="n">diccionario</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Abmc.importar_datos">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc.importar_datos">[documentos]</a>
+    <span class="nd">@registro</span>
+    <span class="k">def</span> <span class="nf">importar_datos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Usado para importar datos desde un archivo shelve.&quot;&quot;&quot;</span>
+
+        <span class="n">diccionario2</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;referencia</span><span class="se">\\</span><span class="s2">diccionario_nombre_apellido_cl3&quot;</span><span class="p">)</span>
+            <span class="n">diccionario2</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;diccionario&quot;</span><span class="p">]</span>
+            <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No se pudo abrir el archivo shelve </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">42</span><span class="p">,</span> <span class="s2">&quot;Modelo&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span>
+            <span class="p">)</span>
+            <span class="c1"># self.reg_errores.clientes(42, &quot;Modelo&quot;, datetime.datetime.now(), self.usuario)</span>
+            <span class="c1"># self.reg_errores.registrar()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">conectar_bd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">datos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">diccionario2</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+                <span class="c1"># valores = datos</span>
+                <span class="c1"># for i in range(len(diccionario2)):</span>
+                <span class="c1">#    datos = diccionario2[i]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">agregar_datos</span><span class="p">(</span><span class="s2">&quot;personas&quot;</span><span class="p">,</span> <span class="n">datos</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cerrar_db</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cargar_treeview</span><span class="p">(</span>
+                <span class="n">tree</span><span class="p">,</span> <span class="n">nombre_bd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">,</span> <span class="n">nombre_tabla</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;No se pudo modificar el cliente: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">55</span><span class="p">,</span> <span class="s2">&quot;Modelo&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Abmc.agregar_cliente_diccionario">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc.agregar_cliente_diccionario">[documentos]</a>
+    <span class="k">def</span> <span class="nf">agregar_cliente_diccionario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diccionario</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Usado para agregar datos a la base de datos cuando está vacía.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">datos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">diccionario</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">agregar_datos</span><span class="p">(</span><span class="s2">&quot;personas&quot;</span><span class="p">,</span> <span class="n">datos</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Abmc.alta_cliente">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc.alta_cliente">[documentos]</a>
+    <span class="nd">@registro</span>
+    <span class="k">def</span> <span class="nf">alta_cliente</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tree</span><span class="p">,</span>
+        <span class="n">var_indice</span><span class="p">,</span>
+        <span class="n">var_nombre_cliente</span><span class="p">,</span>
+        <span class="n">var_apellido_cliente</span><span class="p">,</span>
+        <span class="n">var_contacto</span><span class="p">,</span>
+        <span class="n">var_correo_electronico</span><span class="p">,</span>
+        <span class="n">var_telefono</span><span class="p">,</span>
+        <span class="n">var_sitio</span><span class="p">,</span>
+        <span class="n">var_perfil</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alta de clientes en la base de datos.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">var_indice</span><span class="p">,</span>
+            <span class="n">var_nombre_cliente</span><span class="p">,</span>
+            <span class="n">var_apellido_cliente</span><span class="p">,</span>
+            <span class="n">var_contacto</span><span class="p">,</span>
+            <span class="n">var_correo_electronico</span><span class="p">,</span>
+            <span class="n">var_telefono</span><span class="p">,</span>
+            <span class="n">var_sitio</span><span class="p">,</span>
+            <span class="n">var_perfil</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">accion</span> <span class="o">=</span> <span class="s2">&quot;agregaron&quot;</span>
+
+        <span class="n">valor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validar</span><span class="o">.</span><span class="n">validar</span><span class="p">(</span>
+            <span class="n">accion</span><span class="p">,</span>
+            <span class="n">var_indice</span><span class="p">,</span>
+            <span class="n">var_nombre_cliente</span><span class="p">,</span>
+            <span class="n">var_apellido_cliente</span><span class="p">,</span>
+            <span class="n">var_contacto</span><span class="p">,</span>
+            <span class="n">var_correo_electronico</span><span class="p">,</span>
+            <span class="n">var_telefono</span><span class="p">,</span>
+            <span class="n">var_sitio</span><span class="p">,</span>
+            <span class="n">var_perfil</span><span class="p">,</span>
+            <span class="n">tree</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">valor</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">askquestion</span><span class="p">(</span><span class="s2">&quot;¡Atención!&quot;</span><span class="p">,</span> <span class="s2">&quot;¿Desea agregar el cliente?&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">datos</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;nombre_cliente&quot;</span><span class="p">:</span> <span class="n">var_nombre_cliente</span><span class="p">,</span>
+                        <span class="s2">&quot;apellido_cliente&quot;</span><span class="p">:</span> <span class="n">var_apellido_cliente</span><span class="p">,</span>
+                        <span class="s2">&quot;contacto&quot;</span><span class="p">:</span> <span class="n">var_contacto</span><span class="p">,</span>
+                        <span class="s2">&quot;correo_electronico&quot;</span><span class="p">:</span> <span class="n">var_correo_electronico</span><span class="p">,</span>
+                        <span class="s2">&quot;telefono&quot;</span><span class="p">:</span> <span class="n">var_telefono</span><span class="p">,</span>
+                        <span class="s2">&quot;sitio_web&quot;</span><span class="p">:</span> <span class="n">var_sitio</span><span class="p">,</span>
+                        <span class="s2">&quot;otro_perfil&quot;</span><span class="p">:</span> <span class="n">var_perfil</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">conectar_bd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">agregar_datos</span><span class="p">(</span><span class="s2">&quot;personas&quot;</span><span class="p">,</span> <span class="n">datos</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cerrar_db</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">notificar</span><span class="p">(</span><span class="s2">&quot;Alta:&quot;</span><span class="p">,</span> <span class="n">datos</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cargar_treeview</span><span class="p">(</span>
+                        <span class="n">tree</span><span class="p">,</span> <span class="n">nombre_bd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">,</span> <span class="n">nombre_tabla</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                        <span class="mi">142</span><span class="p">,</span> <span class="s2">&quot;Alta&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vaciar_todo</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="n">showinfo</span><span class="p">(</span>
+                        <span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;No se pudo modificar el cliente: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                        <span class="mi">113</span><span class="p">,</span> <span class="s2">&quot;Modelo&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span>
+                    <span class="p">)</span>
+                    <span class="c1"># self.cliente.enviar_datos(113, &quot;Modelo&quot;, datetime.datetime.now(), self.usuario)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;¡Atención!&quot;</span><span class="p">,</span> <span class="s2">&quot;No se agregó el cliente&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Abmc.borrar">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc.borrar">[documentos]</a>
+    <span class="nd">@registro</span>
+    <span class="k">def</span> <span class="nf">borrar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Borra cliente de la base de datos.&quot;&quot;&quot;</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">focus</span><span class="p">()</span>
+        <span class="n">val_seleccionados</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">askquestion</span><span class="p">(</span>
+            <span class="s2">&quot;¡Atención!&quot;</span><span class="p">,</span> <span class="s2">&quot;¿Desea borrar el cliente o los clientes seleccionados?&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># valores = tree.item(item, &quot;values&quot;)</span>
+
+        <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">conectar_bd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">val_seleccionados</span><span class="p">:</span>
+                    <span class="n">valor2</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">borrar_datos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">valor2</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">notificar</span><span class="p">(</span><span class="s2">&quot;Baja:&quot;</span><span class="p">,</span> <span class="n">valor2</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cerrar_db</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cargar_treeview</span><span class="p">(</span>
+                    <span class="n">tree</span><span class="p">,</span>
+                    <span class="n">nombre_bd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">,</span>
+                    <span class="n">nombre_tabla</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                    <span class="mi">184</span><span class="p">,</span> <span class="s2">&quot;Baja&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                    <span class="mi">139</span><span class="p">,</span>
+                    <span class="s2">&quot;Modelo&quot;</span><span class="p">,</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;¡Atención!&quot;</span><span class="p">,</span> <span class="s2">&quot;No se borró el cliente&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vaciar_todo</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Abmc.actualizar">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc.actualizar">[documentos]</a>
+    <span class="nd">@registro</span>
+    <span class="k">def</span> <span class="nf">actualizar</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tree</span><span class="p">,</span>
+        <span class="n">var_indice</span><span class="p">,</span>
+        <span class="n">var_nombre_cliente</span><span class="p">,</span>
+        <span class="n">var_apellido_cliente</span><span class="p">,</span>
+        <span class="n">var_contacto</span><span class="p">,</span>
+        <span class="n">var_correo_electronico</span><span class="p">,</span>
+        <span class="n">var_telefono</span><span class="p">,</span>
+        <span class="n">var_sitio</span><span class="p">,</span>
+        <span class="n">var_perfil</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Modifica los datos de un cliente específico.&quot;&quot;&quot;</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">focus</span><span class="p">()</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+        <span class="n">accion</span> <span class="o">=</span> <span class="s2">&quot;modificaron&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">accion</span><span class="p">)</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validar</span><span class="o">.</span><span class="n">validar</span><span class="p">(</span>
+            <span class="n">accion</span><span class="p">,</span>
+            <span class="n">var_indice</span><span class="p">,</span>
+            <span class="n">var_nombre_cliente</span><span class="p">,</span>
+            <span class="n">var_apellido_cliente</span><span class="p">,</span>
+            <span class="n">var_contacto</span><span class="p">,</span>
+            <span class="n">var_correo_electronico</span><span class="p">,</span>
+            <span class="n">var_telefono</span><span class="p">,</span>
+            <span class="n">var_sitio</span><span class="p">,</span>
+            <span class="n">var_perfil</span><span class="p">,</span>
+            <span class="n">tree</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">valor</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">askquestion</span><span class="p">(</span><span class="s2">&quot;¡Atención!&quot;</span><span class="p">,</span> <span class="s2">&quot;¿Desea modificar el cliente?&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">datos</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;nombre_cliente&quot;</span><span class="p">:</span> <span class="n">var_nombre_cliente</span><span class="p">,</span>
+                        <span class="s2">&quot;apellido_cliente&quot;</span><span class="p">:</span> <span class="n">var_apellido_cliente</span><span class="p">,</span>
+                        <span class="s2">&quot;contacto&quot;</span><span class="p">:</span> <span class="n">var_contacto</span><span class="p">,</span>
+                        <span class="s2">&quot;correo_electronico&quot;</span><span class="p">:</span> <span class="n">var_correo_electronico</span><span class="p">,</span>
+                        <span class="s2">&quot;telefono&quot;</span><span class="p">:</span> <span class="n">var_telefono</span><span class="p">,</span>
+                        <span class="s2">&quot;sitio_web&quot;</span><span class="p">:</span> <span class="n">var_sitio</span><span class="p">,</span>
+                        <span class="s2">&quot;otro_perfil&quot;</span><span class="p">:</span> <span class="n">var_perfil</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">conectar_bd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">actualizar_datos</span><span class="p">(</span>
+                        <span class="s2">&quot;personas&quot;</span><span class="p">,</span> <span class="n">datos</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;id = </span><span class="si">{</span><span class="n">var_indice</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cerrar_db</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">notificar</span><span class="p">(</span><span class="s2">&quot;Modificación:&quot;</span><span class="p">,</span> <span class="n">datos</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cargar_treeview</span><span class="p">(</span>
+                        <span class="n">tree</span><span class="p">,</span> <span class="n">nombre_bd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">,</span> <span class="n">nombre_tabla</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vaciar_todo</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                        <span class="mi">252</span><span class="p">,</span> <span class="s2">&quot;Modificación&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+
+                <span class="k">except</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="n">showinfo</span><span class="p">(</span>
+                        <span class="s2">&quot;Error&quot;</span><span class="p">,</span> <span class="s2">&quot;No se pudo modificar el cliente: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                        <span class="mi">201</span><span class="p">,</span> <span class="s2">&quot;Modelo&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuario</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">showinfo</span><span class="p">(</span>
+                    <span class="s2">&quot;¡Atención!&quot;</span><span class="p">,</span> <span class="s2">&quot;No se realizó la modificación del cliente.&quot;</span>
+                <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Abmc.cargar_treeview">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc.cargar_treeview">[documentos]</a>
+    <span class="k">def</span> <span class="nf">cargar_treeview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">nombre_bd</span><span class="p">,</span> <span class="n">nombre_tabla</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Llena el Treeview con los datos de la base de datos.&quot;&quot;&quot;</span>
+        <span class="c1"># nombre_tabla = &quot;personas&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">conectar_bd</span><span class="p">(</span><span class="n">nombre_bd</span><span class="p">)</span>
+        <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="o">*</span><span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cargar_datos</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SELECT * FROM </span><span class="si">{</span><span class="n">nombre_tabla</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">row</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_datos</span><span class="o">.</span><span class="n">cerrar_db</span><span class="p">()</span></div>
+
+        <span class="c1"># global indice</span>
+
+<div class="viewcode-block" id="Abmc.vaciar_todo">
+<a class="viewcode-back" href="../modelo.html#modelo.Abmc.vaciar_todo">[documentos]</a>
+    <span class="k">def</span> <span class="nf">vaciar_todo</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tree</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Vacía los datos de los widget de entrada.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ventana</span><span class="o">.</span><span class="n">vaciar</span><span class="p">()</span>
+        <span class="c1"># self.entry.delete(0, &quot;end&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cargar_treeview</span><span class="p">(</span>
+            <span class="n">tree</span><span class="p">,</span> <span class="n">nombre_bd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_bd</span><span class="p">,</span> <span class="n">nombre_tabla</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre_tabla</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre>
+                            </div>
+
+                        </div>
+                    </div>
+                    <footer>
+
+                        <hr />
+
+                        <div role="contentinfo">
+                            <p>&#169; Derechos de autor 2024, Germán Andrés González.</p>
+                        </div>
+
+                        Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+                        <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+                        proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+
+</html>

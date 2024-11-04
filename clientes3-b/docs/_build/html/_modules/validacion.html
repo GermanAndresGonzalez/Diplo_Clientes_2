@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>validacion &mdash; documentación de Clientes_UTN - 0.0.1</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=6fcc102b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+    <div class="wy-grid-for-nav">
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-scroll">
+                <div class="wy-side-nav-search">
+
+
+
+                    <a href="../index.html" class="icon icon-home">
+                        Clientes_UTN
+                    </a>
+                    <div role="search">
+                        <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+                            <input type="text" name="q" placeholder="Buscar documentos"
+                                aria-label="Buscar documentos" />
+                            <input type="hidden" name="check_keywords" value="yes" />
+                            <input type="hidden" name="area" value="default" />
+                        </form>
+                    </div>
+                </div>
+                <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+                    <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+                    <ul>
+                        <li class="toctree-l1"><a class="reference internal" href="../base_datos.html">módulo
+                                base_datos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../basedatos.html">Módulo
+                                basedatos</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../cliente-comando.html">Módulo
+                                cliente-comando</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../creador_ini.html">creador_ini
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../librerias.html">librerias
+                                package</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../modelo.html">Módulo modelo</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../observador.html">observador
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../registro.html">Módulo registro</a>
+                        </li>
+                        <li class="toctree-l1"><a class="reference internal" href="../validacion.html">validacion
+                                module</a></li>
+                        <li class="toctree-l1"><a class="reference internal" href="../vista.html">Módulo vista</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+            <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="../index.html">Clientes_UTN</a>
+            </nav>
+
+            <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="navigation" aria-label="Page navigation">
+                        <ul class="wy-breadcrumbs">
+                            <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+                            <li class="breadcrumb-item active">validacion</li>
+                            <li class="wy-breadcrumbs-aside">
+                            </li>
+                        </ul>
+                        <hr />
+                    </div>
+                    <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+                        <div itemprop="articleBody">
+
+                            <h1>Código fuente para validacion</h1>
+                            <div class="highlight">
+                                <pre>
+<span></span><span class="sd">&quot;&quot;&quot;Módulo para la validación de los valores de los campos.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">showinfo</span>
+<span class="kn">from</span> <span class="nn">registro</span> <span class="kn">import</span> <span class="n">RegistroLogError</span>
+
+
+<div class="viewcode-block" id="ValidacionCampos">
+<a class="viewcode-back" href="../validacion.html#validacion.ValidacionCampos">[documentos]</a>
+<span class="k">class</span> <span class="nc">ValidacionCampos</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Valida los campos de widget de entrada.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># self.reg_errores = RegistroLogError()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterio_correo</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;Formato de correo electrónico: xxx@xxxxx.xxx, xxx@xxxxx.xxx.xx&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterio_campos</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;No se permiten campos vacíos o con espacios al inicio o al final&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterio_sitio</span> <span class="o">=</span> <span class="s2">&quot;Sitio web/perfil sin &#39;http://&#39; o &#39;https://&#39;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterio_perfil</span> <span class="o">=</span> <span class="s2">&quot;Otro perfil puede ser &#39;No&#39; o una dirección web&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">criterio_telefono</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;El número de teléfono debe tener formato +xxxxxxxxxx (8-16 dígitos)&quot;</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ValidacionCampos.validar_nombres">
+<a class="viewcode-back" href="../validacion.html#validacion.ValidacionCampos.validar_nombres">[documentos]</a>
+    <span class="k">def</span> <span class="nf">validar_nombres</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">campo_nombre</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Valida los nombres y contactos.&quot;&quot;&quot;</span>
+        <span class="n">patron_nombre</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^[A-Za-zñáéíóúÑÁÉÍÓÚ]+(?:[ _-][A-Za-zñáéíóúÑÁÉÍÓÚ]+)*$&quot;</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">patron_nombre</span><span class="p">,</span> <span class="n">campo_nombre</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ValidacionCampos.validar_correo">
+<a class="viewcode-back" href="../validacion.html#validacion.ValidacionCampos.validar_correo">[documentos]</a>
+    <span class="k">def</span> <span class="nf">validar_correo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_correo_electronico</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Valida los correos electronicos.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            var_correo_electronico (str): correo electrónico</span>
+
+<span class="sd">        Devuelve:</span>
+<span class="sd">            bool: valido o no</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">patron_correo</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">r</span><span class="s2">&quot;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]</span><span class="si">{2}</span><span class="s2">)?$&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">patron_correo</span><span class="p">,</span> <span class="n">var_correo_electronico</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ValidacionCampos.sitios_web">
+<a class="viewcode-back" href="../validacion.html#validacion.ValidacionCampos.sitios_web">[documentos]</a>
+    <span class="k">def</span> <span class="nf">sitios_web</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">campo_sitio</span><span class="p">,</span> <span class="n">nombre_campo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Valida los campos de sitio web y perfil</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            campo_sitio (str): URL sitio web</span>
+<span class="sd">            nombre_campo (str): Nombre del campo a validar</span>
+
+<span class="sd">        Devuelve:</span>
+<span class="sd">            bool: validado o no</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sitio_bol</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">patron_sitio</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">r</span><span class="s2">&quot;^(www\.)?[\w-]+\.[a-z]{2,3}(?:\.[a-z]{2,3})?(\/profile\/\d+)?$&quot;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">nombre_campo</span> <span class="o">==</span> <span class="s2">&quot;sitio&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">patron_sitio</span><span class="p">,</span> <span class="n">campo_sitio</span><span class="p">)):</span>
+                    <span class="n">sitio_bol</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sitio_bol</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">campo_sitio</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;No&quot;</span><span class="p">:</span>
+                    <span class="n">campo_sitio</span> <span class="o">=</span> <span class="s2">&quot;No&quot;</span>
+                    <span class="n">sitio_bol</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">patron_sitio</span><span class="p">,</span> <span class="n">campo_sitio</span><span class="p">)):</span>
+                        <span class="n">sitio_bol</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">sitio_bol</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">sitio_bol</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">80</span><span class="p">,</span> <span class="s2">&quot;Validacion&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+    <span class="c1"># def validar_sitio(self, sitio):</span>
+
+<div class="viewcode-block" id="ValidacionCampos.validar_telefono">
+<a class="viewcode-back" href="../validacion.html#validacion.ValidacionCampos.validar_telefono">[documentos]</a>
+    <span class="k">def</span> <span class="nf">validar_telefono</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">telefono</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Valida el campo del teléfono</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            telefono (str): telefono</span>
+
+<span class="sd">        Devuelve:</span>
+<span class="sd">            bool: validado o no</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">patron_telefono</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^\+\d{8,16}$&quot;</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">patron_telefono</span><span class="p">,</span> <span class="n">telefono</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;Validacion&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="ValidacionCampos.validar">
+<a class="viewcode-back" href="../validacion.html#validacion.ValidacionCampos.validar">[documentos]</a>
+    <span class="k">def</span> <span class="nf">validar</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">accion</span><span class="p">,</span>
+        <span class="n">var_indice</span><span class="p">,</span>
+        <span class="n">var_nombre_cliente</span><span class="p">,</span>
+        <span class="n">var_apellido_cliente</span><span class="p">,</span>
+        <span class="n">var_contacto</span><span class="p">,</span>
+        <span class="n">var_correo_electronico</span><span class="p">,</span>
+        <span class="n">var_telefono</span><span class="p">,</span>
+        <span class="n">var_sitio</span><span class="p">,</span>
+        <span class="n">var_perfil</span><span class="p">,</span>
+        <span class="n">tree</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validación de campos</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            accion (str): Origen de la acción</span>
+<span class="sd">            var_indice (str): Indice</span>
+<span class="sd">            var_nombre_cliente (str): Nombre cliente</span>
+<span class="sd">            var_apellido_cliente (_str): Apellido cliente</span>
+<span class="sd">            var_contacto (str): Persona de contacto</span>
+<span class="sd">            var_correo_electronico (str): Correo electrónico</span>
+<span class="sd">            var_telefono (str): Número de teléfono</span>
+<span class="sd">            var_sitio (str): Sitio web</span>
+<span class="sd">            var_perfil (str): Sitio web secundario</span>
+<span class="sd">            tree (tree): Treeview</span>
+
+<span class="sd">        Devuelve:</span>
+<span class="sd">            bool: validado o no</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">var_indice</span>
+
+        <span class="n">nombre_cliente</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_nombre_cliente</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">apellido_cliente</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_apellido_cliente</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">contacto</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_contacto</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">correo_electronico</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_correo_electronico</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">telefono</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_telefono</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">sitio_web</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_sitio</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">otro_perfil</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">var_perfil</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="c1"># print(type(nombre_cliente), nombre_cliente)</span>
+
+        <span class="n">criterios_mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">criterio_correo</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">criterio_campos</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">criterio_sitio</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">criterio_perfil</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">criterio_telefono</span><span class="si">}</span><span class="s2">.&quot;</span>
+
+        <span class="n">diccionario_valido</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;nombre de cliente&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">validar_nombres</span><span class="p">(</span><span class="n">nombre_cliente</span><span class="p">),</span>
+            <span class="s2">&quot;apellido_cliente&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">validar_nombres</span><span class="p">(</span><span class="n">apellido_cliente</span><span class="p">),</span>
+            <span class="s2">&quot;nombre de contacto&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">validar_nombres</span><span class="p">(</span><span class="n">contacto</span><span class="p">),</span>
+            <span class="s2">&quot;correo electrónico&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">validar_correo</span><span class="p">(</span><span class="n">correo_electronico</span><span class="p">),</span>
+            <span class="s2">&quot;teléfono&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">validar_telefono</span><span class="p">(</span><span class="n">telefono</span><span class="p">),</span>
+            <span class="s2">&quot;sitio web&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sitios_web</span><span class="p">(</span><span class="n">sitio_web</span><span class="p">,</span> <span class="s2">&quot;sitio&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;otro perfil&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">sitios_web</span><span class="p">(</span><span class="n">otro_perfil</span><span class="p">,</span> <span class="s2">&quot;perfil&quot;</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">v</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">diccionario_valido</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+                <span class="n">claves_falsas</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">diccionario_valido</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">False</span>
+                <span class="p">]</span>
+                <span class="n">mensaje</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">claves_falsas</span><span class="p">)</span>
+                <span class="n">showinfo</span><span class="p">(</span>
+                    <span class="s2">&quot;¡Atención!&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;Hay un problema, revise: </span><span class="si">{</span><span class="n">mensaje</span><span class="si">}</span><span class="s2">.</span><span class="se">\n</span><span class="s2">No se </span><span class="si">{</span><span class="n">accion</span><span class="si">}</span><span class="s2"> los datos.&quot;</span><span class="p">,</span>
+                    <span class="n">detail</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">criterios_mensaje</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span> <span class="o">=</span> <span class="n">RegistroLogError</span><span class="p">(</span>
+                <span class="mi">170</span><span class="p">,</span> <span class="s2">&quot;Validacion&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_errores</span><span class="o">.</span><span class="n">registrar</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="kc">False</span></div>
+</div>
+
+</pre>
+                            </div>
+
+                        </div>
+                    </div>
+                    <footer>
+
+                        <hr />
+
+                        <div role="contentinfo">
+                            <p>&#169; Derechos de autor 2024, Germán Andrés González.</p>
+                        </div>
+
+                        Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+                        <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+                        proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+
+
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+
+</html>
