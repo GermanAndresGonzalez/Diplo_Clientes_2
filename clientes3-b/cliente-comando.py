@@ -15,7 +15,7 @@ def cliente():
     ingreso = encabezado + " " + sys.argv[1]
 
     print(ingreso)
-    HOST, PORT = "localhost", 8080
+    HOST, PORT = "localhost", 9999
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((HOST, PORT))
 

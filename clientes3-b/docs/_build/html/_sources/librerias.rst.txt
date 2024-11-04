@@ -1,10 +1,10 @@
-librerias package
+Módulo librerias
 =================
 
-Submodules
+Submódulos
 ----------
 
-librerias.acercade module
+Módulo librerias.acercade
 -------------------------
 
 .. automodule:: librerias.acercade
@@ -12,7 +12,7 @@ librerias.acercade module
    :undoc-members:
    :show-inheritance:
 
-librerias.carpetas module
+Módulo librerias.carpetas
 -------------------------
 
 .. automodule:: librerias.carpetas
@@ -28,7 +28,7 @@ librerias.creador\_ini module
    :undoc-members:
    :show-inheritance:
 
-librerias.diccionario module
+Módulo librerias.diccionario
 ----------------------------
 
 .. automodule:: librerias.diccionario
@@ -36,7 +36,7 @@ librerias.diccionario module
    :undoc-members:
    :show-inheritance:
 
-librerias.fabrica module
+Módulo librerias.fabrica
 ------------------------
 
 .. automodule:: librerias.fabrica
@@ -44,7 +44,7 @@ librerias.fabrica module
    :undoc-members:
    :show-inheritance:
 
-librerias.importar module
+Módulo librerias.importar
 -------------------------
 
 .. automodule:: librerias.importar
@@ -60,7 +60,7 @@ librerias.tempCodeRunnerFile module
    :undoc-members:
    :show-inheritance:
 
-Module contents
+Contenido Módulo
 ---------------
 
 .. automodule:: librerias

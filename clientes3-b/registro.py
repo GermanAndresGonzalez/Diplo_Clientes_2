@@ -9,12 +9,14 @@
 """
 
 import os
-#import datetime
+
+# import datetime
 import socket
 
 
 class ClienteServidor:
     """Usado para enviar datos a registrar en el servidor."""
+
     def __init__(
         self, linea, modulo, fecha, usuario=None, mensaje=None, *args, **kwargs
     ):
@@ -33,7 +35,7 @@ class ClienteServidor:
         try:
 
             self.mensaje = f"Linea: {self.linea}, Módulo: {self.modulo}, Fecha: {self.fecha}, Usuario: {self.usuario} {self.mensaje if self.mensaje else None}"
-            HOST, PORT = "localhost", 8080
+            HOST, PORT = "localhost", 9999
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             client_socket.connect((HOST, PORT))
 
@@ -97,8 +99,6 @@ class RegistroLogError(Exception):
             self.mensaje if self.mensaje else None,
         )
         self.cliente.enviar_datos()  # self.cliente(mensaje)
-
-
 
 
 if __name__ == "__main__":

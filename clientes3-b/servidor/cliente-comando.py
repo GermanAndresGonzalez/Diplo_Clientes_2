@@ -5,6 +5,7 @@ El servidor realiza una busqueda en el archivo de registros de la aplicación.
 A la vez, el servidor registra la consulta realizada en un archivo separado.
 
 """
+
 import socket
 import sys
 
@@ -14,7 +15,7 @@ def cliente():
     ingreso = encabezado + " " + sys.argv[1]
 
     print(ingreso)
-    HOST, PORT = "localhost", 8080
+    HOST, PORT = "localhost", 9999
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((HOST, PORT))
 

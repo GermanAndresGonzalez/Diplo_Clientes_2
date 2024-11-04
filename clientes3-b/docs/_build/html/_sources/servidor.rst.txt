@@ -1,7 +1,7 @@
-servidor package
+Módulo servidor
 ================
 
-Submodules
+Submódulos
 ----------
 
 servidor.cliente\-comando module
@@ -20,7 +20,7 @@ servidor.servidor module
    :undoc-members:
    :show-inheritance:
 
-Module contents
+Contenido Módulo
 ---------------
 
 .. automodule:: servidor

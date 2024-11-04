@@ -1,4 +1,4 @@
-basedatos module
+Módulo basedatos
 ================
 
 .. automodule:: basedatos

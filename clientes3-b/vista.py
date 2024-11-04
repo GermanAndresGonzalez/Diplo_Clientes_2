@@ -37,7 +37,6 @@ from base_datos import ManejoBD
 from observador import Observer
 
 
-
 from librerias.fabrica import FabricaWidgets, CreadorMultiple, CreadorEntradasMultiples
 
 # from librerias.creador_ini import leer_config
@@ -321,7 +320,7 @@ class Ventana:
         # self.entradas["indice"].config(state="normal")
 
     def abrir_documentacion(self):
-        directorio = getcwd() + "/docs/build/html/index.html"
+        directorio = getcwd() + "/docs/_build/html/index.html"
         print(directorio)
         webbrowser.open(directorio)
 
