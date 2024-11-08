@@ -12,7 +12,19 @@ import sys
 
 def cliente():
     encabezado = "Busqueda_cliente"
-    ingreso = encabezado + " " + sys.argv[1]
+    predeterminado = "Login incorrecto"
+    ingreso = ""
+    try:
+        ingreso = sys.argv[1]
+    except IndexError:
+        print("Faltan argumentos, se busca login incorrecto")
+        ingreso = encabezado + " " + predeterminado
+
+    if not ingreso.strip():
+        print("No ingresó argumentos, se busca login incorrecto")
+        ingreso = encabezado + " " + predeterminado
+    else:
+        ingreso = encabezado + " " + ingreso
 
     print(ingreso)
     HOST, PORT = "localhost", 9999

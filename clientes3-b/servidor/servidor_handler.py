@@ -11,6 +11,7 @@ import socketserver
 import threading
 import time
 import tkinter as tk
+import pickle
 
 encabezado = "Busqueda_cliente "
 registro_app = "registro_app.log"
@@ -44,7 +45,7 @@ class MiHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         print(f"Conexión establecida con {self.client_address}")
-        datos_rec = self.request.recv(1024).decode("utf-8")
+        datos_rec = self.request.recv(40960).decode("utf-8")
         print(f"Mensaje recibido: {datos_rec}")
 
         resultado_busqueda = self.buscar_encabezado(datos_rec)
